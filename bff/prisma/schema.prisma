@@ -1,0 +1,2306 @@
+// ============================================================
+//  منصة «شريك العمر» — SHARIK ALOMR
+//  Prisma Schema — المخطط الكامل (كل المراحل)
+//  قاعدة حاكمة: One Account = One Device
+//  قاعدة أعمال: لا قيم مثبّتة في الكود — كل شيء في جداول
+// ============================================================
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// ============================================================
+//  ENUMs
+// ============================================================
+enum AccountStatus {
+  active
+  suspended
+  banned
+  deleted
+}
+
+enum VerificationStatus {
+  unverified
+  pending
+  verified
+  rejected
+}
+
+enum Gender {
+  male
+  female
+}
+
+enum OtpPurpose {
+  register
+  login
+  change_phone
+  two_factor
+}
+
+enum SocialProvider {
+  google
+  apple
+  facebook
+}
+
+enum AdminStatus {
+  active
+  suspended
+}
+
+enum PermissionAccess {
+  full
+  partial
+  none
+  deny
+}
+
+enum RiskLevel {
+  low
+  medium
+  high
+}
+
+enum FraudSignalType {
+  vpn
+  proxy
+  mock_location
+  emulator
+  duplicate_identity
+  multiple_account
+  device_integrity
+  ip_risk
+}
+
+enum MaritalStatus {
+  single
+  divorced
+  widowed
+}
+
+enum Education {
+  high_school
+  bachelor
+  master
+  phd
+  other
+}
+
+enum SmokingStatus {
+  no
+  yes
+  sometimes
+}
+
+enum JobStability {
+  stable
+  unstable
+}
+
+enum MarriageIntent {
+  serious_marriage
+  dating_first
+  matchmaking_for_other
+}
+
+enum MarriageTimeline {
+  m6
+  months_6
+  months_12
+  months_24
+  unspecified
+}
+
+enum WantsChildren {
+  yes
+  no
+  undecided
+}
+
+enum Relocation {
+  willing
+  unwilling
+  conditional
+}
+
+enum LivingPreference {
+  independent_home
+  family_home
+  unspecified
+}
+
+enum PhotoCategory {
+  public
+  private
+  one_time
+  temporary
+}
+
+enum PhotoStatus {
+  active
+  removed
+}
+
+enum PhotoRequestStatus {
+  pending
+  accepted
+  rejected
+  expired
+}
+
+enum VerificationPipelineStatus {
+  draft
+  pending
+  processing
+  approved
+  rejected
+}
+
+enum VerificationStep {
+  upload
+  liveness
+  human_review
+  activation
+}
+
+enum VerificationStepStatus {
+  done
+  in_progress
+  pending
+}
+
+enum RecommendationStatus {
+  new
+  viewed
+  consumed
+  removed
+}
+
+enum LikeAction {
+  like
+  pass
+  favorite
+  serious_interest
+}
+
+enum MatchStatus {
+  active
+  unmatched
+  ended
+}
+
+enum ConversationType {
+  direct
+  group_with_wali
+}
+
+enum ConversationStatus {
+  active
+  archived
+  deleted
+}
+
+enum ParticipantRole {
+  member
+  wali
+  invited
+}
+
+enum MessageType {
+  text
+  voice
+  image
+  view_once
+  system
+}
+
+enum AttachmentKind {
+  image
+  voice
+  file
+}
+
+enum MessageRequestStatus {
+  pending
+  accepted
+  ignored
+}
+
+enum CallType {
+  voice
+  video
+}
+
+enum CallStatus {
+  ringing
+  active
+  completed
+  missed
+  failed
+  rejected
+}
+
+enum CallEventType {
+  ring
+  answer
+  hold
+  mute
+  record_start
+  record_stop
+  end
+}
+
+enum WaliRelation {
+  father
+  older_brother
+  paternal_uncle
+  maternal_uncle
+  other
+}
+
+enum WaliLinkStatus {
+  active
+  pending
+  revoked
+}
+
+enum WaliInvitationStatus {
+  pending
+  accepted
+  expired
+  revoked
+}
+
+enum PostVisibility {
+  public
+  followers
+  private
+}
+
+enum PostStatus {
+  draft
+  published
+  removed
+  pending_review
+}
+
+enum PostReactionKind {
+  like
+  bookmark
+}
+
+enum ArticleStatus {
+  draft
+  scheduled
+  published
+}
+
+enum BlogReactionKind {
+  like
+  bookmark
+  helpful
+  not_helpful
+}
+
+enum ReportTargetType {
+  user
+  post
+  comment
+  message
+  call
+  photo
+  article
+}
+
+enum ReportStatus {
+  open
+  reviewing
+  resolved
+  dismissed
+}
+
+enum ModerationAction {
+  warn
+  suspend
+  ban
+  remove
+  restore
+}
+
+enum CreditTxType {
+  purchase
+  welcome_bonus
+  video_call
+  voice_call
+  boost
+  serious_interest
+  ai_recommendation
+  premium_recommendation
+  top_profile
+  consultation_booking
+  consultation_refund
+  admin_adjust
+  refund_never
+}
+
+enum VisionStatus {
+  pending
+  approved
+  scheduled
+  completed
+  declined
+  cancelled
+}
+
+enum VisionLocation {
+  family_home
+  mosque
+  public_center
+  video_with_wali
+}
+
+enum PrayerMethod {
+  egyptian
+  mwl
+  isna
+  umm_al_qura
+  karachi
+}
+
+enum AsrMethod {
+  shafi
+  hanafi
+}
+
+enum ConsultationStatus {
+  confirmed
+  completed
+  cancelled_by_member
+  cancelled_by_sheikh
+  no_show
+}
+
+enum ConsultationMeetingType {
+  video
+  audio
+}
+
+enum SheikhTxType {
+  consultation_earning
+  payout
+  admin_adjust
+}
+
+enum CostUnit {
+  one_time
+  per_minute
+  per_day
+}
+
+enum AccessMode {
+  free
+  subscription_only
+  credits_only
+  subscription_or_credits
+  subscription_and_credits
+}
+
+enum SubscriptionStatus {
+  active
+  expired
+  cancelled
+  pending
+}
+
+enum PaymentPurpose {
+  credit_package
+  subscription
+}
+
+enum PaymentProvider {
+  card
+  apple_pay
+  google_pay
+  paypal
+  vodafone_cash
+  instapay
+  stripe
+  paymob
+}
+
+enum PaymentStatus {
+  pending
+  succeeded
+  failed
+  refunded_never
+}
+
+enum MarketStatus {
+  enabled
+  testing
+  disabled
+}
+
+enum LimitBehavior {
+  likes
+  ai_recommendations
+  top_profiles
+  new_messages
+  private_photos
+  verification_requests
+}
+
+enum LimitWindow {
+  day
+  week
+}
+
+enum BoostStatus {
+  active
+  expired
+}
+
+enum NotificationChannel {
+  push
+  email
+  both
+}
+
+// ============================================================
+//  ١ · الهوية والوصول
+// ============================================================
+model User {
+  id           String  @id @default(cuid())
+  phone        String  @unique
+  countryCode  String  @default("+20") @map("country_code")
+  email        String? @unique
+  passwordHash String? @map("password_hash")
+
+  firstName String  @map("first_name")
+  lastName  String? @map("last_name")
+
+  gender        Gender?
+  dateOfBirth   DateTime?          @map("date_of_birth") @db.Date
+  accountStatus AccountStatus      @default(active) @map("account_status")
+  verification  VerificationStatus @default(unverified)
+
+  isVerifiedBadge       Boolean @default(false) @map("is_verified_badge")
+  profileQuality        Int     @default(0) @map("profile_quality")
+  riskScore             Int     @default(0) @map("risk_score")
+  verificationAvailable Boolean @default(true) @map("verification_available")
+
+  country String?
+  city    String?
+
+  phoneVerifiedAt DateTime? @map("phone_verified_at")
+  emailVerifiedAt DateTime? @map("email_verified_at")
+  lastActiveAt    DateTime? @map("last_active_at")
+  deletedAt       DateTime? @map("deleted_at")
+  createdAt       DateTime  @default(now()) @map("created_at")
+  updatedAt       DateTime  @updatedAt @map("updated_at")
+
+  devices             UserDevice[]
+  sessions            UserSession[]
+  socialAccounts      SocialAccount[]
+  otpCodes            OtpCode[]
+  emailChangeRequests EmailChangeRequest[]
+  loginAttempts       LoginAttempt[]
+  passwordResets      PasswordReset[]
+  riskScores          RiskScore[]
+  fraudSignals        FraudSignal[]
+
+  profile                   Profile?
+  profileMarriage           ProfileMarriage?
+  profileAbout              ProfileAbout?
+  photos                    ProfilePhoto[]
+  photoRequestsOwned        PhotoAccessRequest[]        @relation("photoOwner")
+  photoRequestsMade         PhotoAccessRequest[]        @relation("photoRequester")
+  profilePhotoRequestsOwned ProfilePhotoAccessRequest[] @relation("profilePhotoOwner")
+  profilePhotoRequestsMade  ProfilePhotoAccessRequest[] @relation("profilePhotoRequester")
+  location                  UserLocation?
+  preferences               UserPreferences?
+  preferenceWeights         PreferenceWeight[]
+  userCoreValues            UserCoreValue[]
+  dealBreakers              DealBreaker[]
+  privacy                   PrivacySettings?
+  notificationSettings      NotificationSettings?
+
+  verificationRequests VerificationRequest[]
+  livenessChecks       LivenessCheck[]
+  identityDocuments    IdentityDocument[]
+
+  recommendationRuns RecommendationRun[]
+  recommendations    Recommendations[]
+  profileViewsMade   ProfileView[]       @relation("viewer")
+  profileViewsGot    ProfileView[]       @relation("viewed")
+  topProfileViews    TopProfileView[]    @relation("tpViewer")
+  topProfileViewsGot TopProfileView[]    @relation("tpTarget")
+  likesSent          Like[]              @relation("likesFrom")
+  likesReceived      Like[]              @relation("likesTo")
+  matchesAsA         Match[]             @relation("matchA")
+  matchesAsB         Match[]             @relation("matchB")
+  favorites          Favorite[]          @relation("favOwner")
+  favoritedBy        Favorite[]          @relation("favTarget")
+  filterPresets      FilterPreset[]
+
+  participations  ConversationParticipant[]
+  messagesSent    Message[]
+  messageReceipts MessageReceipt[]
+  messageRequests MessageRequest[]
+  callsMade       Call[]                    @relation("caller")
+  callsReceived   Call[]                    @relation("receiver")
+
+  waliAccount     Wali?            @relation("waliUser")
+  waliLinks       WaliLink[]
+  waliInvitations WaliInvitation[]
+
+  // الرؤية الشرعية والصلوات والاستشارات
+  visionRequestsMade     VisionRequest[]         @relation("visionRequester")
+  visionRequestsReceived VisionRequest[]         @relation("visionRecipient")
+  prayerSettings         PrayerSettings?
+  prayerNotificationLogs PrayerNotificationLog[]
+  consultationsAsMember  Consultation[]          @relation("consultationMember")
+  sheikhProfile          SheikhProfile?
+
+  posts         Post[]
+  comments      Comment[]
+  postReactions PostReaction[]
+  topicFollows  TopicFollow[]
+  blogReactions BlogArticleReaction[]
+  reportsMade   Report[]              @relation("reporter")
+
+  wallet             Wallet?
+  creditTransactions CreditTransaction[]
+  subscriptions      Subscription[]
+  payments           Payment[]
+  paymentMethods     PaymentMethod[]
+  boosts             Boost[]
+
+  notifications Notification[]
+  pushTokens    PushToken[]
+  blockedUsers  BlockedUser[]  @relation("blocker")
+  blockedBy     BlockedUser[]  @relation("blocked")
+
+  @@index([country, city])
+  @@index([accountStatus, verification])
+  @@index([deletedAt])
+  @@map("users")
+}
+
+model UserDevice {
+  id           String    @id @default(cuid())
+  userId       String    @map("user_id")
+  deviceId     String    @map("device_id")
+  fingerprint  String?
+  model        String?
+  osVersion    String?   @map("os_version")
+  build        String?
+  isActive     Boolean   @default(false) @map("is_active")
+  firstLoginAt DateTime? @map("first_login_at")
+  lastActiveAt DateTime? @map("last_active_at")
+  ipAddress    String?   @map("ip_address")
+  city         String?
+  country      String?
+  createdAt    DateTime  @default(now()) @map("created_at")
+  updatedAt    DateTime  @updatedAt @map("updated_at")
+
+  user     User          @relation(fields: [userId], references: [id], onDelete: Cascade)
+  sessions UserSession[]
+
+  @@unique([userId, deviceId])
+  @@index([userId, isActive])
+  @@index([deviceId])
+  @@map("user_devices")
+}
+
+model UserSession {
+  id               String    @id @default(cuid())
+  userId           String    @map("user_id")
+  deviceId         String?   @map("device_id")
+  refreshTokenHash String    @map("refresh_token_hash")
+  rememberMe       Boolean   @default(false) @map("remember_me")
+  ipAddress        String?   @map("ip_address")
+  userAgent        String?   @map("user_agent")
+  expiresAt        DateTime  @map("expires_at")
+  revokedAt        DateTime? @map("revoked_at")
+  createdAt        DateTime  @default(now()) @map("created_at")
+
+  user   User        @relation(fields: [userId], references: [id], onDelete: Cascade)
+  device UserDevice? @relation(fields: [deviceId], references: [id], onDelete: SetNull)
+
+  @@index([userId, revokedAt])
+  @@index([deviceId])
+  @@map("user_sessions")
+}
+
+model OtpCode {
+  id          String     @id @default(cuid())
+  userId      String?    @map("user_id")
+  phone       String
+  codeHash    String     @map("code_hash")
+  purpose     OtpPurpose
+  attempts    Int        @default(0)
+  expiresAt   DateTime   @map("expires_at")
+  consumedAt  DateTime?  @map("consumed_at")
+  resendAfter DateTime   @map("resend_after")
+  createdAt   DateTime   @default(now()) @map("created_at")
+
+  user User? @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([phone, purpose, createdAt])
+  @@index([expiresAt])
+  @@map("otp_codes")
+}
+
+model EmailChangeRequest {
+  id          String    @id @default(cuid())
+  userId      String    @map("user_id")
+  newEmail    String    @map("new_email")
+  codeHash    String    @map("code_hash")
+  attempts    Int       @default(0)
+  expiresAt   DateTime  @map("expires_at")
+  resendAfter DateTime  @map("resend_after")
+  consumedAt  DateTime? @map("consumed_at")
+  createdAt   DateTime  @default(now()) @map("created_at")
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId, createdAt])
+  @@index([newEmail])
+  @@map("email_change_requests")
+}
+
+model SocialAccount {
+  id          String         @id @default(cuid())
+  userId      String         @map("user_id")
+  provider    SocialProvider
+  providerUid String         @map("provider_uid")
+  email       String?
+  createdAt   DateTime       @default(now()) @map("created_at")
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([provider, providerUid])
+  @@map("social_accounts")
+}
+
+model LoginAttempt {
+  id        String   @id @default(cuid())
+  userId    String?  @map("user_id")
+  phone     String?
+  email     String?
+  success   Boolean  @default(false)
+  reason    String?
+  ipAddress String?  @map("ip_address")
+  deviceId  String?  @map("device_id")
+  createdAt DateTime @default(now()) @map("created_at")
+
+  user User? @relation(fields: [userId], references: [id], onDelete: SetNull)
+
+  @@index([phone, createdAt])
+  @@index([ipAddress, createdAt])
+  @@index([success, createdAt])
+  @@map("login_attempts")
+}
+
+model PasswordReset {
+  id         String    @id @default(cuid())
+  userId     String    @map("user_id")
+  tokenHash  String    @map("token_hash")
+  expiresAt  DateTime  @map("expires_at")
+  consumedAt DateTime? @map("consumed_at")
+  createdAt  DateTime  @default(now()) @map("created_at")
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@map("password_resets")
+}
+
+// ============================================================
+//  ٢ · الأمان والمخاطر
+// ============================================================
+model RiskScore {
+  id        String    @id @default(cuid())
+  userId    String    @map("user_id")
+  score     Int
+  level     RiskLevel @default(low)
+  reasons   Json      @default("[]")
+  createdAt DateTime  @default(now()) @map("created_at")
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId, createdAt])
+  @@index([level])
+  @@map("risk_scores")
+}
+
+model FraudSignal {
+  id        String          @id @default(cuid())
+  userId    String          @map("user_id")
+  signal    FraudSignalType
+  value     String?
+  severity  Int             @default(50)
+  createdAt DateTime        @default(now()) @map("created_at")
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId, signal])
+  @@map("fraud_signals")
+}
+
+model BlockedUser {
+  id        String   @id @default(cuid())
+  blockerId String   @map("blocker_id")
+  blockedId String   @map("blocked_id")
+  reason    String?
+  createdAt DateTime @default(now()) @map("created_at")
+
+  blocker User @relation("blocker", fields: [blockerId], references: [id], onDelete: Cascade)
+  blocked User @relation("blocked", fields: [blockedId], references: [id], onDelete: Cascade)
+
+  @@unique([blockerId, blockedId])
+  @@map("blocked_users")
+}
+
+// ============================================================
+//  ٣ · الملف الشخصي
+// ============================================================
+model Profile {
+  userId        String         @id @map("user_id")
+  nationality   String?
+  maritalStatus MaritalStatus? @map("marital_status")
+  hasChildren   Boolean        @default(false) @map("has_children")
+  childrenCount Int            @default(0) @map("children_count")
+  heightCm      Int?           @map("height_cm")
+  education     Education?
+  university    String?
+  profession    String?
+  incomeRange   String?        @map("income_range")
+  languages     String[]       @default([])
+  smoking       SmokingStatus?
+  smokingType   String?        @map("smoking_type")
+  weightHealth  String?        @map("weight_health")
+  jobStability  JobStability?  @map("job_stability")
+  legalRecord   Boolean        @default(false) @map("legal_record")
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("profiles")
+}
+
+model ProfileMarriage {
+  userId           String            @id @map("user_id")
+  marriageIntent   MarriageIntent?   @map("marriage_intent")
+  marriageTimeline MarriageTimeline? @map("marriage_timeline")
+  wantsChildren    WantsChildren?    @map("wants_children")
+  childrenPlanned  String?           @map("children_planned")
+  relocation       Relocation?
+  livingPreference LivingPreference? @map("living_preference")
+  religion         String?
+  sect             String?
+  familyPrefs      Json              @default("{}") @map("family_prefs")
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("profile_marriage")
+}
+
+model ProfileAbout {
+  userId      String   @id @map("user_id")
+  bio         String?
+  interests   String[] @default([])
+  personality String[] @default([])
+  lifestyle   String[] @default([])
+  lookingFor  String?  @map("looking_for")
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("profile_about")
+}
+
+model ProfilePhoto {
+  id           String        @id @default(cuid())
+  userId       String        @map("user_id")
+  url          String
+  storageKey   String?       @map("storage_key")
+  thumbnailUrl String?       @map("thumbnail_url")
+  category     PhotoCategory @default(public)
+  isPrimary    Boolean       @default(false) @map("is_primary")
+  watermarked  Boolean       @default(true)
+  expiresAt    DateTime?     @map("expires_at")
+  orderIndex   Int           @default(0) @map("order_index")
+  status       PhotoStatus   @default(active)
+  createdAt    DateTime      @default(now()) @map("created_at")
+
+  user     User                 @relation(fields: [userId], references: [id], onDelete: Cascade)
+  requests PhotoAccessRequest[]
+
+  @@index([userId, category, status])
+  @@map("profile_photos")
+}
+
+model PhotoAccessRequest {
+  id          String             @id @default(cuid())
+  photoId     String             @map("photo_id")
+  ownerId     String             @map("owner_id")
+  requesterId String             @map("requester_id")
+  status      PhotoRequestStatus @default(pending)
+  ttlSeconds  Int                @default(86400) @map("ttl_seconds")
+  acceptedAt  DateTime?          @map("accepted_at")
+  expiresAt   DateTime?          @map("expires_at")
+  createdAt   DateTime           @default(now()) @map("created_at")
+
+  photo     ProfilePhoto @relation(fields: [photoId], references: [id], onDelete: Cascade)
+  owner     User         @relation("photoOwner", fields: [ownerId], references: [id], onDelete: Cascade)
+  requester User         @relation("photoRequester", fields: [requesterId], references: [id], onDelete: Cascade)
+
+  @@index([requesterId, status])
+  @@index([ownerId, status])
+  @@map("photo_access_requests")
+}
+
+model ProfilePhotoAccessRequest {
+  id          String             @id @default(cuid())
+  ownerId     String             @map("owner_id")
+  requesterId String             @map("requester_id")
+  status      PhotoRequestStatus @default(pending)
+  ttlSeconds  Int                @default(86400) @map("ttl_seconds")
+  acceptedAt  DateTime?          @map("accepted_at")
+  expiresAt   DateTime?          @map("expires_at")
+  createdAt   DateTime           @default(now()) @map("created_at")
+
+  owner     User @relation("profilePhotoOwner", fields: [ownerId], references: [id], onDelete: Cascade)
+  requester User @relation("profilePhotoRequester", fields: [requesterId], references: [id], onDelete: Cascade)
+
+  @@unique([ownerId, requesterId])
+  @@index([ownerId, status])
+  @@index([requesterId, status])
+  @@map("profile_photo_access_requests")
+}
+
+model UserLocation {
+  userId          String   @id @map("user_id")
+  country         String?
+  city            String?
+  lat             Float?
+  lng             Float?
+  confidenceScore Int      @default(0) @map("confidence_score")
+  sourcesJson     Json     @default("{}") @map("sources_json")
+  isSuspicious    Boolean  @default(false) @map("is_suspicious")
+  updatedAt       DateTime @updatedAt @map("updated_at")
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("user_locations")
+}
+
+// ============================================================
+//  ٤ · التفضيلات والحواجز والخصوصية
+// ============================================================
+model UserPreferences {
+  userId    String   @id @map("user_id")
+  countries String[] @default([])
+  ageMin    Int?     @map("age_min")
+  ageMax    Int?     @map("age_max")
+  heightMin Int?     @map("height_min")
+  heightMax Int?     @map("height_max")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("user_preferences")
+}
+
+model PreferenceWeight {
+  id        String @id @default(cuid())
+  userId    String @map("user_id")
+  criterion String
+  weight    Int    @default(3)
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, criterion])
+  @@map("preference_weights")
+}
+
+model CoreValue {
+  id       String  @id @default(cuid())
+  key      String  @unique
+  labelAr  String  @map("label_ar")
+  isActive Boolean @default(true) @map("is_active")
+
+  users UserCoreValue[]
+
+  @@map("core_values")
+}
+
+model UserCoreValue {
+  userId  String @map("user_id")
+  valueId String @map("value_id")
+
+  user  User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  value CoreValue @relation(fields: [valueId], references: [id], onDelete: Cascade)
+
+  @@id([userId, valueId])
+  @@map("user_core_values")
+}
+
+model DealBreakerCatalog {
+  id            String  @id @default(cuid())
+  key           String  @unique
+  labelAr       String  @map("label_ar")
+  descriptionAr String? @map("description_ar")
+  icon          String?
+  isActive      Boolean @default(true) @map("is_active")
+
+  breakers DealBreaker[]
+
+  @@map("deal_breaker_catalog")
+}
+
+model DealBreaker {
+  id        String   @id @default(cuid())
+  userId    String   @map("user_id")
+  breakerId String   @map("breaker_id")
+  isActive  Boolean  @default(true) @map("is_active")
+  createdAt DateTime @default(now()) @map("created_at")
+
+  user    User               @relation(fields: [userId], references: [id], onDelete: Cascade)
+  breaker DealBreakerCatalog @relation(fields: [breakerId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, breakerId])
+  @@map("deal_breakers")
+}
+
+model PrivacySettings {
+  userId                    String    @id @map("user_id")
+  profileVisibility         String    @default("public") @map("profile_visibility")
+  showOnlineStatus          Boolean   @default(true) @map("show_online_status")
+  hideLastSeen              Boolean   @default(false) @map("hide_last_seen")
+  cityOnlyLocation          Boolean   @default(true) @map("city_only_location")
+  searchable                Boolean   @default(true)
+  privatePhotosNeedApproval Boolean   @default(true) @map("private_photos_need_approval")
+  profilePhotosNeedApproval Boolean   @default(false) @map("profile_photos_need_approval")
+  temporaryPhotosTtlDays    Int       @default(7) @map("temporary_photos_ttl_days")
+  watermarkPhotos           Boolean   @default(true) @map("watermark_photos")
+  dataExportRequestedAt     DateTime? @map("data_export_requested_at")
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("privacy_settings")
+}
+
+model IdempotencyRecord {
+  id          String    @id @default(cuid())
+  userId      String    @map("user_id")
+  method      String
+  path        String
+  key         String
+  requestHash String    @map("request_hash")
+  statusCode  Int?      @map("status_code")
+  response    Json?
+  completedAt DateTime? @map("completed_at")
+  createdAt   DateTime  @default(now()) @map("created_at")
+
+  @@unique([userId, method, path, key])
+  @@index([createdAt])
+  @@map("idempotency_records")
+}
+
+model NotificationSettings {
+  userId           String  @id @map("user_id")
+  match            Boolean @default(true)
+  messages         Boolean @default(true)
+  calls            Boolean @default(true)
+  community        Boolean @default(true)
+  prayer           Boolean @default(true)
+  consultation     Boolean @default(true)
+  emailWeekly      Boolean @default(false) @map("email_weekly")
+  newLoginAlerts   Boolean @default(true) @map("new_login_alerts")
+  twoFactorEnabled Boolean @default(false) @map("two_factor_enabled")
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("notification_settings")
+}
+
+// ============================================================
+//  ٥ · التوثيق
+// ============================================================
+model VerificationRequest {
+  id               String                     @id @default(cuid())
+  userId           String                     @map("user_id")
+  status           VerificationPipelineStatus @default(draft)
+  livenessScore    Float?                     @map("liveness_score")
+  faceMatch        Float?                     @map("face_match")
+  rejectionReasons Json                       @default("[]") @map("rejection_reasons")
+  reviewSlaHours   Int                        @default(6) @map("review_sla_hours")
+  submittedAt      DateTime?                  @map("submitted_at")
+  reviewedAt       DateTime?                  @map("reviewed_at")
+  reviewedBy       String?                    @map("reviewed_by")
+  createdAt        DateTime                   @default(now()) @map("created_at")
+
+  user  User                  @relation(fields: [userId], references: [id], onDelete: Cascade)
+  steps VerificationStepRow[]
+
+  @@index([userId, status])
+  @@map("verification_requests")
+}
+
+model VerificationStepRow {
+  id         String                 @id @default(cuid())
+  requestId  String                 @map("request_id")
+  step       VerificationStep
+  status     VerificationStepStatus @default(pending)
+  detail     String?
+  occurredAt DateTime               @default(now()) @map("occurred_at")
+
+  request VerificationRequest @relation(fields: [requestId], references: [id], onDelete: Cascade)
+
+  @@map("verification_steps")
+}
+
+model LivenessCheck {
+  id              String   @id @default(cuid())
+  userId          String   @map("user_id")
+  requestId       String?  @map("request_id")
+  provider        String
+  passed          Boolean  @default(false)
+  confidence      Float?
+  antiSpoofPassed Boolean  @default(false) @map("anti_spoof_passed")
+  createdAt       DateTime @default(now()) @map("created_at")
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("liveness_checks")
+}
+
+model IdentityDocument {
+  id              String   @id @default(cuid())
+  userId          String   @map("user_id")
+  type            String
+  storageKey      String?  @map("storage_key")
+  docNumberMasked String?  @map("doc_number_masked")
+  nameMatched     Boolean  @default(false) @map("name_matched")
+  addressVerified Boolean  @default(false) @map("address_verified")
+  status          String   @default("pending")
+  createdAt       DateTime @default(now()) @map("created_at")
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("identity_documents")
+}
+
+// ============================================================
+//  ٦ · الاكتشاف والتطابق
+// ============================================================
+model RecommendationRun {
+  id          String   @id @default(cuid())
+  userId      String   @map("user_id")
+  runDate     DateTime @map("run_date") @db.Date
+  quota       Int      @default(20)
+  used        Int      @default(0)
+  tier        String?
+  generatedAt DateTime @default(now()) @map("generated_at")
+
+  user  User              @relation(fields: [userId], references: [id], onDelete: Cascade)
+  items Recommendations[]
+
+  @@index([userId, runDate])
+  @@map("recommendation_runs")
+}
+
+model Recommendations {
+  id              String               @id @default(cuid())
+  runId           String               @map("run_id")
+  userId          String               @map("user_id")
+  candidateId     String               @map("candidate_id")
+  matchScore      Int                  @default(0) @map("match_score")
+  reasonsPositive Json                 @default("[]") @map("reasons_positive")
+  reasonsNegative Json                 @default("[]") @map("reasons_negative")
+  factors         Json                 @default("{}")
+  isPaid          Boolean              @default(false) @map("is_paid")
+  costCredits     Int                  @default(0) @map("cost_credits")
+  status          RecommendationStatus @default(new)
+  createdAt       DateTime             @default(now()) @map("created_at")
+
+  run  RecommendationRun @relation(fields: [runId], references: [id], onDelete: Cascade)
+  user User              @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId, status])
+  @@map("recommendations")
+}
+
+model ProfileView {
+  id        String   @id @default(cuid())
+  viewerId  String   @map("viewer_id")
+  viewedId  String   @map("viewed_id")
+  createdAt DateTime @default(now()) @map("created_at")
+
+  viewer User @relation("viewer", fields: [viewerId], references: [id], onDelete: Cascade)
+  viewed User @relation("viewed", fields: [viewedId], references: [id], onDelete: Cascade)
+
+  @@index([viewedId, createdAt])
+  @@map("profile_views")
+}
+
+model TopProfileView {
+  id          String   @id @default(cuid())
+  userId      String   @map("user_id")
+  targetId    String   @map("target_id")
+  costCredits Int      @default(0) @map("cost_credits")
+  viewedAt    DateTime @default(now()) @map("viewed_at")
+
+  user   User @relation("tpViewer", fields: [userId], references: [id], onDelete: Cascade)
+  target User @relation("tpTarget", fields: [targetId], references: [id], onDelete: Cascade)
+
+  @@index([userId, viewedAt])
+  @@map("top_profile_views")
+}
+
+model Like {
+  id          String     @id @default(cuid())
+  fromUserId  String     @map("from_user_id")
+  toUserId    String     @map("to_user_id")
+  action      LikeAction
+  costCredits Int        @default(0) @map("cost_credits")
+  createdAt   DateTime   @default(now()) @map("created_at")
+
+  from User @relation("likesFrom", fields: [fromUserId], references: [id], onDelete: Cascade)
+  to   User @relation("likesTo", fields: [toUserId], references: [id], onDelete: Cascade)
+
+  @@unique([fromUserId, toUserId, action])
+  @@index([toUserId, action])
+  @@map("likes")
+}
+
+model Match {
+  id          String      @id @default(cuid())
+  userA       String      @map("user_a")
+  userB       String      @map("user_b")
+  status      MatchStatus @default(active)
+  matchedAt   DateTime    @default(now()) @map("matched_at")
+  unmatchedAt DateTime?   @map("unmatched_at")
+  unmatchedBy String?     @map("unmatched_by")
+
+  a User @relation("matchA", fields: [userA], references: [id], onDelete: Cascade)
+  b User @relation("matchB", fields: [userB], references: [id], onDelete: Cascade)
+
+  visionRequests VisionRequest[]
+
+  @@unique([userA, userB])
+  @@map("matches")
+}
+
+model Favorite {
+  id        String   @id @default(cuid())
+  userId    String   @map("user_id")
+  targetId  String   @map("target_id")
+  createdAt DateTime @default(now()) @map("created_at")
+
+  user   User @relation("favOwner", fields: [userId], references: [id], onDelete: Cascade)
+  target User @relation("favTarget", fields: [targetId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, targetId])
+  @@map("favorites")
+}
+
+model FilterPreset {
+  id        String   @id @default(cuid())
+  userId    String   @map("user_id")
+  payload   Json
+  createdAt DateTime @default(now()) @map("created_at")
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("filter_presets")
+}
+
+// ============================================================
+//  ٧ · المحادثة والمكالمات
+// ============================================================
+model Conversation {
+  id            String             @id @default(cuid())
+  matchId       String?            @map("match_id")
+  type          ConversationType   @default(direct)
+  status        ConversationStatus @default(active)
+  lastMessageAt DateTime?          @map("last_message_at")
+  createdAt     DateTime           @default(now()) @map("created_at")
+
+  participants ConversationParticipant[]
+  messages     Message[]
+  requests     MessageRequest[]
+
+  @@index([status, lastMessageAt])
+  @@map("conversations")
+}
+
+model ConversationParticipant {
+  id             String          @id @default(cuid())
+  conversationId String          @map("conversation_id")
+  userId         String          @map("user_id")
+  role           ParticipantRole @default(member)
+  joinedAt       DateTime        @default(now()) @map("joined_at")
+  leftAt         DateTime?       @map("left_at")
+
+  conversation Conversation @relation(fields: [conversationId], references: [id], onDelete: Cascade)
+  user         User         @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([conversationId, userId])
+  @@map("conversation_participants")
+}
+
+model Message {
+  id                 String      @id @default(cuid())
+  conversationId     String      @map("conversation_id")
+  senderId           String      @map("sender_id")
+  type               MessageType @default(text)
+  body               String?
+  isRequest          Boolean     @default(false) @map("is_request")
+  viewOnceTtlSeconds Int         @default(30) @map("view_once_ttl_seconds")
+  openedAt           DateTime?   @map("opened_at")
+  moderation         Json        @default("{}")
+  replyTo            String?     @map("reply_to")
+  createdAt          DateTime    @default(now()) @map("created_at")
+  deletedAt          DateTime?   @map("deleted_at")
+
+  conversation Conversation        @relation(fields: [conversationId], references: [id], onDelete: Cascade)
+  sender       User                @relation(fields: [senderId], references: [id], onDelete: Cascade)
+  attachments  MessageAttachment[]
+  receipts     MessageReceipt[]
+
+  @@index([conversationId, createdAt])
+  @@map("messages")
+}
+
+model MessageAttachment {
+  id              String         @id @default(cuid())
+  messageId       String         @map("message_id")
+  kind            AttachmentKind
+  url             String
+  storageKey      String?        @map("storage_key")
+  durationSeconds Int?           @map("duration_seconds")
+  wave            Json?
+
+  message Message @relation(fields: [messageId], references: [id], onDelete: Cascade)
+
+  @@map("message_attachments")
+}
+
+model MessageReceipt {
+  messageId String
+  userId    String   @map("user_id")
+  readAt    DateTime @default(now()) @map("read_at")
+
+  message Message @relation(fields: [messageId], references: [id], onDelete: Cascade)
+  user    User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@id([messageId, userId])
+  @@map("message_receipts")
+}
+
+model MessageRequest {
+  id             String               @id @default(cuid())
+  conversationId String               @map("conversation_id")
+  fromUserId     String               @map("from_user_id")
+  status         MessageRequestStatus @default(pending)
+  createdAt      DateTime             @default(now()) @map("created_at")
+
+  conversation Conversation @relation(fields: [conversationId], references: [id], onDelete: Cascade)
+  fromUser     User         @relation(fields: [fromUserId], references: [id], onDelete: Cascade)
+
+  @@map("message_requests")
+}
+
+model Call {
+  id                      String     @id @default(cuid())
+  callerId                String     @map("caller_id")
+  receiverId              String     @map("receiver_id")
+  type                    CallType
+  status                  CallStatus @default(ringing)
+  ratePerMinute           Int        @default(20) @map("rate_per_minute")
+  startedAt               DateTime?  @map("started_at")
+  endedAt                 DateTime?  @map("ended_at")
+  durationSeconds         Int        @default(0) @map("duration_seconds")
+  creditsConsumed         Int        @default(0) @map("credits_consumed")
+  isRecorded              Boolean    @default(false) @map("is_recorded")
+  peerNotifiedOfRecording Boolean    @default(true) @map("peer_notified_of_recording")
+  createdAt               DateTime   @default(now()) @map("created_at")
+
+  caller   User        @relation("caller", fields: [callerId], references: [id], onDelete: Cascade)
+  receiver User        @relation("receiver", fields: [receiverId], references: [id], onDelete: Cascade)
+  events   CallEvent[]
+
+  @@index([callerId, createdAt])
+  @@index([receiverId, createdAt])
+  @@map("calls")
+}
+
+model CallEvent {
+  id     String        @id @default(cuid())
+  callId String        @map("call_id")
+  event  CallEventType
+  at     DateTime      @default(now())
+
+  call Call @relation(fields: [callId], references: [id], onDelete: Cascade)
+
+  @@map("call_events")
+}
+
+// ============================================================
+//  ٨ · الوليّ
+// ============================================================
+model Wali {
+  id         String       @id @default(cuid())
+  userId     String?      @unique @map("user_id")
+  name       String
+  relation   WaliRelation
+  phone      String
+  email      String?
+  isVerified Boolean      @default(false) @map("is_verified")
+  createdAt  DateTime     @default(now()) @map("created_at")
+
+  user        User?            @relation("waliUser", fields: [userId], references: [id], onDelete: SetNull)
+  links       WaliLink[]
+  invitations WaliInvitation[]
+  sessions    WaliSession[]
+
+  @@map("walis")
+}
+
+model WaliLink {
+  id                       String         @id @default(cuid())
+  userId                   String         @map("user_id")
+  waliId                   String         @map("wali_id")
+  status                   WaliLinkStatus @default(pending)
+  linkedSince              DateTime?      @map("linked_since")
+  sharedConversationsCount Int            @default(0) @map("shared_conversations_count")
+
+  user        User            @relation(fields: [userId], references: [id], onDelete: Cascade)
+  wali        Wali            @relation(fields: [waliId], references: [id], onDelete: Cascade)
+  permissions WaliPermission?
+  sessions    WaliSession[]
+
+  @@index([userId, status])
+  @@map("wali_links")
+}
+
+model WaliInvitation {
+  id        String               @id @default(cuid())
+  userId    String               @map("user_id")
+  waliId    String?              @map("wali_id")
+  phone     String?
+  email     String?
+  token     String               @unique
+  expiresAt DateTime             @map("expires_at")
+  status    WaliInvitationStatus @default(pending)
+  createdAt DateTime             @default(now()) @map("created_at")
+
+  user User  @relation(fields: [userId], references: [id], onDelete: Cascade)
+  wali Wali? @relation(fields: [waliId], references: [id], onDelete: SetNull)
+
+  @@map("wali_invitations")
+}
+
+model WaliPermission {
+  waliLinkId             String  @id @map("wali_link_id")
+  viewMatchedCandidates  Boolean @default(true) @map("view_matched_candidates")
+  viewVerificationStatus Boolean @default(true) @map("view_verification_status")
+  joinGroupChats         Boolean @default(true) @map("join_group_chats")
+  readDirectChats        Boolean @default(false) @map("read_direct_chats")
+
+  link WaliLink @relation(fields: [waliLinkId], references: [id], onDelete: Cascade)
+
+  @@map("wali_permissions")
+}
+
+/**
+ * جلسة الوليّ: رمز مستقل يُصدر عند قبول الدعوة أو عند تبادل رابط مقبول بجلسة.
+ * نخزّن hash فقط، وترتبط الجلسة بالربط المحدد حتى يسري عليها تعديل الصلاحيات فوراً.
+ */
+model WaliSession {
+  id         String    @id @default(cuid())
+  linkId     String    @map("link_id")
+  waliId     String    @map("wali_id")
+  tokenHash  String    @unique @map("token_hash")
+  expiresAt  DateTime  @map("expires_at")
+  revokedAt  DateTime? @map("revoked_at")
+  lastUsedAt DateTime? @map("last_used_at")
+  createdAt  DateTime  @default(now()) @map("created_at")
+
+  link WaliLink @relation(fields: [linkId], references: [id], onDelete: Cascade)
+  wali Wali     @relation(fields: [waliId], references: [id], onDelete: Cascade)
+
+  @@index([linkId, revokedAt])
+  @@index([waliId, revokedAt])
+  @@map("wali_sessions")
+}
+
+// ============================================================
+//  ٩ · المجتمع والمدونة والإشراف
+// ============================================================
+model CommunityTopic {
+  id           String   @id @default(cuid())
+  key          String   @unique
+  nameAr       String   @map("name_ar")
+  icon         String?
+  isFollowable Boolean  @default(true) @map("is_followable")
+  isSeasonal   Boolean  @default(false) @map("is_seasonal")
+  isActive     Boolean  @default(true) @map("is_active")
+  sortOrder    Int      @default(0) @map("sort_order")
+  createdAt    DateTime @default(now()) @map("created_at")
+
+  posts   Post[]
+  follows TopicFollow[]
+
+  @@map("community_topics")
+}
+
+model TopicFollow {
+  userId    String   @map("user_id")
+  topicId   String   @map("topic_id")
+  createdAt DateTime @default(now()) @map("created_at")
+
+  user  User           @relation(fields: [userId], references: [id], onDelete: Cascade)
+  topic CommunityTopic @relation(fields: [topicId], references: [id], onDelete: Cascade)
+
+  @@id([userId, topicId])
+  @@map("topic_follows")
+}
+
+model Post {
+  id            String         @id @default(cuid())
+  authorId      String         @map("author_id")
+  topicId       String?        @map("topic_id")
+  body          String
+  mediaCount    Int            @default(0) @map("media_count")
+  visibility    PostVisibility @default(public)
+  status        PostStatus     @default(published)
+  isPinned      Boolean        @default(false) @map("is_pinned")
+  isFeatured    Boolean        @default(false) @map("is_featured")
+  moderation    Json           @default("{}")
+  likeCount     Int            @default(0) @map("like_count")
+  commentCount  Int            @default(0) @map("comment_count")
+  bookmarkCount Int            @default(0) @map("bookmark_count")
+  shareCount    Int            @default(0) @map("share_count")
+  createdAt     DateTime       @default(now()) @map("created_at")
+  publishedAt   DateTime?      @map("published_at")
+
+  author    User            @relation(fields: [authorId], references: [id], onDelete: Cascade)
+  topic     CommunityTopic? @relation(fields: [topicId], references: [id], onDelete: SetNull)
+  media     PostMedia[]
+  tags      PostTag[]
+  comments  Comment[]
+  reactions PostReaction[]
+
+  @@index([status, publishedAt])
+  @@index([topicId])
+  @@map("posts")
+}
+
+model PostMedia {
+  id         String @id @default(cuid())
+  postId     String @map("post_id")
+  kind       String
+  url        String
+  orderIndex Int    @default(0) @map("order_index")
+
+  post Post @relation(fields: [postId], references: [id], onDelete: Cascade)
+
+  @@map("post_media")
+}
+
+model PostTag {
+  postId String @map("post_id")
+  tag    String
+
+  post Post @relation(fields: [postId], references: [id], onDelete: Cascade)
+
+  @@id([postId, tag])
+  @@map("post_tags")
+}
+
+model Comment {
+  id        String   @id @default(cuid())
+  postId    String?  @map("post_id")
+  articleId String?  @map("article_id")
+  authorId  String   @map("author_id")
+  parentId  String?  @map("parent_id")
+  body      String
+  likeCount Int      @default(0) @map("like_count")
+  status    String   @default("published")
+  createdAt DateTime @default(now()) @map("created_at")
+
+  post    Post?        @relation(fields: [postId], references: [id], onDelete: Cascade)
+  article BlogArticle? @relation(fields: [articleId], references: [id], onDelete: Cascade)
+  author  User         @relation(fields: [authorId], references: [id], onDelete: Cascade)
+
+  @@index([postId, createdAt])
+  @@map("comments")
+}
+
+model PostReaction {
+  userId String           @map("user_id")
+  postId String           @map("post_id")
+  kind   PostReactionKind
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  post Post @relation(fields: [postId], references: [id], onDelete: Cascade)
+
+  @@id([userId, postId, kind])
+  @@map("post_reactions")
+}
+
+model BlogCategory {
+  id     String @id @default(cuid())
+  key    String @unique
+  nameAr String @map("name_ar")
+
+  articles BlogArticle[]
+
+  @@map("blog_categories")
+}
+
+model BlogArticle {
+  id              String        @id @default(cuid())
+  authorId        String        @map("author_id")
+  categoryId      String?       @map("category_id")
+  title           String
+  slug            String        @unique
+  excerpt         String?
+  body            String
+  coverUrl        String?       @map("cover_url")
+  readTimeMinutes Int           @default(3) @map("read_time_minutes")
+  seoTitle        String?       @map("seo_title")
+  metaDescription String?       @map("meta_description")
+  status          ArticleStatus @default(draft)
+  isFeatured      Boolean       @default(false) @map("is_featured")
+  views           Int           @default(0)
+  likes           Int           @default(0)
+  helpfulCount    Int           @default(0) @map("helpful_count")
+  notHelpfulCount Int           @default(0) @map("not_helpful_count")
+  bookmarkCount   Int           @default(0) @map("bookmark_count")
+  publishedAt     DateTime?     @map("published_at")
+  createdAt       DateTime      @default(now()) @map("created_at")
+
+  category  BlogCategory?         @relation(fields: [categoryId], references: [id], onDelete: SetNull)
+  reactions BlogArticleReaction[]
+  comments  Comment[]
+
+  @@index([status, publishedAt])
+  @@map("blog_articles")
+}
+
+model BlogArticleReaction {
+  userId    String           @map("user_id")
+  articleId String           @map("article_id")
+  kind      BlogReactionKind
+
+  user    User        @relation(fields: [userId], references: [id], onDelete: Cascade)
+  article BlogArticle @relation(fields: [articleId], references: [id], onDelete: Cascade)
+
+  @@id([userId, articleId, kind])
+  @@map("blog_article_reactions")
+}
+
+model ReportReason {
+  id            String  @id @default(cuid())
+  key           String  @unique
+  labelAr       String  @map("label_ar")
+  descriptionAr String? @map("description_ar")
+  isActive      Boolean @default(true) @map("is_active")
+
+  reports Report[]
+
+  @@map("report_reasons")
+}
+
+model Report {
+  id         String           @id @default(cuid())
+  reference  String           @unique
+  reporterId String           @map("reporter_id")
+  targetType ReportTargetType @map("target_type")
+  targetId   String           @map("target_id")
+  reasonId   String?          @map("reason_id")
+  details    String?
+  status     ReportStatus     @default(open)
+  slaHours   Int              @default(24) @map("sla_hours")
+  createdAt  DateTime         @default(now()) @map("created_at")
+  resolvedAt DateTime?        @map("resolved_at")
+  resolvedBy String?          @map("resolved_by")
+
+  reporter User          @relation("reporter", fields: [reporterId], references: [id], onDelete: Cascade)
+  reason   ReportReason? @relation(fields: [reasonId], references: [id], onDelete: SetNull)
+
+  @@index([status, createdAt])
+  @@map("reports")
+}
+
+model ModerationLog {
+  id         String           @id @default(cuid())
+  adminId    String           @map("admin_id")
+  targetType String           @map("target_type")
+  targetId   String           @map("target_id")
+  action     ModerationAction
+  reason     String?
+  createdAt  DateTime         @default(now()) @map("created_at")
+
+  @@index([targetType, targetId])
+  @@map("moderation_actions")
+}
+
+model BannedWord {
+  id       String  @id @default(cuid())
+  word     String  @unique
+  severity Int     @default(50)
+  isActive Boolean @default(true) @map("is_active")
+
+  @@map("banned_words")
+}
+
+// ============================================================
+//  ١٠ · المال (الكريدت والاشتراكات والدفع)
+// ============================================================
+model Wallet {
+  userId         String   @id @map("user_id")
+  balanceCredits Int      @default(0) @map("balance_credits")
+  currency       String   @default("EGP")
+  updatedAt      DateTime @updatedAt @map("updated_at")
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("wallets")
+}
+
+model CreditTransaction {
+  id            String       @id @default(cuid())
+  reference     String       @unique
+  userId        String       @map("user_id")
+  type          CreditTxType
+  amount        Int
+  balanceBefore Int          @map("balance_before")
+  balanceAfter  Int          @map("balance_after")
+  relatedId     String?      @map("related_id")
+  description   String?
+  providerRef   String?      @map("provider_ref")
+  cardLast4     String?      @map("card_last4")
+  createdAt     DateTime     @default(now()) @map("created_at")
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId, createdAt])
+  @@map("credit_transactions")
+}
+
+model CreditPackage {
+  id             String    @id @default(cuid())
+  name           String
+  key            String    @unique
+  baseCredits    Int       @map("base_credits")
+  bonusCredits   Int       @default(0) @map("bonus_credits")
+  priceAmount    Int       @map("price_amount")
+  currency       String    @default("EGP")
+  oldPriceAmount Int?      @map("old_price_amount")
+  country        String?
+  badge          String?
+  ribbon         String?
+  isPopular      Boolean   @default(false) @map("is_popular")
+  isActive       Boolean   @default(true) @map("is_active")
+  sortOrder      Int       @default(0) @map("sort_order")
+  expiresAt      DateTime? @map("expires_at")
+
+  @@map("credit_packages")
+}
+
+model FeatureCatalog {
+  id            String   @id @default(cuid())
+  key           String   @unique
+  nameAr        String   @map("name_ar")
+  descriptionAr String?  @map("description_ar")
+  isFree        Boolean  @default(false) @map("is_free")
+  creditCost    Int      @default(0) @map("credit_cost")
+  costUnit      CostUnit @default(one_time) @map("cost_unit")
+  dailyLimit    Int?     @map("daily_limit")
+  monthlyLimit  Int?     @map("monthly_limit")
+  planRequired  String?  @map("plan_required")
+  countries     String[] @default([])
+  isActive      Boolean  @default(true) @map("is_active")
+
+  accessRules  FeatureAccessRule[]
+  planFeatures PlanFeature[]
+
+  @@map("feature_catalog")
+}
+
+model FeatureAccessRule {
+  id         String     @id @default(cuid())
+  featureId  String     @map("feature_id")
+  accessMode AccessMode @default(credits_only) @map("access_mode")
+
+  feature FeatureCatalog @relation(fields: [featureId], references: [id], onDelete: Cascade)
+
+  @@map("feature_access_rules")
+}
+
+model SubscriptionPlan {
+  id               String  @id @default(cuid())
+  name             String
+  key              String  @unique
+  tier             String
+  durationDays     Int     @map("duration_days")
+  priceAmount      Int     @map("price_amount")
+  currency         String  @default("EGP")
+  country          String?
+  cycle            String  @default("monthly")
+  descriptionAr    String? @map("description_ar")
+  isActive         Boolean @default(true) @map("is_active")
+  autoRenewDefault Boolean @default(true) @map("auto_renew_default")
+  maxUsers         Int?    @map("max_users")
+  sortOrder        Int     @default(0) @map("sort_order")
+
+  features      PlanFeature[]
+  subscriptions Subscription[]
+
+  @@map("subscription_plans")
+}
+
+model PlanFeature {
+  planId     String @map("plan_id")
+  featureId  String @map("feature_id")
+  limitValue Int?   @map("limit_value")
+
+  plan    SubscriptionPlan @relation(fields: [planId], references: [id], onDelete: Cascade)
+  feature FeatureCatalog   @relation(fields: [featureId], references: [id], onDelete: Cascade)
+
+  @@id([planId, featureId])
+  @@map("plan_features")
+}
+
+model Subscription {
+  id          String             @id @default(cuid())
+  userId      String             @map("user_id")
+  planId      String             @map("plan_id")
+  status      SubscriptionStatus @default(active)
+  startedAt   DateTime           @default(now()) @map("started_at")
+  expiresAt   DateTime           @map("expires_at")
+  autoRenew   Boolean            @default(true) @map("auto_renew")
+  priceLocked Boolean            @default(false) @map("price_locked")
+  cancelledAt DateTime?          @map("cancelled_at")
+  createdAt   DateTime           @default(now()) @map("created_at")
+
+  user User             @relation(fields: [userId], references: [id], onDelete: Cascade)
+  plan SubscriptionPlan @relation(fields: [planId], references: [id])
+
+  @@index([userId, status])
+  @@map("subscriptions")
+}
+
+model Payment {
+  id          String          @id @default(cuid())
+  reference   String          @unique
+  userId      String          @map("user_id")
+  purpose     PaymentPurpose
+  refId       String?         @map("ref_id")
+  amount      Int
+  currency    String          @default("EGP")
+  serviceFee  Int             @default(0) @map("service_fee")
+  provider    PaymentProvider
+  providerRef String?         @map("provider_ref")
+  cardLast4   String?         @map("card_last4")
+  status      PaymentStatus   @default(pending)
+  createdAt   DateTime        @default(now()) @map("created_at")
+  paidAt      DateTime?       @map("paid_at")
+
+  user    User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  invoice Invoice?
+
+  @@index([userId, createdAt])
+  @@map("payments")
+}
+
+model Invoice {
+  id        String   @id @default(cuid())
+  paymentId String   @unique @map("payment_id")
+  pdfUrl    String?  @map("pdf_url")
+  issuedAt  DateTime @default(now()) @map("issued_at")
+
+  payment Payment @relation(fields: [paymentId], references: [id], onDelete: Cascade)
+
+  @@map("invoices")
+}
+
+model PaymentMethod {
+  id        String          @id @default(cuid())
+  userId    String          @map("user_id")
+  provider  PaymentProvider
+  tokenRef  String          @map("token_ref")
+  last4     String?
+  isDefault Boolean         @default(false) @map("is_default")
+  createdAt DateTime        @default(now()) @map("created_at")
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("payment_methods")
+}
+
+model CountryPricing {
+  id                 String       @id @default(cuid())
+  country            String       @unique
+  currency           String
+  marketStatus       MarketStatus @default(enabled) @map("market_status")
+  priceGold          Int          @map("price_gold")
+  pricePlatinum      Int          @map("price_platinum")
+  priceCreditsPack   Int          @map("price_credits_pack")
+  costVoicePerMinute Int          @map("cost_voice_per_minute")
+  costVideoPerMinute Int          @map("cost_video_per_minute")
+  costBoost          Int          @map("cost_boost")
+  lastUpdated        DateTime     @updatedAt @map("last_updated")
+
+  @@map("country_pricing")
+}
+
+model DailyLimit {
+  id           String        @id @default(cuid())
+  behavior     LimitBehavior
+  window       LimitWindow   @default(day)
+  defaultLimit Int           @map("default_limit")
+  goldLimit    Int           @map("gold_limit")
+  isActive     Boolean       @default(true) @map("is_active")
+
+  @@unique([behavior, window])
+  @@map("daily_limits")
+}
+
+model Boost {
+  id                    String      @id @default(cuid())
+  userId                String      @map("user_id")
+  durationDays          Int         @map("duration_days")
+  costCredits           Int         @map("cost_credits")
+  startsAt              DateTime    @default(now()) @map("starts_at")
+  endsAt                DateTime    @map("ends_at")
+  dailyExtraImpressions Int         @default(5) @map("daily_extra_impressions")
+  status                BoostStatus @default(active)
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId, status])
+  @@map("boosts")
+}
+
+// ============================================================
+//  ١١ · الإشعارات
+// ============================================================
+// ============================================================
+//  ٩ · الرؤية الشرعية · مواقيت الصلاة · الاستشارات الدينية
+// ============================================================
+model VisionRequest {
+  id              String         @id @default(cuid())
+  matchId         String?        @map("match_id")
+  requesterId     String         @map("requester_id")
+  recipientId     String         @map("recipient_id")
+  status          VisionStatus   @default(pending)
+  preferredAt     DateTime?      @map("preferred_at")
+  locationType    VisionLocation @default(family_home) @map("location_type")
+  locationDetails String?        @map("location_details")
+  guardianName    String?        @map("guardian_name")
+  guardianPhone   String?        @map("guardian_phone")
+  notes           String?
+  responseNote    String?        @map("response_note")
+  respondedAt     DateTime?      @map("responded_at")
+  scheduledAt     DateTime?      @map("scheduled_at")
+  completedAt     DateTime?      @map("completed_at")
+  cancelledAt     DateTime?      @map("cancelled_at")
+  createdAt       DateTime       @default(now()) @map("created_at")
+  updatedAt       DateTime       @updatedAt @map("updated_at")
+
+  requester User   @relation("visionRequester", fields: [requesterId], references: [id], onDelete: Cascade)
+  recipient User   @relation("visionRecipient", fields: [recipientId], references: [id], onDelete: Cascade)
+  match     Match? @relation(fields: [matchId], references: [id], onDelete: SetNull)
+
+  @@index([recipientId, status])
+  @@index([requesterId, status])
+  @@map("vision_requests")
+}
+
+model PrayerSettings {
+  userId                String       @id @map("user_id")
+  enabled               Boolean      @default(true)
+  city                  String?
+  country               String?
+  latitude              Float?
+  longitude             Float?
+  timezone              String       @default("Africa/Cairo")
+  method                PrayerMethod @default(egyptian)
+  asrMethod             AsrMethod    @default(shafi) @map("asr_method")
+  reminderMinutesBefore Int          @default(0) @map("reminder_minutes_before")
+  fajr                  Boolean      @default(true)
+  dhuhr                 Boolean      @default(true)
+  asr                   Boolean      @default(true)
+  maghrib               Boolean      @default(true)
+  isha                  Boolean      @default(true)
+  createdAt             DateTime     @default(now()) @map("created_at")
+  updatedAt             DateTime     @updatedAt @map("updated_at")
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("prayer_settings")
+}
+
+model PrayerNotificationLog {
+  id        String   @id @default(cuid())
+  userId    String   @map("user_id")
+  prayer    String
+  localDate String   @map("local_date")
+  sentAt    DateTime @default(now()) @map("sent_at")
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, prayer, localDate])
+  @@index([localDate])
+  @@map("prayer_notification_logs")
+}
+
+model SheikhProfile {
+  id                     String   @id @default(cuid())
+  userId                 String   @unique @map("user_id")
+  displayName            String   @map("display_name")
+  bio                    String?
+  specialties            String[] @default([])
+  languages              String[] @default([])
+  yearsExperience        Int      @default(0) @map("years_experience")
+  sessionDurationMinutes Int      @default(30) @map("session_duration_minutes")
+  sessionCredits         Int?     @map("session_credits")
+  earningEgpPerSession   Int?     @map("earning_egp_per_session")
+  timezone               String   @default("Africa/Cairo")
+  isActive               Boolean  @default(true) @map("is_active")
+  isVerified             Boolean  @default(true) @map("is_verified")
+  rating                 Float    @default(0)
+  totalSessions          Int      @default(0) @map("total_sessions")
+  balanceEgp             Int      @default(0) @map("balance_egp")
+  createdAt              DateTime @default(now()) @map("created_at")
+  updatedAt              DateTime @updatedAt @map("updated_at")
+
+  user          User                 @relation(fields: [userId], references: [id], onDelete: Cascade)
+  availability  SheikhAvailability[]
+  consultations Consultation[]
+  transactions  SheikhTransaction[]
+
+  @@index([isActive])
+  @@map("sheikh_profiles")
+}
+
+model SheikhAvailability {
+  id          String   @id @default(cuid())
+  sheikhId    String   @map("sheikh_id")
+  weekday     Int
+  startMinute Int      @map("start_minute")
+  endMinute   Int      @map("end_minute")
+  isActive    Boolean  @default(true) @map("is_active")
+  createdAt   DateTime @default(now()) @map("created_at")
+
+  sheikh SheikhProfile @relation(fields: [sheikhId], references: [id], onDelete: Cascade)
+
+  @@index([sheikhId, weekday])
+  @@map("sheikh_availability")
+}
+
+model Consultation {
+  id                 String                  @id @default(cuid())
+  memberId           String                  @map("member_id")
+  sheikhId           String                  @map("sheikh_id")
+  scheduledAt        DateTime                @map("scheduled_at")
+  durationMinutes    Int                     @default(30) @map("duration_minutes")
+  status             ConsultationStatus      @default(confirmed)
+  meetingType        ConsultationMeetingType @default(video) @map("meeting_type")
+  topic              String?
+  notes              String?
+  creditsCharged     Int                     @map("credits_charged")
+  sheikhEarningEgp   Int                     @map("sheikh_earning_egp")
+  creditReference    String?                 @map("credit_reference")
+  cancelledAt        DateTime?               @map("cancelled_at")
+  cancellationReason String?                 @map("cancellation_reason")
+  completedAt        DateTime?               @map("completed_at")
+  createdAt          DateTime                @default(now()) @map("created_at")
+  updatedAt          DateTime                @updatedAt @map("updated_at")
+
+  member  User               @relation("consultationMember", fields: [memberId], references: [id], onDelete: Cascade)
+  sheikh  SheikhProfile      @relation(fields: [sheikhId], references: [id], onDelete: Restrict)
+  earning SheikhTransaction?
+
+  @@index([memberId, scheduledAt])
+  @@index([sheikhId, scheduledAt])
+  @@index([status, scheduledAt])
+  @@map("consultations")
+}
+
+model SheikhTransaction {
+  id             String       @id @default(cuid())
+  sheikhId       String       @map("sheikh_id")
+  type           SheikhTxType
+  amountEgp      Int          @map("amount_egp")
+  balanceBefore  Int          @map("balance_before")
+  balanceAfter   Int          @map("balance_after")
+  consultationId String?      @unique @map("consultation_id")
+  description    String?
+  createdAt      DateTime     @default(now()) @map("created_at")
+
+  sheikh       SheikhProfile @relation(fields: [sheikhId], references: [id], onDelete: Cascade)
+  consultation Consultation? @relation(fields: [consultationId], references: [id], onDelete: SetNull)
+
+  @@index([sheikhId, createdAt])
+  @@map("sheikh_transactions")
+}
+
+model Notification {
+  id        String              @id @default(cuid())
+  userId    String?             @map("user_id")
+  adminId   String?             @map("admin_id")
+  type      String
+  titleAr   String              @map("title_ar")
+  bodyAr    String              @map("body_ar")
+  data      Json                @default("{}")
+  channel   NotificationChannel @default(push)
+  isRead    Boolean             @default(false) @map("is_read")
+  readAt    DateTime?           @map("read_at")
+  createdAt DateTime            @default(now()) @map("created_at")
+
+  user  User?  @relation(fields: [userId], references: [id], onDelete: Cascade)
+  admin Admin? @relation(fields: [adminId], references: [id], onDelete: Cascade)
+
+  @@index([userId, isRead, createdAt])
+  @@map("notifications")
+}
+
+model PushToken {
+  id        String   @id @default(cuid())
+  userId    String   @map("user_id")
+  platform  String
+  token     String   @unique
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("push_tokens")
+}
+
+model EmailTemplate {
+  id          String   @id @default(cuid())
+  key         String   @unique
+  subject     String
+  bodyHtml    String   @map("body_html")
+  variables   String[] @default([])
+  isActive    Boolean  @default(true) @map("is_active")
+  triggerRule String?  @map("trigger_rule")
+
+  @@map("email_templates")
+}
+
+// ============================================================
+//  ١٢ · الإدارة و RBAC والمنصة
+// ============================================================
+model Admin {
+  id               String      @id @default(cuid())
+  name             String
+  email            String      @unique
+  phone            String?
+  passwordHash     String      @map("password_hash")
+  avatarUrl        String?     @map("avatar_url")
+  status           AdminStatus @default(active)
+  twoFactorEnabled Boolean     @default(false) @map("two_factor_enabled")
+  twoFactorSecret  String?     @map("two_factor_secret")
+  lastLoginAt      DateTime?   @map("last_login_at")
+  createdAt        DateTime    @default(now()) @map("created_at")
+  updatedAt        DateTime    @updatedAt @map("updated_at")
+
+  roles         AdminUserRole[]
+  sessions      AdminSession[]
+  auditLogs     AuditLog[]
+  notifications Notification[]
+
+  @@map("admins")
+}
+
+model AdminRole {
+  id        String   @id @default(cuid())
+  key       String   @unique
+  nameAr    String   @map("name_ar")
+  scope     String?
+  isSystem  Boolean  @default(false) @map("is_system")
+  createdAt DateTime @default(now()) @map("created_at")
+
+  admins          AdminUserRole[]
+  rolePermissions RolePermission[]
+
+  @@map("admin_roles")
+}
+
+model AdminUserRole {
+  adminId    String   @map("admin_id")
+  roleId     String   @map("role_id")
+  assignedBy String?  @map("assigned_by")
+  assignedAt DateTime @default(now()) @map("assigned_at")
+
+  admin Admin     @relation(fields: [adminId], references: [id], onDelete: Cascade)
+  role  AdminRole @relation(fields: [roleId], references: [id], onDelete: Cascade)
+
+  @@id([adminId, roleId])
+  @@map("admin_user_roles")
+}
+
+model Permission {
+  id          String  @id @default(cuid())
+  key         String  @unique
+  nameAr      String  @map("name_ar")
+  group       String
+  isSensitive Boolean @default(false) @map("is_sensitive")
+
+  rolePermissions RolePermission[]
+
+  @@index([group])
+  @@map("permissions")
+}
+
+model RolePermission {
+  roleId       String           @map("role_id")
+  permissionId String           @map("permission_id")
+  access       PermissionAccess @default(partial)
+
+  role       AdminRole  @relation(fields: [roleId], references: [id], onDelete: Cascade)
+  permission Permission @relation(fields: [permissionId], references: [id], onDelete: Cascade)
+
+  @@id([roleId, permissionId])
+  @@map("role_permissions")
+}
+
+model AdminSession {
+  id        String    @id @default(cuid())
+  adminId   String    @map("admin_id")
+  tokenHash String    @unique @map("token_hash")
+  ipAddress String?   @map("ip_address")
+  device    String?
+  expiresAt DateTime  @map("expires_at")
+  revokedAt DateTime? @map("revoked_at")
+  createdAt DateTime  @default(now()) @map("created_at")
+
+  admin Admin @relation(fields: [adminId], references: [id], onDelete: Cascade)
+
+  @@index([adminId, revokedAt])
+  @@map("admin_sessions")
+}
+
+model FeatureFlag {
+  id          String   @id @default(cuid())
+  key         String   @unique
+  nameAr      String?  @map("name_ar")
+  isEnabled   Boolean  @default(true) @map("is_enabled")
+  rollout     Int      @default(100)
+  description String?
+  updatedBy   String?  @map("updated_by")
+  createdAt   DateTime @default(now()) @map("created_at")
+  updatedAt   DateTime @updatedAt @map("updated_at")
+
+  @@map("feature_flags")
+}
+
+model AppSetting {
+  id        String   @id @default(cuid())
+  key       String   @unique
+  value     Json
+  group     String   @default("general")
+  updatedBy String?  @map("updated_by")
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  @@index([group])
+  @@map("app_settings")
+}
+
+model AuditLog {
+  id           String   @id @default(cuid())
+  actorAdminId String?  @map("actor_admin_id")
+  actorRole    String?  @map("actor_role")
+  action       String
+  targetType   String?  @map("target_type")
+  targetId     String?  @map("target_id")
+  oldValue     Json?    @map("old_value")
+  newValue     Json?    @map("new_value")
+  reason       String?
+  ipAddress    String?  @map("ip_address")
+  device       String?
+  createdAt    DateTime @default(now()) @map("created_at")
+
+  actorAdmin Admin? @relation(fields: [actorAdminId], references: [id], onDelete: SetNull)
+
+  @@index([actorAdminId, createdAt])
+  @@index([targetType, targetId])
+  @@index([action, createdAt])
+  @@map("audit_logs")
+}
+
+model AnalyticsEvent {
+  id        BigInt   @id @default(autoincrement())
+  userId    String?  @map("user_id")
+  name      String
+  props     Json     @default("{}")
+  country   String?
+  createdAt DateTime @default(now()) @map("created_at")
+
+  @@index([name, createdAt])
+  @@map("analytics_events")
+}
+
+// ============================================================
+//  Web BFF — جداول خاصة بجلسات الويب ورموز التحقق
+//  لا تؤثر على جلسات الموبايل (user_sessions) ولا على otp_codes.
+// ============================================================
+
+model WebSession {
+  id         String   @id @default(cuid())
+  userId     String   @map("user_id")
+  tokenHash  String   @unique @map("token_hash")
+  userAgent  String?  @map("user_agent")
+  ipAddress  String?  @map("ip_address")
+  createdAt  DateTime @default(now()) @map("created_at")
+  lastSeenAt DateTime @default(now()) @map("last_seen_at")
+  expiresAt  DateTime @map("expires_at")
+
+  @@index([userId])
+  @@index([expiresAt])
+  @@map("web_sessions")
+}
+
+model WebOtpCode {
+  id          String    @id @default(cuid())
+  userId      String?   @map("user_id")
+  phone       String
+  codeHash    String    @map("code_hash")
+  purpose     String    @default("login")
+  attempts    Int       @default(0)
+  expiresAt   DateTime  @map("expires_at")
+  resendAfter DateTime  @map("resend_after")
+  consumedAt  DateTime? @map("consumed_at")
+  createdAt   DateTime  @default(now()) @map("created_at")
+
+  @@index([phone, purpose, createdAt])
+  @@index([userId, purpose, createdAt])
+  @@index([expiresAt])
+  @@map("web_otp_codes")
+}
+
+/// عدّاد حدود مشترك بين كل نسخ الخدمة — يمنع تجاوز الحدود عند التوسّع الأفقي.
+model WebRateLimit {
+  key       String   @id
+  count     Int      @default(0)
+  resetAt   DateTime @map("reset_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  @@index([resetAt])
+  @@map("web_rate_limits")
+}
