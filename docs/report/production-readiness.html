@@ -1,0 +1,1018 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>شريك العمر — تقرير جاهزية الويب للإنتاج</title>
+  <meta name="author" content="فريق التطوير">
+  <meta name="description" content="مراجعة فجوات ما قبل الإطلاق: الأمان، استكمال المنتج، والتشغيل.">
+  <meta name="keywords" content="شريك العمر, ويب, جاهزية, إنتاج, أمان, دفع, تشغيل">
+  <link rel="stylesheet" href="report.css">
+  <style>
+    @page {
+      @top-left {
+        content: "شريك العمر · تقرير جاهزية الويب للإنتاج";
+      }
+    }
+
+    .state {
+      display: inline-block;
+      border-radius: 99px;
+      padding: 0.5mm 2mm;
+      font-size: 6.6pt;
+      font-weight: 700;
+      white-space: nowrap;
+    }
+    .state.done { background: var(--success-bg); color: var(--success); }
+    .state.partial { background: var(--warning-bg); color: var(--warning); }
+    .state.missing { background: #fbe9ed; color: #a52e43; }
+
+    .priority.p0 { background: #f7dbe0; color: #8c1d33; }
+
+    .credit {
+      display: grid;
+      grid-template-columns: 17mm 1fr auto;
+      gap: 4mm;
+      align-items: center;
+      background: linear-gradient(150deg, var(--primary), #5d2255);
+      color: #fff;
+      border-radius: 4mm;
+      padding: 4.5mm 5mm;
+      margin: 4mm 0 5mm;
+      break-inside: avoid;
+    }
+    .credit-mark {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 16mm;
+      height: 16mm;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.14);
+      border: 1px solid rgba(255, 255, 255, 0.25);
+      font-size: 7pt;
+      font-weight: 700;
+      color: #f3d9f0;
+    }
+    .credit b {
+      display: block;
+      font-size: 11pt;
+      margin-bottom: 1mm;
+    }
+    .credit span {
+      display: block;
+      font-size: 7.6pt;
+      line-height: 1.7;
+      color: #ecdbea;
+    }
+    .credit-date {
+      font-size: 7.2pt;
+      color: #e2c7df;
+      white-space: nowrap;
+    }
+
+    .endpoint-table {
+      margin: 2mm 0 0;
+      font-size: 6.5pt;
+    }
+    .endpoint-table th {
+      background: var(--lavender);
+      color: var(--primary);
+      border-bottom: 1px solid var(--border);
+      padding: 1.6mm 2mm;
+      font-size: 7.6pt;
+      text-align: right;
+    }
+    .endpoint-table td {
+      border-bottom: 0;
+      padding: 1.8mm 2mm;
+      vertical-align: top;
+    }
+    .endpoint-table code {
+      display: block;
+      direction: ltr;
+      text-align: left;
+      font-size: 6.5pt;
+      line-height: 1.65;
+      padding: 0.6mm 0;
+      border-bottom: 1px solid var(--border-soft);
+      color: var(--primary);
+    }
+
+    .gap-table td:first-child {
+      width: 7mm;
+      text-align: center;
+      font-weight: 700;
+      color: var(--plum);
+    }
+
+    .risk-high { color: #a52e43; font-weight: 700; }
+    .risk-med { color: #8d5c12; font-weight: 700; }
+
+    .roadmap-table td:nth-child(3) {
+      white-space: nowrap;
+      text-align: center;
+      font-weight: 600;
+      color: var(--primary);
+    }
+
+    .check-list.tight li {
+      margin: 1.5mm 0;
+    }
+  </style>
+</head>
+<body>
+
+<!-- ══════════════════════════════════════════════════════════
+     COVER
+     ══════════════════════════════════════════════════════════ -->
+<section class="cover">
+  <div class="cover-photo"></div>
+  <div class="cover-ring one"></div>
+  <div class="cover-ring two"></div>
+
+  <div class="cover-content">
+    <div class="cover-top">
+      <div class="cover-brand">
+        <span class="cover-logo"><img src="assets/logo.png" alt="شريك العمر"></span>
+        <span>
+          <b>شريك العمر</b>
+          <small>SHARIK ALOMR</small>
+        </span>
+      </div>
+      <span class="cover-tag">تقرير جاهزية</span>
+    </div>
+
+    <div class="cover-main">
+      <span class="cover-eyebrow">مراجعة ما قبل الإطلاق · نسخة الويب</span>
+      <h1>الويب جاهز للإطلاق؟<br><span>تقرير الفجوات وخطة الاستكمال</span></h1>
+      <p class="cover-subtitle">
+        مراجعة فنية شاملة للواجهة والـ BFF وقاعدة البيانات والتشغيل —
+        عشان نعرف بالظبط إيه اللي خلص، وإيه اللي ناقص، وإيه اللي لازم
+        يتقفل قبل النشر.
+      </p>
+      <div class="cover-pills">
+        <span>Next.js + React</span>
+        <span>Express + Prisma</span>
+        <span>PostgreSQL</span>
+        <span>Security</span>
+        <span>Payments</span>
+        <span>Operations</span>
+      </div>
+    </div>
+
+    <div class="cover-bottom">
+      <div class="cover-meta">
+        <div><span>التاريخ</span><b>9 نوفمبر 2026</b></div>
+        <div><span>إعداد المراجعة</span><b>محمد مضيان</b></div>
+        <div><span>نطاق المراجعة</span><b>الويب + BFF</b></div>
+      </div>
+      <div class="cover-secret">خاص بالعميل<br>يُرجى عدم التوزيع</div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════════════════
+     TOC
+     ══════════════════════════════════════════════════════════ -->
+<section class="toc-page">
+  <div class="toc-head">
+    <span class="kicker">تقرير جاهزية الويب للإنتاج</span>
+    <h1>محتوى التقرير</h1>
+  </div>
+
+  <div class="toc-grid">
+    <div class="toc-list">
+      <a class="toc-row" href="#summary"><span class="no">01</span><span class="title">ملخص تنفيذي</span><span class="page" data-target="#summary"></span></a>
+      <a class="toc-row" href="#scope"><span class="no">02</span><span class="title">نطاق المراجعة ومنهجيتها</span><span class="page" data-target="#scope"></span></a>
+      <a class="toc-row" href="#snapshot"><span class="no">03</span><span class="title">صورة الجاهزية الحالية</span><span class="page" data-target="#snapshot"></span></a>
+      <a class="toc-row" href="#backend"><span class="no">04</span><span class="title">إنجاز الباك اند — ما تم تنفيذه</span><span class="page" data-target="#backend"></span></a>
+      <a class="toc-row" href="#p0"><span class="no">05</span><span class="title">فجوات P0 — أمان وصحة</span><span class="page" data-target="#p0"></span></a>
+      <a class="toc-row" href="#p1"><span class="no">06</span><span class="title">فجوات P1 — استكمال المنتج</span><span class="page" data-target="#p1"></span></a>
+      <a class="toc-row" href="#p2"><span class="no">07</span><span class="title">فجوات P2 — التشغيل والبنية</span><span class="page" data-target="#p2"></span></a>
+      <a class="toc-row" href="#dashboard"><span class="no">08</span><span class="title">تفصيل أقسام الداشبورد</span><span class="page" data-target="#dashboard"></span></a>
+      <a class="toc-row" href="#roadmap"><span class="no">09</span><span class="title">خطة التنفيذ المقترحة</span><span class="page" data-target="#roadmap"></span></a>
+      <a class="toc-row" href="#acceptance"><span class="no">10</span><span class="title">معايير القبول قبل الإطلاق</span><span class="page" data-target="#acceptance"></span></a>
+      <a class="toc-row" href="#risks"><span class="no">11</span><span class="title">مخاطر الإطلاق بالوضع الحالي</span><span class="page" data-target="#risks"></span></a>
+      <a class="toc-row" href="#decisions"><span class="no">12</span><span class="title">قرارات مطلوبة من العميل</span><span class="page" data-target="#decisions"></span></a>
+      <a class="toc-row" href="#closing"><span class="no">13</span><span class="title">الخلاصة والخطوة الجاية</span><span class="page" data-target="#closing"></span></a>
+    </div>
+
+    <aside class="toc-aside">
+      <span class="aside-kicker">المراجعة في أرقام</span>
+      <h2>الأساس سليم<br>والمنتج لسه محتاج شغل</h2>
+      <p>
+        الصفحات العامة والمصادقة شغالين على بيانات حقيقية،
+        لكن لوحة التحكم والدفع والتشغيل الإنتاجي لسه ناقصين.
+      </p>
+      <div class="mini-stat"><b>3</b><span>مستويات أولوية واضحة</span></div>
+      <div class="mini-stat"><b>8</b><span>بنود حاجزة قبل الإطلاق</span></div>
+      <div class="mini-stat"><b>12</b><span>قسم داشبورد محتاج ربط</span></div>
+      <div class="mini-stat"><b>0</b><span>اختبارات آلية للويب حاليًا</span></div>
+    </aside>
+  </div>
+
+  <div class="toc-note">
+    <b>ملاحظة عن التقرير:</b> دي مراجعة فنية للكود والحالة الحالية، مش عرض تصميم.
+    كل بند مكتوب «ناقص» معناه مفيش له تنفيذ فعلي في المشروع دلوقتي — مش مجرد تحسين مقترح.
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════════════════
+     01 — SUMMARY
+     ══════════════════════════════════════════════════════════ -->
+<section class="section" id="summary">
+  <div class="section-head">
+    <span class="section-no">01</span>
+    <div>
+      <span class="kicker">الخلاصة أولًا</span>
+      <h2>ملخص تنفيذي</h2>
+    </div>
+  </div>
+
+  <p class="lead">
+    الويب دلوقتي أقوى من مجرد واجهة تعريفية: الصفحات العامة، الباقات، المقالات،
+    وتسجيل الدخول بكل طرقه شغالين على بيانات حقيقية. لكن لوحة التحكم ولوحة الإدارة
+    لسه واجهات تجريبية، والدفع والتشغيل الإنتاجي لسه مش موجودين.
+    يعني <strong>الأساس سليم، لكن المنتج نفسه محتاج استكمال</strong>.
+  </p>
+
+  <div class="stats">
+    <div class="stat"><b>3</b><span>مراحل تنفيذ مقترحة</span></div>
+    <div class="stat"><b>8</b><span>بنود P0 حاجزة للإطلاق</span></div>
+    <div class="stat"><b>12</b><span>قسم داشبورد ببيانات تجريبية</span></div>
+    <div class="stat"><b>0</b><span>اختبارات آلية أو CI/CD</span></div>
+  </div>
+
+  <div class="two-col mt-4">
+    <div class="panel">
+      <h3>الجاهز فعلاً</h3>
+      <ul class="bullets check">
+        <li>الصفحة الرئيسية والباقات والمقالات وتفاصيل المقال.</li>
+        <li>تسجيل حساب جديد ودخول بكلمة مرور أو OTP أو Google.</li>
+        <li>جلسات ويب آمنة، خروج، وإلغاء كل الجلسات.</li>
+        <li>الثيمات الفاتح والغامق، العربي والإنجليزي، والريسبونسيف.</li>
+        <li>BFF مستقل ونفس قاعدة بيانات الموبايل بدون تعديل كود الموبايل.</li>
+      </ul>
+    </div>
+    <div class="panel soft">
+      <h3>غير الجاهز</h3>
+      <ul class="bullets dash">
+        <li>لوحة التحكم كلها ببيانات محلية ومفيش APIs حقيقية وراها.</li>
+        <li>لوحة الإدارة مكشوفة لأي زائر وبدون تسجيل دخول أو صلاحيات.</li>
+        <li>استعادة كلمة المرور وتغيير رقم الهاتف غير موجودين.</li>
+        <li>الاشتراكات والدفع والفواتير والاسترداد غير موجودين.</li>
+        <li>مفيش اختبارات آلية ولا مراقبة ولا نسخ احتياطي موثّق.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="callout warn">
+    <b>التوصية المباشرة</b>
+    <p>
+      ما يتمش الإطلاق العام بالنسخة الحالية. لازم تتقفل بنود <span class="ltr">P0</span> الأول —
+      على الأقل حماية المسارات، مصادقة الأدمن، وحفظ الـ onboarding — لأنها مخاطر أمنية
+      وتجربة مستخدم حقيقية، مش تحسينات شكلية.
+    </p>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════════════════
+     02 — SCOPE
+     ══════════════════════════════════════════════════════════ -->
+<section class="section" id="scope">
+  <div class="section-head">
+    <span class="section-no">02</span>
+    <div>
+      <span class="kicker">إيه اللي اتفحص بالظبط</span>
+      <h2>نطاق المراجعة ومنهجيتها</h2>
+    </div>
+  </div>
+
+  <p class="lead">
+    المراجعة غطّت كل ما يخص الويب: واجهة <span class="ltr">Next.js</span>،
+    وطبقة <span class="ltr">BFF</span>، وجلسات الويب، وقاعدة البيانات المشتركة،
+    وملفات التشغيل. تطبيق الموبايل خارج النطاق.
+  </p>
+
+  <div class="three-col">
+    <div class="panel">
+      <h3>داخل النطاق</h3>
+      <ul class="bullets tight">
+        <li>الصفحات العامة والمحتوى.</li>
+        <li>تسجيل الدخول والتسجيل والجلسات.</li>
+        <li>لوحة المستخدم ولوحة الإدارة.</li>
+        <li>مسارات الـ BFF والتحقق من المدخلات.</li>
+        <li>جداول الويب في قاعدة البيانات.</li>
+        <li>إعدادات البيئة والبناء والنشر.</li>
+      </ul>
+    </div>
+    <div class="panel soft">
+      <h3>خارج النطاق</h3>
+      <ul class="bullets tight">
+        <li>كود تطبيق الموبايل.</li>
+        <li>إعادة تصميم الواجهة من الصفر.</li>
+        <li>مزايا جديدة مش موجودة في الخطة الحالية.</li>
+        <li>تجهيز السيرفرات والاستضافة فعليًا.</li>
+      </ul>
+    </div>
+    <div class="panel">
+      <h3>طريقة المراجعة</h3>
+      <ul class="bullets tight">
+        <li>مراجعة كود الواجهة والـ BFF مسار بمسار.</li>
+        <li>حصر كل الشاشات وحالة البيانات وراها.</li>
+        <li>تشغيل فحوصات البناء والأنواع والصحة.</li>
+        <li>اختبار يدوي لمسارات الدخول والجلسات.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="callout">
+    <b>مفيش اختبارات آلية تغطي المراجعة</b>
+    <p>
+      المشروع الحالي مفيهوش اختبارات <span class="ltr">unit</span> أو
+      <span class="ltr">integration</span> أو <span class="ltr">E2E</span>،
+      ولا pipeline للـ <span class="ltr">CI</span>. عشان كده التحقق من السلوك
+      اتعمل يدويًا على المسارات الأساسية، وده في حد ذاته بند لازم يتعالج قبل الإنتاج.
+    </p>
+  </div>
+
+  <h3 class="mt-4 mb-2">إزاي بنصنّف الأولويات؟</h3>
+  <table class="roadmap-table">
+    <thead>
+      <tr><th>الأولوية</th><th>المعنى</th><th>القرار</th></tr>
+    </thead>
+    <tbody>
+      <tr><td><span class="priority p0">P0</span></td><td>أمان أو صحة بيانات أو تجربة مستخدم أساسية.</td><td>لازم تتقفل قبل أي إطلاق عام.</td></tr>
+      <tr><td><span class="priority p1">P1</span></td><td>استكمال المنتج نفسه وربط الأقسام بالبيانات الحقيقية.</td><td>لازم قبل الإطلاق التجاري الكامل.</td></tr>
+      <tr><td><span class="priority p2">P2</span></td><td>تشغيل، جودة، نمو، والتزامات قانونية.</td><td>مهمة جدًا، وممكن تتنفذ بالتوازي أو قبل النمو.</td></tr>
+    </tbody>
+  </table>
+</section>
+
+<!-- ══════════════════════════════════════════════════════════
+     03 — SNAPSHOT
+     ══════════════════════════════════════════════════════════ -->
+<section class="section" id="snapshot">
+  <div class="section-head">
+    <span class="section-no">03</span>
+    <div>
+      <span class="kicker">نظرة سريعة على الحالة</span>
+      <h2>صورة الجاهزية الحالية</h2>
+    </div>
+  </div>
+
+  <p class="lead">
+    الجدول ده بيجاوب على سؤال واحد: لو هنطلق بكرة، كل جزء في الويب هيقف فين؟
+    الحالة «جاهز» معناها شغال على بيانات حقيقية ومتحقق منه، و«واجهة فقط» معناها
+    الشكل موجود لكن مفيش وظيفة حقيقية وراه.
+  </p>
+
+  <table>
+    <thead>
+      <tr><th>المنطقة</th><th class="center">الحالة</th><th>التفاصيل</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>الصفحات العامة والمحتوى</td><td class="center"><span class="state done">جاهز</span></td><td>الرئيسية، الباقات، المقالات، وتفاصيل المقال — بيانات حقيقية من الـ BFF.</td></tr>
+      <tr><td>تسجيل الدخول والتسجيل</td><td class="center"><span class="state done">جاهز</span></td><td>كلمة مرور، OTP، Google، جلسات، خروج، وترحيب برصيد.</td></tr>
+      <tr><td>استعادة كلمة المرور</td><td class="center"><span class="state missing">ناقص</span></td><td>مفيش مسار ولا شاشة لاستعادة الحساب.</td></tr>
+      <tr><td>تغيير أو إضافة رقم الهاتف</td><td class="center"><span class="state missing">ناقص</span></td><td>مستخدم Google بيفضل برقم وهمي ومش قادر يضيف رقم حقيقي.</td></tr>
+      <tr><td>حماية مسارات الداشبورد</td><td class="center"><span class="state missing">ناقص</span></td><td>الصفحات بتفتح من غير تسجيل دخول — مفيش guard على السيرفر.</td></tr>
+      <tr><td>لوحة المستخدم</td><td class="center"><span class="state partial">واجهة فقط</span></td><td>12 قسم ببيانات محلية ورسالة «نسخة تجريبية».</td></tr>
+      <tr><td>لوحة الإدارة</td><td class="center"><span class="state missing">غير جاهزة</span></td><td>مكشوفة للعامة، بيانات وهمية، ومفيش تنفيذ فعلي للأدوار والصلاحيات.</td></tr>
+      <tr><td>الاشتراكات والدفع</td><td class="center"><span class="state missing">غير موجود</span></td><td>زرار الباقة بيودّي للـ onboarding، مفيش checkout ولا webhooks.</td></tr>
+      <tr><td>التشغيل والجودة</td><td class="center"><span class="state missing">ناقص</span></td><td>مفيش اختبارات، CI/CD، مراقبة، أو نسخ احتياطي موثّق.</td></tr>
+      <tr><td>SEO والمحتوى القانوني</td><td class="center"><span class="state partial">جزئي</span></td><td>metadata أساسية و robots فقط — مفيش sitemap ولا صفحات شروط وخصوصية.</td></tr>
+    </tbody>
+  </table>
+
+  <div class="two-col mt-4">
+    <div class="panel">
+      <h3>اللي بيشتغل على بيانات حقيقية</h3>
+      <ul class="bullets check">
+        <li>الباقات ومزاياها من قاعدة البيانات.</li>
+        <li>المقالات المنشورة وتفاصيلها.</li>
+        <li>إنشاء الحساب وتأكيد الهاتف.</li>
+        <li>الدخول بكلمة المرور و OTP و Google.</li>
+        <li>الجلسة والخروج وإلغاء كل الجلسات.</li>
+      </ul>
+    </div>
+    <div class="panel soft">
+      <h3>اللي شكله شغال لكنه تجريبي</h3>
+      <ul class="bullets dash">
+        <li>الترشيحات والبحث والاهتمامات.</li>
+        <li>الرسائل والإشعارات والمكالمات.</li>
+        <li>المحفظة والولي والمجتمع.</li>
+        <li>الملف الشخصي والخصوصية والإعدادات.</li>
+        <li>كل شاشات لوحة الإدارة.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════════════════
+     04 — BACKEND DELIVERY
+     ══════════════════════════════════════════════════════════ -->
+<section class="section" id="backend">
+  <div class="section-head">
+    <span class="section-no">04</span>
+    <div>
+      <span class="kicker">إنجاز موثّق</span>
+      <h2>الباك اند اللي تم تنفيذه فعلاً</h2>
+    </div>
+  </div>
+
+  <p class="lead">
+    القسم ده مش خطة ولا وعود. دي قائمة بالجزء اللي اتبنى واتختبر في
+    <span class="ltr">BFF</span> الويب — كل بند موجود في الكود وله مسار
+    أو جدول أو دليل تشغيل.
+  </p>
+
+  <div class="credit">
+    <div class="credit-mark">إنجاز</div>
+    <div>
+      <b>تنفيذ وتطوير: محمد مضيان</b>
+      <span>تأسيس الباك اند والـ BFF، المصادقة والجلسات، وتكامل الواجهة.</span>
+    </div>
+    <div class="credit-date">9 نوفمبر 2026</div>
+  </div>
+
+  <table>
+    <thead>
+      <tr><th>#</th><th>البند المنفّذ</th><th>التفاصيل</th><th class="center">الحالة</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>1</td><td>تأسيس BFF مستقل</td><td>خدمة <span class="ltr">Express + TypeScript</span> على بورت 4001، منفصلة عن الموبايل، مع proxy من Next.js.</td><td class="center"><span class="state done">تم التنفيذ</span></td></tr>
+      <tr><td>2</td><td>جداول الويب</td><td>جدولان منفصلان لجلسات الويب وأكواد OTP، مع فهارس للبحث.</td><td class="center"><span class="state done">تم التنفيذ</span></td></tr>
+      <tr><td>3</td><td>الجلسات</td><td>كوكي <span class="ltr">httpOnly</span>، تخزين <span class="ltr">HMAC-SHA256</span>، مدة صلاحية، تحقق، خروج، وإلغاء كل الجلسات.</td><td class="center"><span class="state done">تم التنفيذ</span></td></tr>
+      <tr><td>4</td><td>التسجيل</td><td>تسجيل بالهاتف مع OTP من 5 أرقام وكلمة مرور اختيارية.</td><td class="center"><span class="state done">تم التنفيذ</span></td></tr>
+      <tr><td>5</td><td>الدخول بكلمة المرور</td><td>دخول بهاتف أو بريد مع <span class="ltr">bcrypt</span> وتسجيل محاولات الدخول.</td><td class="center"><span class="state done">تم التنفيذ</span></td></tr>
+      <tr><td>6</td><td>الدخول بـ OTP</td><td>إرسال والتحقق من OTP مع صلاحية ومحاولات وإعادة إرسال.</td><td class="center"><span class="state done">تم التنفيذ</span></td></tr>
+      <tr><td>7</td><td>الدخول بـ Google</td><td>تحقق من توكن Google وربط الحساب ورقم مؤقت للمستخدم الجديد.</td><td class="center"><span class="state done">تم التنفيذ</span></td></tr>
+      <tr><td>8</td><td>البروفايل وكلمة المرور</td><td>تحديث البيانات الأساسية، تعيين كلمة المرور، وتغييرها.</td><td class="center"><span class="state done">تم التنفيذ</span></td></tr>
+      <tr><td>9</td><td>هدية الترحيب</td><td>قراءة قيمة الهدية من إعدادات التطبيق وتسجيل حركة رصيد عند إنشاء الحساب.</td><td class="center"><span class="state done">تم التنفيذ</span></td></tr>
+      <tr><td>10</td><td>الباقات والمقالات</td><td>الباقات والمزايا، تصنيفات المقالات، قائمة المقالات، وتفاصيل المقال المنشور.</td><td class="center"><span class="state done">تم التنفيذ</span></td></tr>
+      <tr><td>11</td><td>الأمان والأخطاء</td><td><span class="ltr">helmet</span> و<span class="ltr">CORS</span> وفحص أصل الطلب و<span class="ltr">Zod</span> و<span class="ltr">requestId</span> ورد خطأ موحّد.</td><td class="center"><span class="state done">تم التنفيذ</span></td></tr>
+      <tr><td>12</td><td>تكامل الواجهة</td><td>ربط الواجهة بمسارات الدخول والباقات والمقالات عبر <span class="ltr">/api/bff/*</span> مع كوكي الجلسة.</td><td class="center"><span class="state done">تم التنفيذ</span></td></tr>
+    </tbody>
+  </table>
+
+  <div class="two-col mt-3">
+    <div class="panel">
+      <h3>ملفات التنفيذ الرئيسية</h3>
+      <ul class="bullets tight">
+        <li><code>bff/src/server.ts</code> — تأسيس الخدمة وطبقة middleware.</li>
+        <li><code>bff/src/auth/routes.ts</code> — مسارات المصادقة.</li>
+        <li><code>bff/src/auth/session.ts</code> — الجلسات والكوكيز.</li>
+        <li><code>bff/src/auth/google.ts</code> — التحقق من Google.</li>
+        <li><code>bff/prisma/web_tables.sql</code> — جداول الويب.</li>
+      </ul>
+    </div>
+    <div class="panel soft">
+      <h3>أدلة التحقق</h3>
+      <ul class="bullets check">
+        <li>فحص <span class="ltr">TypeScript</span> ناجح للويب والـ BFF.</li>
+        <li><span class="ltr">/health</span> بيرجع <span class="ltr">database: ok</span>.</li>
+        <li>تسجيل ودخول بكلمة مرور و OTP تم اختبارهم فعليًا.</li>
+        <li>دخول Google وربط الحساب تم اختبارهما فعليًا.</li>
+        <li>الخروج وإلغاء كل الجلسات يعملان.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="panel mt-3">
+    <h3>المسارات المنفذة</h3>
+    <table class="endpoint-table">
+      <thead>
+        <tr><th>المصادقة</th><th>الباقات والمقالات</th><th>الصحة</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>
+            <code>POST /api/auth/register/start</code>
+            <code>POST /api/auth/register/verify-otp</code>
+            <code>PATCH /api/auth/register/profile-basics</code>
+            <code>POST /api/auth/otp/login/start</code>
+            <code>POST /api/auth/otp/login/verify</code>
+            <code>POST /api/auth/login</code>
+            <code>GET /api/auth/google/config</code>
+            <code>POST /api/auth/google</code>
+            <code>GET /api/auth/me</code>
+            <code>POST /api/auth/logout</code>
+            <code>POST /api/auth/logout-all</code>
+            <code>POST /api/auth/set-password</code>
+            <code>POST /api/auth/change-password</code>
+          </td>
+          <td>
+            <code>GET /api/subscriptions/plans</code>
+            <code>GET /api/blog/categories</code>
+            <code>GET /api/blog/articles</code>
+            <code>GET /api/blog/articles/:slugOrId</code>
+          </td>
+          <td>
+            <code>GET /health</code>
+            <code>GET /api/health</code>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="callout success">
+    <b>حدود الإنجاز — مهم للتوضيح</b>
+    <p>
+      القسم ده يغطي <strong>الباك اند الأساسي</strong> اللي تم تنفيذه.
+      بنود <span class="ltr">P0</span> و<span class="ltr">P1</span> و<span class="ltr">P2</span>
+      في باقي التقرير هي شغل متبقٍ ولم يتم تنفيذه بعد — والفصل بينهم مقصود
+      عشان الصورة تبقى واضحة.
+    </p>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════════════════
+     05 — P0
+     ══════════════════════════════════════════════════════════ -->
+<section class="section" id="p0">
+  <div class="section-head">
+    <span class="section-no">05</span>
+    <div>
+      <span class="kicker">بنود حاجزة للإطلاق</span>
+      <h2>فجوات P0 — أمان وصحة</h2>
+    </div>
+  </div>
+
+  <p class="lead">
+    دي مش تحسينات. دي بنود لو فضلت مفتوحة، الإطلاق يكون غير آمن أو غير صحيح.
+    كل بند هنا ليه أثر مباشر على المستخدم أو على سمعة المنصة.
+  </p>
+
+  <table class="gap-table">
+    <thead>
+      <tr><th>#</th><th>البند</th><th>الوضع الحالي</th><th>الأثر</th><th>المطلوب</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>1</td>
+        <td>حماية مسارات الداشبورد</td>
+        <td>صفحات المستخدم والإدارة مفتوحة لأي زائر بدون جلسة.</td>
+        <td>أي حد يشوف واجهة المستخدم والإدارة من غير تسجيل دخول.</td>
+        <td>Guard على السيرفر يتحقق من الجلسة ويحوّل لـ <span class="ltr">/login</span>.</td>
+      </tr>
+      <tr>
+        <td>2</td>
+        <td>مصادقة وصلاحيات الأدمن</td>
+        <td>لوحة إدارة كاملة مفتوحة بدون login أو roles.</td>
+        <td>واجهة إدارية مكشوفة للعامة — خطر أمني وسمعة حتى لو البيانات تجريبية.</td>
+        <td>تسجيل دخول أدمن منفصل + أدوار + 2FA + Audit Log + فحص صلاحيات.</td>
+      </tr>
+      <tr>
+        <td>3</td>
+        <td>استعادة كلمة المرور</td>
+        <td>مفيش endpoint ولا شاشة «نسيت كلمة المرور».</td>
+        <td>أي مستخدم ينسى كلمة المرور يفقد حسابه نهائيًا.</td>
+        <td>OTP purpose جديد + شاشة + حد أقصى للمحاولات + إبطال الجلسات.</td>
+      </tr>
+      <tr>
+        <td>4</td>
+        <td>إضافة أو تغيير رقم الهاتف</td>
+        <td>مستخدم Google بياخد رقم وهمي <span class="ltr">google_&lt;sub&gt;</span>.</td>
+        <td>مش قادر يستلم OTP ولا يستعيد حسابه ولا يفعّل رقم حقيقي.</td>
+        <td>Flow لتغيير الرقم مع OTP + فحص عدم التكرار + تحديث الجلسات.</td>
+      </tr>
+      <tr>
+        <td>5</td>
+        <td>سلوك الجلسات</td>
+        <td><span class="ltr">rememberMe</span> بيتبعت وبيتجاهل، ومفيش idle timeout ولا تنظيف دوري.</td>
+        <td>جلسات أطول من اللازم، تراكم جلسات منتهية، وسلوك غير متوقع.</td>
+        <td>TTL حسب <span class="ltr">rememberMe</span> + idle timeout + إبطال عند تغيير كلمة المرور + cleanup job.</td>
+      </tr>
+      <tr>
+        <td>6</td>
+        <td>Rate limiting و lockout</td>
+        <td>الحد في الذاكرة فقط، ومحاولات الدخول بتتسجل بدون قفل للحساب.</td>
+        <td>Brute force و OTP abuse، والحد بيضيع مع restart أو تعدد السيرفرات.</td>
+        <td>Store مشترك (Redis) + قفل مؤقت للحساب + تنبيهات.</td>
+      </tr>
+      <tr>
+        <td>7</td>
+        <td>حفظ الـ Onboarding</td>
+        <td>الخطوة 7 بتنادي <span class="ltr">done()</span> بدون إرسال أي بيانات للـ BFF.</td>
+        <td>المستخدم يوصل لداشبورد وملفه فاضي — تجربة مكسورة من أول خطوة.</td>
+        <td>حفظ البروفايل + تحقق من الاكتمال + منع الدخول للداشبورد قبل الحفظ.</td>
+      </tr>
+      <tr>
+        <td>8</td>
+        <td>تقوية إعدادات الإنتاج</td>
+        <td>الإعدادات الحساسة يدوية وغير مفروضة، ومفيش CSP مضبوط للويب أو مراجعة أصول.</td>
+        <td>احتمال نشر بكوكيز غير آمنة أو CORS غير مضبوط أو أخطاء إعداد.</td>
+        <td>فحص env عند الإقلاع + كوكيز آمنة + CSP + CORS على الدومين النهائي + HTTPS.</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="callout warn">
+    <b>أخطر بندين في القائمة</b>
+    <p>
+      <strong>لوحة الإدارة المكشوفة</strong> أولًا: أي زائر يقدر يفتحها، وحتى لو البيانات
+      تجريبية دلوقتي، الشكل نفسه غير مقبول في الإنتاج. <strong>وحفظ الـ onboarding</strong>
+      ثانيًا: من غير حفظ، كل مستخدم جديد هيوصل لداشبورد فاضي وده هيكسر الثقة من أول استخدام.
+    </p>
+  </div>
+
+  <div class="callout">
+    <b>ملاحظة مهمة عن الحماية</b>
+    <p>
+      حماية الواجهة بالكود في المتصفح مش كفاية. لازم التحقق يحصل على السيرفر
+      (middleware أو server component) قبل تحميل أي شاشة، وأي API حساس يتحقق
+      من الجلسة والصلاحية بنفسه — مش يعتمد على إن الواجهة مخبية الزرار.
+    </p>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════════════════
+     06 — P1
+     ══════════════════════════════════════════════════════════ -->
+<section class="section" id="p1">
+  <div class="section-head">
+    <span class="section-no">06</span>
+    <div>
+      <span class="kicker">استكمال المنتج نفسه</span>
+      <h2>فجوات P1 — ربط الأقسام بالبيانات</h2>
+    </div>
+  </div>
+
+  <p class="lead">
+    بعد ما نقفل <span class="ltr">P0</span>، يبدأ الشغل الحقيقي: كل قسم في الداشبورد
+    حاليًا واجهة محلية ببيانات ثابتة. المطلوب API وحفظ حقيقي وقواعد واضحة لكل قسم.
+  </p>
+
+  <table>
+    <thead>
+      <tr><th>المجال</th><th>الوضع الحالي</th><th>المطلوب</th><th class="center">الأولوية</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>الـ Onboarding والملف الشخصي</td><td>بيانات محلية في المتصفح، مفيش حفظ.</td><td>GET/PATCH للبروفايل + رفع صور + تحقق من الاكتمال.</td><td class="center"><span class="priority p1">P1</span></td></tr>
+      <tr><td>الترشيحات والبحث</td><td>كروت وفلاتر محلية.</td><td>Recommendations + Search APIs + pagination + like/skip.</td><td class="center"><span class="priority p1">P1</span></td></tr>
+      <tr><td>الاهتمامات</td><td>قائمة محلية.</td><td>CRUD للاهتمامات + حدود حسب الباقة.</td><td class="center"><span class="priority p1">P1</span></td></tr>
+      <tr><td>الرسائل</td><td>محادثات وهمية.</td><td>Conversations + Messages + Receipts + Block/Report.</td><td class="center"><span class="priority p1">P1</span></td></tr>
+      <tr><td>الإشعارات</td><td>مفاتيح تشغيل محلية.</td><td>Notifications API + read state + push/email.</td><td class="center"><span class="priority p1">P1</span></td></tr>
+      <tr><td>المحفظة والاشتراكات والدفع</td><td>رصيد وهمي وزرار باقة بيودّي للـ onboarding.</td><td>Wallet + ledger + packages + Paymob/Fawry + webhooks + فواتير + استرداد.</td><td class="center"><span class="priority p1">P1</span></td></tr>
+      <tr><td>الخصوصية والإعدادات</td><td>مفاتيح محلية بدون حفظ.</td><td>Privacy prefs + notification prefs + sessions/devices + حذف/تصدير الحساب.</td><td class="center"><span class="priority p1">P1</span></td></tr>
+      <tr><td>الولي والأسرة</td><td>دعوات وصلاحيات وهمية.</td><td>دعوات حقيقية + صلاحيات + موافقات + سجل.</td><td class="center"><span class="priority p2">P2</span></td></tr>
+      <tr><td>المجتمع</td><td>بوستات وتعليقات وهمية.</td><td>Posts + Comments + Reactions + Reporting + Moderation.</td><td class="center"><span class="priority p2">P2</span></td></tr>
+      <tr><td>المكالمات</td><td>واجهة فقط بدون مزود.</td><td>مزود مكالمات + جدولة + موافقة الطرفين + تسجيل/إبلاغ.</td><td class="center"><span class="priority p2">P2</span></td></tr>
+      <tr><td>إزالة البيانات التجريبية</td><td><span class="ltr">PrototypeNotice</span> ظاهر في الأقسام.</td><td>حذف كل mock data وربط كل شاشة بمصدرها الحقيقي.</td><td class="center"><span class="priority p1">P1</span></td></tr>
+    </tbody>
+  </table>
+
+  <div class="callout success">
+    <b>توصية لإطلاق MVP أسرع</b>
+    <p>
+      لو الهدف هو إطلاق تجاري أسرع، نرشح تأجيل <strong>المجتمع والمكالمات والولي</strong>
+      في أول نسخة، والتركيز على: الـ onboarding، الملف الشخصي، الترشيحات، الاهتمامات،
+      الرسائل، الإشعارات، والمحفظة/الدفع. كده التجربة الأساسية تكون كاملة
+      من غير ما نفتح كل الأقسام مرة واحدة.
+    </p>
+  </div>
+
+  <div class="callout">
+    <b>قبل ربط أي قسم</b>
+    <p>
+      لازم نتفق على شكل البيانات وقواعد العمل لكل قسم: مين يقدر يشوف مين،
+      إيه حدود الباقة المجانية، إيه اللي بيتسجل في الـ audit، وإيه اللي بيتحذف
+      لما الحساب يتقفل. الاتفاق ده قبل الكود بيوفر إعادة شغل كبيرة.
+    </p>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════════════════
+     07 — P2
+     ══════════════════════════════════════════════════════════ -->
+<section class="section" id="p2">
+  <div class="section-head">
+    <span class="section-no">07</span>
+    <div>
+      <span class="kicker">التشغيل والبنية التحتية</span>
+      <h2>فجوات P2 — جاهزية التشغيل</h2>
+    </div>
+  </div>
+
+  <p class="lead">
+    دي مش أقل أهمية، لكنها مش بتوقف تجربة المستخدم يوم الإطلاق. لو اتأجلت،
+    لازم يكون فيه خطة واضحة قبل النمو — لأن أي مشكلة في التشغيل بعد الإطلاق
+    بتتحول بسرعة لمشكلة ثقة.
+  </p>
+
+  <table>
+    <thead>
+      <tr><th>البند</th><th>الوضع الحالي</th><th>المطلوب</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>إدارة قاعدة البيانات</td><td>جداول الويب بتتعمل يدويًا من <span class="ltr">web_tables.sql</span>.</td><td>Prisma baseline + <span class="ltr">migrate deploy</span> + بيئة staging + خطة rollback.</td></tr>
+      <tr><td>الاختبارات</td><td>مفيش اختبارات آلية للويب أو الـ BFF.</td><td>Unit + Integration + E2E للمسارات الحرجة (دخول، دفع، رسائل).</td></tr>
+      <tr><td>CI/CD</td><td>مفيش pipeline.</td><td>Lint + Typecheck + Test + Build + Deploy تلقائي مع حماية الفروع.</td></tr>
+      <tr><td>النشر</td><td>مفيش Dockerfile ولا reverse proxy ولا HTTPS موثّق.</td><td>Docker + Nginx/Caddy + TLS + graceful shutdown + health/readiness.</td></tr>
+      <tr><td>المراقبة</td><td>مفيش لوجز منظمة أو تتبع أخطاء أو تنبيهات.</td><td>Structured logs + Sentry + metrics + uptime alerts + request tracing.</td></tr>
+      <tr><td>النسخ الاحتياطي</td><td>غير موثّق.</td><td>نسخ يومي + PITR + اختبار استرجاع دوري.</td></tr>
+      <tr><td>SEO</td><td>metadata أساسية و robots فقط.</td><td>Metadata لكل صفحة + sitemap + Open Graph + canonical + hreflang.</td></tr>
+      <tr><td>المحتوى القانوني</td><td>مفيش صفحات شروط أو خصوصية أو استرداد.</td><td>صفحات قانونية معتمدة + Cookie consent + سياسة احتفاظ بالبيانات.</td></tr>
+      <tr><td>الأداء وإتاحة الوصول</td><td>لم يتم قياسه بشكل منهجي.</td><td>Lighthouse + Core Web Vitals + فحص WCAG الأساسي.</td></tr>
+      <tr><td>البريد المعاملاتي</td><td>مفيش مزود بريد.</td><td>إرسال إشعارات وفواتير وإعادة تعيين — مع قوالب ومراقبة التسليم.</td></tr>
+    </tbody>
+  </table>
+
+  <div class="callout warn">
+    <b>أهم بندين في P2</b>
+    <p>
+      <strong>النسخ الاحتياطي</strong> و<strong>المراقبة</strong>. أي منصة زواج فيها بيانات
+      حساسة؛ لو حصل عطل ومفيش نسخة احتياطية قابلة للاسترجاع، الخسارة مش تقنية بس.
+      والمراقبة هي اللي هتعرفنا إن فيه مشكلة قبل ما المستخدمين يشتكوا.
+    </p>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════════════════
+     08 — DASHBOARD DETAIL
+     ══════════════════════════════════════════════════════════ -->
+<section class="section" id="dashboard">
+  <div class="section-head">
+    <span class="section-no">08</span>
+    <div>
+      <span class="kicker">تفصيل شاشة بشاشة</span>
+      <h2>أقسام الداشبورد: الحالة والمطلوب</h2>
+    </div>
+  </div>
+
+  <p class="lead">
+    الـ 12 قسم دول هم قلب المنتج. كلهم حاليًا ببيانات محلية أو ثابتة،
+    ومحتاجين API وحفظ وقواعد عمل. الجدول ده هو خريطة الشغل لكل قسم.
+  </p>
+
+  <table>
+    <thead>
+      <tr><th>القسم</th><th>الوضع الحالي</th><th>المطلوب قبل الإطلاق</th><th class="center">الأولوية</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>الرئيسية</td><td>إحصائيات وكروت وهمية.</td><td>ملخص حقيقي: ترشيحات، رسائل، إشعارات، ونشاط الحساب.</td><td class="center"><span class="priority p1">P1</span></td></tr>
+      <tr><td>الترشيحات</td><td>كروت ثابتة بدون تفاعل حقيقي.</td><td>Recommendations API + فلاتر + Like/Skip + سبب الترشيح.</td><td class="center"><span class="priority p1">P1</span></td></tr>
+      <tr><td>البحث المتقدم</td><td>فلاتر محلية بدون نتائج حقيقية.</td><td>Search API + pagination + حفظ البحث + احترام الخصوصية.</td><td class="center"><span class="priority p1">P1</span></td></tr>
+      <tr><td>الاهتمامات</td><td>قائمة محلية.</td><td>CRUD + حدود الباقة + ربطها بالترشيحات.</td><td class="center"><span class="priority p1">P1</span></td></tr>
+      <tr><td>المحفظة</td><td>رصيد 1250 وسجل حركة وهمي.</td><td>Wallet + Credit ledger + Packages + Payment + فواتير.</td><td class="center"><span class="priority p1">P1</span></td></tr>
+      <tr><td>الولي والأسرة</td><td>دعوات وصلاحيات وهمية.</td><td>دعوة حقيقية + قبول/رفض + صلاحيات + موافقات + سجل.</td><td class="center"><span class="priority p2">P2</span></td></tr>
+      <tr><td>المجتمع</td><td>بوستات وتعليقات وهمية.</td><td>Posts + Comments + Reactions + Report + Moderation.</td><td class="center"><span class="priority p2">P2</span></td></tr>
+      <tr><td>المكالمات</td><td>واجهة بدون مزود أو جدولة.</td><td>مزود مكالمات + مواعيد + موافقة + إبلاغ + تسجيل حسب السياسة.</td><td class="center"><span class="priority p2">P2</span></td></tr>
+      <tr><td>الرسائل</td><td>محادثات وهمية.</td><td>Conversations + Messages + Receipts + Block/Report + حدود الباقة.</td><td class="center"><span class="priority p1">P1</span></td></tr>
+      <tr><td>الإشعارات</td><td>مفاتيح تشغيل محلية.</td><td>Notifications API + read/unread + push/email + تفضيلات.</td><td class="center"><span class="priority p1">P1</span></td></tr>
+      <tr><td>الملف الشخصي</td><td>بيانات محلية بدون حفظ.</td><td>GET/PATCH + صور + مراجعة + جودة الملف + التحقق.</td><td class="center"><span class="priority p1">P1</span></td></tr>
+      <tr><td>الخصوصية والإعدادات</td><td>مفاتيح محلية بدون حفظ.</td><td>Privacy prefs + sessions/devices + حذف الحساب + تصدير البيانات.</td><td class="center"><span class="priority p1">P1</span></td></tr>
+    </tbody>
+  </table>
+
+  <div class="callout">
+    <b>ملاحظة عن «الرئيسية»</b>
+    <p>
+      الصفحة الرئيسية للداشبورد مش قسم مستقل؛ هي ملخص لكل الأقسام التانية.
+      عشان كده مش هتشتغل صح قبل ما الأقسام الأساسية (الترشيحات، الرسائل،
+      الإشعارات) تتوصل ببيانات حقيقية.
+    </p>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════════════════
+     09 — ROADMAP
+     ══════════════════════════════════════════════════════════ -->
+<section class="section" id="roadmap">
+  <div class="section-head">
+    <span class="section-no">09</span>
+    <div>
+      <span class="kicker">الترتيب والمدد</span>
+      <h2>خطة التنفيذ المقترحة</h2>
+    </div>
+  </div>
+
+  <p class="lead">
+    الخطة مقسمة على مراحل عشان كل مرحلة تنتج حاجة قابلة للاختبار. المدد تقديرية
+    وتفترض فريق 2–3 مطورين، وقرارات العميل جاهزة في بداية كل مرحلة.
+  </p>
+
+  <table class="roadmap-table">
+    <thead>
+      <tr><th>المرحلة</th><th>المحتوى</th><th>المدة</th><th>المخرج</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>المرحلة 0</td><td>بنود <span class="ltr">P0</span>: حماية المسارات، الأدمن، استعادة كلمة المرور، تغيير الرقم، الجلسات، rate limiting، حفظ الـ onboarding، تقوية الإنتاج.</td><td>2–3 أسابيع</td><td>نسخة آمنة قابلة للاختبار الداخلي.</td></tr>
+      <tr><td>المرحلة 1</td><td>الملف الشخصي والخصوصية والإعدادات + رفع الصور + جلسات الأجهزة.</td><td>2–3 أسابيع</td><td>ملف حقيقي وإعدادات محفوظة.</td></tr>
+      <tr><td>المرحلة 2</td><td>الترشيحات والبحث والاهتمامات والرسائل والإشعارات.</td><td>3–5 أسابيع</td><td>تجربة اكتشاف وتواصل كاملة.</td></tr>
+      <tr><td>المرحلة 3</td><td>المحفظة والاشتراكات والدفع + webhooks + فواتير + استرداد.</td><td>2–4 أسابيع</td><td>تحصيل فعلي وإدارة اشتراك.</td></tr>
+      <tr><td>المرحلة 4</td><td>لوحة الأدمن الحقيقية + المجتمع + الولي + المكالمات حسب الأولوية.</td><td>3–5 أسابيع</td><td>إدارة تشغيلية ومزايا إضافية.</td></tr>
+      <tr><td>المرحلة 5</td><td>الاختبارات و CI/CD والمراقبة والنسخ الاحتياطي والمحتوى القانوني و SEO واختبار الحمل.</td><td>2–3 أسابيع</td><td>إطلاق production مستقر.</td></tr>
+    </tbody>
+  </table>
+
+  <div class="two-col mt-3">
+    <div class="panel">
+      <h3>الإجمالي التقديري</h3>
+      <p class="mb-0">
+        <strong>14–23 أسبوعًا</strong> للنطاق الكامل حسب سرعة القرارات وحجم إعادة
+        استخدام APIs الموبايل. لو المطلوب MVP فقط، يمكن ضغط الخطة إلى
+        <strong>8–12 أسبوعًا</strong> بتأجيل المجتمع والمكالمات والولي.
+      </p>
+    </div>
+    <div class="panel soft">
+      <h3>افتراضات مهمة</h3>
+      <ul class="bullets tight">
+        <li>إعادة استخدام APIs الموبايل المتاحة يقلل المدة بشكل كبير.</li>
+        <li>أي تأخير في قرار الدفع أو النصوص القانونية بيأثر على الجدول.</li>
+        <li>المدد لا تشمل إعادة تصميم الواجهة أو مزايا جديدة.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="callout warn">
+    <b>الترتيب مش قابل للعكس</b>
+    <p>
+      ما ينفعش نبدأ بالدفع أو المجتمع قبل حماية المسارات وحفظ الـ onboarding.
+      كل مرحلة بتعتمد على اللي قبلها، والبدء في المزايا قبل الأساس بيضاعف
+      إعادة الشغل.
+    </p>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════════════════
+     10 — ACCEPTANCE
+     ══════════════════════════════════════════════════════════ -->
+<section class="section" id="acceptance">
+  <div class="section-head">
+    <span class="section-no">10</span>
+    <div>
+      <span class="kicker">إمتى نقول إننا خلصنا؟</span>
+      <h2>معايير القبول قبل الإطلاق</h2>
+    </div>
+  </div>
+
+  <p class="lead">
+    عشان الإطلاق ما يبقاش رأيًا شخصيًا، دي معايير واضحة نقيس بيها الجاهزية.
+    أي بند منها لو مش متحقق، النسخة تعتبر غير جاهزة للنشر العام.
+  </p>
+
+  <table>
+    <thead>
+      <tr><th>المجال</th><th>معيار القبول</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>حماية الوصول</td><td>مفيش صفحة داشبورد تفتح بدون جلسة صالحة، ولوحة الإدارة تتطلب دورًا مصرحًا به.</td></tr>
+      <tr><td>الأدمن</td><td>تسجيل دخول أدمن منفصل + أدوار + Audit Log لكل عملية حساسة.</td></tr>
+      <tr><td>استعادة الحساب</td><td>مستخدم يقدر يعمل reset بكلمة مرور جديدة عبر OTP، وكل الجلسات القديمة تتلغي.</td></tr>
+      <tr><td>رقم الهاتف</td><td>مستخدم Google يقدر يضيف رقمًا حقيقيًا ويتحقق منه ويستخدمه في OTP.</td></tr>
+      <tr><td>الجلسات</td><td><span class="ltr">rememberMe</span> بيغيّر مدة الجلسة فعليًا، والجلسات المنتهية بتتنظف دوريًا.</td></tr>
+      <tr><td>مكافحة الإساءة</td><td>Rate limit شغال عبر السيرفرات، وقفل مؤقت بعد محاولات فاشلة متكررة.</td></tr>
+      <tr><td>الـ Onboarding</td><td>كل خطوة بتتحفظ، ومفيش وصول للداشبورد قبل اكتمال البيانات الأساسية.</td></tr>
+      <tr><td>البيانات الحقيقية</td><td>صفر mock data وصفر <span class="ltr">PrototypeNotice</span> في نسخة الإنتاج.</td></tr>
+      <tr><td>الدفع</td><td>دورة كاملة في sandbox: اشتراك → webhook → تفعيل → فاتورة → استرداد.</td></tr>
+      <tr><td>الجودة</td><td>Build + Typecheck + اختبارات E2E للمسارات الحرجة بتمر في CI مع كل Pull Request.</td></tr>
+      <tr><td>التشغيل</td><td>HTTPS + مراقبة + تنبيهات + نسخة احتياطية تم اختبار استرجاعها.</td></tr>
+      <tr><td>القانوني</td><td>الشروط والخصوصية والاسترداد منشورة، والموافقة بتتسجل.</td></tr>
+    </tbody>
+  </table>
+
+  <div class="callout success">
+    <b>تعريف «جاهز للإطلاق»</b>
+    <p>
+      جاهز للإطلاق يعني: مستخدم جديد يقدر يسجل، يكمل ملفه، يشوف ترشيحات،
+      يتواصل بأمان، يدفع، ويستعيد حسابه — كل ده على بيانات حقيقية، مع مراقبة
+      ونسخ احتياطي، ومن غير أي واجهة تجريبية ظاهرة.
+    </p>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════════════════
+     11 — RISKS
+     ══════════════════════════════════════════════════════════ -->
+<section class="section" id="risks">
+  <div class="section-head">
+    <span class="section-no">11</span>
+    <div>
+      <span class="kicker">لو أطلقنا بالوضع الحالي</span>
+      <h2>مخاطر الإطلاق الآن</h2>
+    </div>
+  </div>
+
+  <p class="lead">
+    المخاطر دي مش افتراضية. كل واحدة ليها سبب واضح في الكود الحالي، وكلها قابلة
+    للمعالجة لو اتنفذت بنود <span class="ltr">P0</span> و<span class="ltr">P1</span> بالترتيب.
+  </p>
+
+  <table>
+    <thead>
+      <tr><th>الخطر</th><th class="center">الاحتمال</th><th class="center">الأثر</th><th>التخفيف</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>وصول عام للوحة الإدارة</td><td class="center risk-high">مؤكد</td><td class="center risk-high">عالي</td><td>حماية المسارات + مصادقة أدمن + صلاحيات.</td></tr>
+      <tr><td>ظهور بيانات وهمية للمستخدمين</td><td class="center risk-high">مؤكد</td><td class="center risk-high">عالي</td><td>ربط الأقسام أو إخفاؤها قبل الإطلاق.</td></tr>
+      <tr><td>عدم قدرة المستخدم على استعادة حسابه</td><td class="center risk-med">مرتفع</td><td class="center risk-high">عالي</td><td>استعادة كلمة المرور + تغيير رقم الهاتف.</td></tr>
+      <tr><td>إساءة استخدام OTP أو تسجيل الدخول</td><td class="center risk-med">متوسط</td><td class="center risk-high">عالي</td><td>Rate limit مشترك + lockout + تنبيهات.</td></tr>
+      <tr><td>عدم وجود تحصيل أو اشتراكات</td><td class="center risk-high">مؤكد</td><td class="center risk-high">عالي</td><td>بوابة دفع + webhooks + فواتير.</td></tr>
+      <tr><td>فقدان بيانات أو عطل غير مرصود</td><td class="center risk-med">متوسط</td><td class="center risk-high">عالي</td><td>نسخ احتياطي + PITR + مراقبة وتنبيهات.</td></tr>
+      <tr><td>مشاكل قانونية أو خصوصية</td><td class="center risk-med">متوسط</td><td class="center risk-high">عالي</td><td>صفحات قانونية + موافقات + سياسة احتفاظ وحذف.</td></tr>
+    </tbody>
+  </table>
+
+  <div class="callout warn">
+    <b>تكلفة التأجيل مقابل تكلفة الإطلاق</b>
+    <p>
+      تأجيل الإطلاق أسبوعين لإغلاق <span class="ltr">P0</span> أرخص بكثير من إطلاق
+      منصة بمخاطر أمنية أو تجربة مكسورة. أول انطباع عن المنصة بيتشكل في أول
+      دقائق من استخدام المستخدم، وصعب يتصلح بعد كده.
+    </p>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════════════════
+     12 — DECISIONS
+     ══════════════════════════════════════════════════════════ -->
+<section class="section" id="decisions">
+  <div class="section-head">
+    <span class="section-no">12</span>
+    <div>
+      <span class="kicker">عشان نبدأ صح</span>
+      <h2>قرارات مطلوبة من العميل</h2>
+    </div>
+  </div>
+
+  <p class="lead">
+    فيه قرارات مش تقنية بالكامل، وأي تأخير فيها بيأخر المرحلة اللي بعدها.
+    القرارات دي محتاجة تتحدد قبل بدء التنفيذ، مش أثناءه.
+  </p>
+
+  <div class="decision-grid">
+    <div class="decision"><b>نطاق الإطلاق</b>هل الهدف MVP سريع ولا النطاق الكامل؟ وإيه الأقسام اللي لازم تكون live يوم الإطلاق؟</div>
+    <div class="decision"><b>بوابة الدفع</b>Paymob أو Fawry أو غيرهم، وبيانات التاجر، وبيئة الاختبار، وسياسة الاسترداد.</div>
+    <div class="decision"><b>مزود المكالمات</b>هل المكالمات ضمن الإطلاق الأول؟ ولو نعم، Agora أو Twilio أو مزود محلي؟</div>
+    <div class="decision"><b>الإشعارات والبريد</b>قنوات الإشعار المطلوبة، ومزود البريد المعاملاتي، وقوالب الرسائل.</div>
+    <div class="decision"><b>صلاحيات الأدمن</b>مين هيدخل لوحة الإدارة، وإيه الأدوار، ومين يعتمد المحتوى أو الاسترداد؟</div>
+    <div class="decision"><b>النصوص القانونية</b>الشروط والخصوصية والاسترداد، وسياسة الاحتفاظ بالبيانات وحذف الحساب.</div>
+    <div class="decision"><b>الاستضافة والدومين</b>الدومين النهائي، السيرفر، شهادة HTTPS، وخطة النسخ الاحتياطي والاسترجاع.</div>
+    <div class="decision"><b>إعادة استخدام APIs</b>هل نستخدم APIs الموبايل الموجودة ولا نبني مسارات ويب مخصصة؟ ده بيحدد الجدول والتكلفة.</div>
+  </div>
+
+  <div class="callout">
+    <b>قرار واحد بيوقف كل حاجة</b>
+    <p>
+      لو مفيش بوابة دفع متفق عليها، مرحلة الاشتراكات كلها هتتأجل. ولو مفيش
+      نصوص قانونية معتمدة، الإطلاق العام هيتأجل حتى لو الكود جاهز. الأفضل
+      نحسم القرارات دي بالتوازي مع تنفيذ <span class="ltr">P0</span>.
+    </p>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════════════════
+     13 — CLOSING
+     ══════════════════════════════════════════════════════════ -->
+<section class="section" id="closing">
+  <div class="section-head">
+    <span class="section-no">13</span>
+    <div>
+      <span class="kicker">الخلاصة والخطوة الجاية</span>
+      <h2>نبني على أساس سليم، مش نطلق بسرعة</h2>
+    </div>
+  </div>
+
+  <p class="lead">
+    الأساس التقني للويب سليم: واجهة حديثة، BFF مستقل، جلسات آمنة، ومصادقة حقيقية.
+    اللي ناقص هو استكمال المنتج وتقفيل مخاطر الإطلاق. لو اتعمل ده بالترتيب،
+    المنصة تقدر تنطلق بثقة وتنمو من غير إعادة بناء.
+  </p>
+
+  <div class="three-col">
+    <div class="panel">
+      <h3>1. اعتماد النطاق</h3>
+      <p class="mb-0">اختيار MVP أو النطاق الكامل، وتحديد الأقسام المطلوبة يوم الإطلاق.</p>
+    </div>
+    <div class="panel soft">
+      <h3>2. تقفيل P0</h3>
+      <p class="mb-0">حماية المسارات، الأدمن، استعادة الحساب، الجلسات، وحفظ الـ onboarding.</p>
+    </div>
+    <div class="panel">
+      <h3>3. اختبار ثم إطلاق</h3>
+      <p class="mb-0">اختبار داخلي شامل، قرار Go/No-Go، ثم إطلاق تدريجي مع مراقبة.</p>
+    </div>
+  </div>
+
+  <div class="closing">
+    <span class="closing-kicker">التوصية النهائية</span>
+    <h2>الأساس جاهز —<br>والمنتج محتاج مرحلة استكمال</h2>
+    <p>
+      نبدأ فورًا في بنود <span class="ltr">P0</span>، وبعدها نبني التجربة الأساسية
+      (ملف، ترشيحات، تواصل، دفع) على مراحل قصيرة قابلة للاختبار. كده كل أسبوع
+      بيقرّبنا من إطلاق حقيقي، مش مجرد واجهة شكلها جاهز.
+    </p>
+  </div>
+
+  <div class="signoff">
+    <div><span>إعداد وتنفيذ</span>محمد مضيان — مراجعة جاهزية الويب</div>
+    <div><span>التاريخ</span>9 نوفمبر 2026</div>
+  </div>
+</section>
+
+</body>
+</html>

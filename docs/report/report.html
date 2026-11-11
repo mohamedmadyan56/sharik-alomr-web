@@ -1,0 +1,1011 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>شريك العمر — تقرير تسليم المرحلة الأولى</title>
+  <meta name="author" content="فريق التطوير">
+  <meta name="description" content="تقرير تسليم المرحلة الأولى: نسخة الويب وباك-إند الويب BFF لمنصة شريك العمر.">
+  <meta name="keywords" content="شريك العمر, ويب, BFF, Next.js, Prisma, PostgreSQL, تقرير تسليم">
+  <link rel="stylesheet" href="report.css">
+</head>
+<body>
+
+<!-- ══════════════════════════════════════════════════════════
+     COVER
+     ══════════════════════════════════════════════════════════ -->
+<section class="cover">
+  <div class="cover-photo"></div>
+  <div class="cover-ring one"></div>
+  <div class="cover-ring two"></div>
+
+  <div class="cover-content">
+    <div class="cover-top">
+      <div class="cover-brand">
+        <span class="cover-logo"><img src="assets/logo.png" alt="شريك العمر"></span>
+        <span>
+          <b>شريك العمر</b>
+          <small>SHARIK ALOMR</small>
+        </span>
+      </div>
+      <span class="cover-tag">تقرير تسليم</span>
+    </div>
+
+    <div class="cover-main">
+      <span class="cover-eyebrow">المرحلة الأولى · نسخة الويب</span>
+      <h1>الموقع الجديد<br><span>وباك-إند ويب مستقل</span></h1>
+      <p class="cover-subtitle">
+        تجربة عربية بالكامل، مصادقة حقيقية، ومحتوى حقيقي من نفس قاعدة بيانات الموبايل —
+        من غير أي تعديل في كود الموبايل.
+      </p>
+      <div class="cover-pills">
+        <span>Next.js + React</span>
+        <span>Express + Prisma</span>
+        <span>PostgreSQL</span>
+        <span>RTL / LTR</span>
+        <span>Light / Dark</span>
+        <span>Responsive</span>
+      </div>
+    </div>
+
+    <div class="cover-bottom">
+      <div class="cover-meta">
+        <div><span>التاريخ</span><b>9 نوفمبر 2026</b></div>
+      </div>
+      <div class="cover-secret">خاص بالعميل<br>يُرجى عدم التوزيع</div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════════════════
+     TOC
+     ══════════════════════════════════════════════════════════ -->
+<section class="toc-page">
+  <div class="toc-head">
+    <span class="kicker">تقرير تسليم المرحلة الأولى</span>
+    <h1>محتوى التقرير</h1>
+  </div>
+
+  <div class="toc-grid">
+    <div class="toc-list">
+      <a class="toc-row" href="#summary"><span class="no">01</span><span class="title">ملخص تنفيذي</span><span class="page" data-target="#summary"></span></a>
+      <a class="toc-row" href="#delivered"><span class="no">02</span><span class="title">اللي تم تسليمه</span><span class="page" data-target="#delivered"></span></a>
+      <a class="toc-row" href="#architecture"><span class="no">03</span><span class="title">المعمارية والتدفق</span><span class="page" data-target="#architecture"></span></a>
+      <a class="toc-row" href="#home"><span class="no">04</span><span class="title">الصفحة الرئيسية</span><span class="page" data-target="#home"></span></a>
+      <a class="toc-row" href="#pricing"><span class="no">05</span><span class="title">الباقات والأسعار</span><span class="page" data-target="#pricing"></span></a>
+      <a class="toc-row" href="#articles"><span class="no">06</span><span class="title">المقالات</span><span class="page" data-target="#articles"></span></a>
+      <a class="toc-row" href="#auth"><span class="no">07</span><span class="title">الدخول والتسجيل</span><span class="page" data-target="#auth"></span></a>
+      <a class="toc-row" href="#dashboard"><span class="no">08</span><span class="title">لوحة التحكم والجلسة</span><span class="page" data-target="#dashboard"></span></a>
+      <a class="toc-row" href="#responsive"><span class="no">09</span><span class="title">التجاوب والثيمات</span><span class="page" data-target="#responsive"></span></a>
+      <a class="toc-row" href="#api"><span class="no">10</span><span class="title">واجهات API</span><span class="page" data-target="#api"></span></a>
+      <a class="toc-row" href="#security"><span class="no">11</span><span class="title">الأمان والخصوصية</span><span class="page" data-target="#security"></span></a>
+      <a class="toc-row" href="#testing"><span class="no">12</span><span class="title">الاختبارات والجودة</span><span class="page" data-target="#testing"></span></a>
+      <a class="toc-row" href="#deploy"><span class="no">13</span><span class="title">التشغيل والنشر</span><span class="page" data-target="#deploy"></span></a>
+      <a class="toc-row" href="#next"><span class="no">14</span><span class="title">المرحلة الثانية والخطوة الجاية</span><span class="page" data-target="#next"></span></a>
+    </div>
+
+    <aside class="toc-aside">
+      <span class="aside-kicker">المرحلة الأولى في أرقام</span>
+      <h2>أساس حقيقي<br>قابل للتوسع</h2>
+      <p>
+        مش مجرد واجهة شكلية: الدخول، الجلسات، الباقات، والمقالات كلهم شغالين
+        على بيانات حقيقية من قاعدة البيانات.
+      </p>
+      <div class="mini-stat"><b>6</b><span>شاشات ويب أساسية</span></div>
+      <div class="mini-stat"><b>15</b><span>مسار API وظيفي</span></div>
+      <div class="mini-stat"><b>2</b><span>طرق دخول + تسجيل جديد</span></div>
+      <div class="mini-stat"><b>0</b><span>تعديل في كود الموبايل</span></div>
+    </aside>
+  </div>
+
+  <div class="toc-note">
+    <b>ملاحظة عن اللقطات:</b> كل الصور في التقرير من <span class="ltr">build</span> إنتاجي محلي
+    (<span class="ltr">next start</span>) وبتعرض بيانات حقيقية من قاعدة البيانات — مش تصاميم مبدئية.
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════════════════
+     01 — SUMMARY
+     ══════════════════════════════════════════════════════════ -->
+<section class="section" id="summary">
+  <div class="section-head">
+    <span class="section-no">01</span>
+    <div>
+      <span class="kicker">الخلاصة أولًا</span>
+      <h2>ملخص تنفيذي</h2>
+    </div>
+  </div>
+
+  <p class="lead">
+    المرحلة الأولى خلّصت الأساس اللي الويب يقوم عليه: واجهة عامة كاملة بالعربي والإنجليزي،
+    مصادقة حقيقية بالكامل، باقات ومقالات بتتقرأ من نفس قاعدة بيانات الموبايل،
+    وطبقة <span class="ltr">BFF</span> مستقلة بجلسات ويب آمنة.
+    الموبايل وباك-انده لم يتم تعديلهم.
+  </p>
+
+  <div class="stats">
+    <div class="stat"><b>6</b><span>شاشات ويب أساسية جاهزة للمراجعة</span></div>
+    <div class="stat"><b>15</b><span>مسار API وظيفي + مساري صحة</span></div>
+    <div class="stat"><b>2</b><span>طرق دخول + تسجيل حساب جديد</span></div>
+    <div class="stat"><b>0</b><span>تعديل في كود الموبايل</span></div>
+  </div>
+
+  <div class="two-col mt-4">
+    <div class="panel">
+      <h3>اللي اتحقق فعليًا</h3>
+      <ul class="bullets check">
+        <li>صفحات عامة كاملة: الرئيسية، الباقات، المقالات، وتفاصيل المقال.</li>
+        <li>دخول بكلمة مرور أو <span class="ltr">OTP</span>، وتسجيل حساب جديد بالهاتف.</li>
+        <li>جلسة ويب <span class="ltr">httpOnly</span> مع إنشاء، تحقق، خروج، وإلغاء كل الجلسات.</li>
+        <li>الباقات والمقالات من نفس قاعدة البيانات، والمقالات المنشورة فقط.</li>
+        <li>هدية ترحيب عند التسجيل + محفظة وحركة مالية في الـ <span class="ltr">ledger</span>.</li>
+        <li>واجهة متجاوبة، عربي/إنجليزي، لايت/دارك، وتقليل الحركة.</li>
+      </ul>
+    </div>
+    <div class="panel soft">
+      <h3>حدود المرحلة الأولى</h3>
+      <ul class="bullets dash">
+        <li><span class="ltr">Onboarding</span> الكامل (7 خطوات) لسه تصميم/مرحلة ثانية.</li>
+        <li>أقسام لوحة التحكم (ترشيحات، رسائل، محفظة، ولي، مجتمع) لسه <span class="ltr">prototype</span>.</li>
+        <li>الدفع والاشتراك الفعلي لسه مرحلة ثانية.</li>
+        <li>إشعارات البريد و<span class="ltr">SMS</span> الإنتاجي وإدارة المحتوى من الأدمن لسه.</li>
+        <li>مفيش اختبارات آلية أو <span class="ltr">CI/CD</span> بعد.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="callout success">
+    <b>النتيجة</b>
+    <p>
+      أساس تقني سليم وقابل للتوسع: الدخول والجلسات والباقات والمقالات شغالين على بيانات حقيقية،
+      والموبايل معزول تمامًا. المرحلة الجاية هتكمّل تجربة المستخدم جوه اللوحة والدفع.
+    </p>
+  </div>
+
+  <div class="callout warn">
+    <b>مهم قبل الإنتاج</b>
+    <p>
+      في التطوير كود <span class="ltr">OTP</span> بيظهر كـ <span class="ltr">devCode</span>.
+      في الإنتاج لازم مزود <span class="ltr">SMS</span> حقيقي (Twilio) و<span class="ltr">OTP_DEV_ECHO=false</span>،
+      والسيرفر بيرفض يشتغل بإعدادات التطوير لو <span class="ltr">NODE_ENV=production</span>.
+    </p>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════════════════
+     02 — DELIVERED
+     ══════════════════════════════════════════════════════════ -->
+<section class="section" id="delivered">
+  <div class="section-head">
+    <span class="section-no">02</span>
+    <div>
+      <span class="kicker">إيه اللي اتعمل بالتفصيل</span>
+      <h2>اللي تم تسليمه</h2>
+    </div>
+  </div>
+
+  <p class="lead">
+    التسليم مقسوم 6 أجزاء واضحة. كل جزء ليه وظيفة مستقلة، لكنهم شغالين مع بعض
+    كتجربة واحدة متماسكة من أول الصفحة الرئيسية لحد تسجيل الخروج.
+  </p>
+
+  <div class="feature-grid">
+    <article class="feature-card">
+      <span class="feature-icon">01</span>
+      <h3>واجهة عامة كاملة</h3>
+      <p>الرئيسية، الباقات، المقالات، تفاصيل المقال، وتسجيل الدخول — بتنقل سليم وهوية بصرية موحدة.</p>
+    </article>
+    <article class="feature-card">
+      <span class="feature-icon">02</span>
+      <h3>مصادقة حقيقية</h3>
+      <p>دخول بكلمة مرور أو <span class="ltr">OTP</span>، تسجيل جديد، جلسة ويب آمنة، وخروج فعلي.</p>
+    </article>
+    <article class="feature-card">
+      <span class="feature-icon">03</span>
+      <h3>باقات من قاعدة البيانات</h3>
+      <p>الباقات والمزايا من <span class="ltr">subscription_plans + plan_features</span>، مع بطاقة مجانية تعريفية للويب.</p>
+    </article>
+    <article class="feature-card">
+      <span class="feature-icon">04</span>
+      <h3>محتوى حقيقي</h3>
+      <p>المقالات من <span class="ltr">blog_articles</span>، المنشور فقط، مع بحث وتصنيف وتفاصيل وعدّاد مشاهدات.</p>
+    </article>
+    <article class="feature-card">
+      <span class="feature-icon">05</span>
+      <h3>لوحة تحكم مرتبطة بالحساب</h3>
+      <p>اسم المستخدم الحقيقي وحالة حسابه من <span class="ltr">/auth/me</span>، وتسجيل خروج بيمسح الجلسة من قاعدة البيانات.</p>
+    </article>
+    <article class="feature-card">
+      <span class="feature-icon">06</span>
+      <h3>جودة العرض</h3>
+      <p>عربي <span class="ltr">RTL</span> وإنجليزي <span class="ltr">LTR</span>، لايت/دارك، 3 مقاسات، وتقليل الحركة — بدون <span class="ltr">overflow</span> أفقي.</p>
+    </article>
+  </div>
+
+  <div class="callout">
+    <b>خارج نطاق المرحلة الأولى (بشفافية)</b>
+    <p>
+      استكمال <span class="ltr">onboarding</span>، تفعيل أقسام لوحة التحكم، الاشتراك والدفع،
+      الإشعارات الإنتاجية، وإدارة المحتوى من الأدمن — كل دول في خطة المرحلة الثانية المفصلة في آخر التقرير.
+    </p>
+  </div>
+
+  <div class="panel mt-4">
+    <h3>ملفات التسليم المهمة</h3>
+    <div class="env-list">
+      <div class="env-item"><code>bff/README.md</code><span>التشغيل، المسارات، والأمان</span></div>
+      <div class="env-item"><code>bff/prisma/web_tables.sql</code><span>جداول الويب: الجلسات و OTP</span></div>
+      <div class="env-item"><code>bff/.env.example</code><span>كل متغيرات البيئة المطلوبة</span></div>
+      <div class="env-item"><code>docs/assets/</code><span>لقطات الشاشة المستخدمة في التقرير</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════════════════
+     03 — ARCHITECTURE
+     ══════════════════════════════════════════════════════════ -->
+<section class="section" id="architecture">
+  <div class="section-head">
+    <span class="section-no">03</span>
+    <div>
+      <span class="kicker">إزاي بنىنا الحل</span>
+      <h2>المعمارية والتدفق</h2>
+    </div>
+  </div>
+
+  <p class="lead">
+    اخترنا <span class="ltr">BFF</span> منفصل بدل ما نضيف مسارات الويب جوه باك-اند الموبايل.
+    كده الموبايل مايتأثرش، والويب ياخد احتياجاته وأمانه بشكل مستقل،
+    والاتنين يشتغلوا على نفس البيانات.
+  </p>
+
+  <div class="arch">
+    <div class="arch-box">
+      <span class="arch-icon">W</span>
+      <b>المتصفح / Next.js</b>
+      <span>واجهة الويب<br>عربي وإنجليزي · RTL / LTR</span>
+      <span class="arch-code">localhost:3000</span>
+    </div>
+    <div class="arch-arrow">←</div>
+    <div class="arch-box">
+      <span class="arch-icon">B</span>
+      <b>BFF / Express</b>
+      <span>جلسات، تحقق، باقات، مقالات<br>واجهات API موحدة</span>
+      <span class="arch-code">127.0.0.1:4001</span>
+    </div>
+    <div class="arch-arrow">←</div>
+    <div class="arch-box">
+      <span class="arch-icon">DB</span>
+      <b>PostgreSQL</b>
+      <span>نفس قاعدة بيانات الموبايل<br>مصدر واحد للحقيقة</span>
+      <span class="arch-code">sharik_alomr_backend</span>
+    </div>
+  </div>
+
+  <div class="arch-note">
+    <span class="note-mark">i</span>
+    <div>
+      <b>نفس قاعدة البيانات، لكن جداول ويب منفصلة</b>
+      <p>
+        الـ <span class="ltr">BFF</span> بيستخدم <span class="ltr">Prisma client</span> خاص بيه على نفس الـ DB.
+        الجلسات في <span class="ltr">web_sessions</span> وأكواد <span class="ltr">OTP</span> في
+        <span class="ltr">web_otp_codes</span>؛ مفيش تعارض أو خلط مع جداول الموبايل.
+      </p>
+    </div>
+  </div>
+
+  <div class="two-col">
+    <div class="panel">
+      <h3>رحلة الطلب</h3>
+      <ol class="flow-list">
+        <li><b>المتصفح</b> يطلب <span class="ltr">/api/bff/...</span> من نفس الدومين.</li>
+        <li><b>Next.js</b> يعمل <span class="ltr">rewrite</span> للطلب إلى الـ <span class="ltr">BFF</span> على 4001.</li>
+        <li><b>BFF</b> يتحقق من الجلسة والمدخلات ويطبّق حدود المحاولات.</li>
+        <li><b>Prisma</b> يقرأ أو يكتب في <span class="ltr">PostgreSQL</span>.</li>
+        <li><b>BFF</b> يرجّع <span class="ltr">data</span> + <span class="ltr">meta.requestId</span> بشكل موحد.</li>
+      </ol>
+    </div>
+    <div class="panel soft">
+      <h3>قرارات تقنية وليه</h3>
+      <ul class="bullets">
+        <li><b>BFF منفصل:</b> عزل كامل عن كود الموبايل وإصداراته.</li>
+        <li><b>Proxy same-origin:</b> الكوكي يشتغل بأمان من غير مشاكل <span class="ltr">CORS</span>.</li>
+        <li><b>جداول ويب منفصلة:</b> <span class="ltr">OTP</span> وجلسات الويب مش بتتداخل مع الموبايل.</li>
+        <li><b>مصدر واحد للبيانات:</b> أي تعديل في الباقات أو المقالات يظهر فورًا.</li>
+        <li><b>Prisma client خاص:</b> schema الويب مستقل وقابل للتطوير.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="callout success">
+    <b>الموبايل زي ما هو</b>
+    <p>
+      كود الموبايل وباك-اند الموبايل لم يتم تعديلهم. الإضافة الوحيدة هي جدولين ويب جديدين
+      على نفس قاعدة البيانات، وكل التعامل معاهم من خلال الـ <span class="ltr">BFF</span>.
+    </p>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════════════════
+     04 — HOME
+     ══════════════════════════════════════════════════════════ -->
+<section class="section" id="home">
+  <div class="section-head">
+    <span class="section-no">04</span>
+    <div>
+      <span class="kicker">أول انطباع للزائر</span>
+      <h2>الصفحة الرئيسية</h2>
+    </div>
+  </div>
+
+  <p class="lead">
+    الرئيسية بقت بتعرض بيانات حقيقية: الباقات من قاعدة البيانات، آخر المقالات المنشورة،
+    وإحصائيات الثقة — مع الحفاظ على هوية شريك العمر البصرية.
+  </p>
+
+  <figure class="shot shot-hero">
+    <div class="browser-bar"><i></i><i></i><i></i><span>sharik-alomr.com /</span></div>
+    <img src="../assets/home-desktop.png" alt="الصفحة الرئيسية — عربي لايت">
+    <figcaption><b>الرئيسية — عربي، لايت، 1440px.</b> لقطة من نسخة إنتاجية محلية مع بيانات حقيقية من قاعدة البيانات.</figcaption>
+  </figure>
+
+  <div class="two-col">
+    <div class="panel">
+      <h3>اللي بتقدمه الصفحة</h3>
+      <ul class="bullets check">
+        <li><span class="ltr">Hero</span> عربي <span class="ltr">RTL</span> مع رسالة واضحة و<span class="ltr">CTA</span> أساسي.</li>
+        <li>شريط ثقة + خطوات «إزاي بتعمل المنصة» + باقات مختصرة.</li>
+        <li>آخر المقالات المنشورة بتتحدّث من نفس الـ <span class="ltr">API</span>.</li>
+        <li>تنقل سليم بين الرئيسية، الباقات، المقالات، والدخول.</li>
+      </ul>
+    </div>
+    <div class="panel soft">
+      <h3>اللي بيتغير من البيانات</h3>
+      <ul class="bullets">
+        <li>الباقات وأسعارها ومزاياها.</li>
+        <li>المقالات المنشورة وبياناتها.</li>
+        <li>حالة التحميل والخطأ والفاضي — مش محتوى ثابت.</li>
+      </ul>
+      <p class="small mt-3">
+        أي تعديل في قاعدة البيانات بيظهر على الويب من غير إعادة نشر،
+        لأن الصفحة بتقرأ من الـ <span class="ltr">BFF</span> مباشرة.
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════════════════
+     05 — PRICING
+     ══════════════════════════════════════════════════════════ -->
+<section class="section" id="pricing">
+  <div class="section-head">
+    <span class="section-no">05</span>
+    <div>
+      <span class="kicker">عرض القيمة</span>
+      <h2>الباقات والأسعار</h2>
+    </div>
+  </div>
+
+  <p class="lead">
+    الباقات ومزاياها بتتقرأ من <span class="ltr">subscription_plans + plan_features</span>
+    مباشرة من قاعدة البيانات. أي تعديل في السعر أو المزايا بيظهر على الويب بدون نشر جديد.
+  </p>
+
+  <figure class="shot shot-hero">
+    <div class="browser-bar"><i></i><i></i><i></i><span>sharik-alomr.com /pricing</span></div>
+    <img src="../assets/pricing-desktop.png" alt="صفحة الباقات — عربي لايت">
+    <figcaption><b>الباقات — عربي، لايت، 1440px.</b> الأسعار والمزايا معروضة من قاعدة البيانات، مع تبديل شهري/سنوي.</figcaption>
+  </figure>
+
+  <div class="price-strip">
+    <div class="price-card">
+      <span class="price-name">مجاني</span>
+      <span class="price-value">0 <small>ج.م</small></span>
+      <span class="price-annual">بطاقة تعريفية للويب — بدون اشتراك فعلي</span>
+      <span class="price-badge">للبداية</span>
+    </div>
+    <div class="price-card featured">
+      <span class="price-name">جولد</span>
+      <span class="price-value">199 <small>ج.م / شهر</small></span>
+      <span class="price-annual">سنوي: 1,990 ج.م · توفير 17%</span>
+      <span class="price-badge">الأكثر اختيارًا</span>
+    </div>
+    <div class="price-card">
+      <span class="price-name">بلاتينيوم</span>
+      <span class="price-value">399 <small>ج.م / شهر</small></span>
+      <span class="price-annual">سنوي: 3,990 ج.م · توفير 17%</span>
+      <span class="price-badge">مزايا أوسع</span>
+    </div>
+  </div>
+
+  <div class="callout">
+    <b>ملاحظة عن الدفع</b>
+    <p>
+      الصفحة بتعرض الباقات والمزايا والأسعار بشكل حقيقي، لكن الاشتراك والدفع الفعلي
+      (Paymob / Fawry) لسه في المرحلة الثانية. البطاقة المجانية تعريفية للويب فقط
+      ومش بتغيّر بيانات باقات الموبايل.
+    </p>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════════════════
+     06 — ARTICLES
+     ══════════════════════════════════════════════════════════ -->
+<section class="section" id="articles">
+  <div class="section-head">
+    <span class="section-no">06</span>
+    <div>
+      <span class="kicker">محتوى يخدم الرحلة</span>
+      <h2>المقالات</h2>
+    </div>
+  </div>
+
+  <p class="lead">
+    المقالات بقت من <span class="ltr">blog_articles</span>، والويب بيعرض المنشور فقط.
+    البحث والتصنيف وتفاصيل المقال شغالين من نفس الـ <span class="ltr">API</span>.
+  </p>
+
+  <div class="shot-stack">
+    <figure class="shot">
+      <div class="browser-bar"><i></i><i></i><i></i><span>sharik-alomr.com /articles</span></div>
+      <img src="../assets/articles-desktop.png" alt="قائمة المقالات — عربي لايت">
+      <figcaption><b>قائمة المقالات.</b> بحث، تصنيفات، حالات تحميل/فاضي/خطأ، وبطاقات مقالات من البيانات الحقيقية.</figcaption>
+    </figure>
+    <figure class="shot">
+      <div class="browser-bar"><i></i><i></i><i></i><span>sharik-alomr.com /articles/…</span></div>
+      <img src="../assets/article-detail.png" alt="تفاصيل المقال — عربي لايت">
+      <figcaption><b>تفاصيل المقال.</b> صورة غلاف، وقت قراءة، تصنيف، محتوى، وعدّاد مشاهدات بيزيد عند الفتح.</figcaption>
+    </figure>
+  </div>
+
+  <div class="three-col mt-4">
+    <div class="panel">
+      <h4>المنشور فقط</h4>
+      <p class="small mb-0">أي مقال غير منشور مش بيظهر في القائمة ولا في التفاصيل.</p>
+    </div>
+    <div class="panel">
+      <h4>بحث وتصنيف</h4>
+      <p class="small mb-0">فلترة بالتصنيف، بحث نصي، وترتيب حسب المقال المميز ثم الأحدث.</p>
+    </div>
+    <div class="panel">
+      <h4>تفاصيل كاملة</h4>
+      <p class="small mb-0">يدعم <span class="ltr">slug</span> أو <span class="ltr">id</span>، وبيتعامل مع المقال غير الموجود برسالة واضحة.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════════════════
+     07 — AUTH
+     ══════════════════════════════════════════════════════════ -->
+<section class="section" id="auth">
+  <div class="section-head">
+    <span class="section-no">07</span>
+    <div>
+      <span class="kicker">دخول حقيقي مش واجهة</span>
+      <h2>الدخول والتسجيل</h2>
+    </div>
+  </div>
+
+  <p class="lead">
+    المصادقة مش واجهة شكلية: المستخدم بيتسجل، بياخد كود <span class="ltr">OTP</span> حقيقي،
+    بيتعمل له جلسة ويب آمنة، وكل صفحة محمية بتتحقق من الجلسة دي.
+  </p>
+
+  <div class="auth-top">
+    <figure class="shot shot-auth">
+      <div class="browser-bar"><i></i><i></i><i></i><span>sharik-alomr.com /login</span></div>
+      <img src="../assets/login-desktop.png" alt="صفحة تسجيل الدخول — عربي لايت">
+      <figcaption><b>تسجيل الدخول — عربي، لايت، 1440px.</b> تبويبات دخول/حساب جديد، وكلمة مرور أو رمز تحقق.</figcaption>
+    </figure>
+    <div class="panel">
+      <h3>طرق الدخول</h3>
+      <ul class="bullets check">
+        <li>كلمة مرور بالهاتف أو البريد الإلكتروني.</li>
+        <li><span class="ltr">OTP</span> على رقم الهاتف — 5 أرقام زي الموبايل.</li>
+        <li>تسجيل حساب جديد بالهاتف + <span class="ltr">OTP</span> + بيانات أساسية.</li>
+        <li>تعيين أو تغيير كلمة المرور بعد الدخول.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="steps-row">
+    <div class="step-card">
+      <span class="step-no">1</span>
+      <b>ابدأ التسجيل أو الدخول</b>
+      <p>رقم مصري صحيح، واختيار كلمة مرور أو <span class="ltr">OTP</span>.</p>
+    </div>
+    <div class="step-card">
+      <span class="step-no">2</span>
+      <b>كود <span class="ltr">OTP</span> 5 أرقام</b>
+      <p>صلاحية 5 دقايق، 5 محاولات، وإعادة إرسال بعد 60 ثانية.</p>
+    </div>
+    <div class="step-card">
+      <span class="step-no">3</span>
+      <b>جلسة ويب آمنة</b>
+      <p>كوكي <span class="ltr">httpOnly</span> لمدة 30 يوم، وخروج بيحذف الجلسة.</p>
+    </div>
+    <div class="step-card">
+      <span class="step-no">4</span>
+      <b>هدية الترحيب</b>
+      <p>عند التسجيل الجديد: محفظة + رصيد ترحيب من إعدادات التطبيق.</p>
+    </div>
+  </div>
+
+  <div class="two-col mt-3">
+    <div class="panel soft">
+      <h3>حالات مغطاة</h3>
+      <ul class="bullets">
+        <li>رسائل خطأ عربية واضحة لكل حالة.</li>
+        <li>حدود محاولات وإعادة إرسال بعدّاد ظاهر.</li>
+        <li><span class="ltr">devCode</span> في التطوير فقط، ومش بيتبعت في الإنتاج.</li>
+        <li>حساب موقوف أو بيانات غلط — رسالة مناسبة بدون كشف تفاصيل.</li>
+      </ul>
+    </div>
+    <div class="callout warn mt-0">
+      <b>OTP في الإنتاج</b>
+      <p>
+        لازم <span class="ltr">OTP_SMS_PROVIDER=twilio</span> مع بيانات Twilio،
+        و<span class="ltr">OTP_DEV_ECHO=false</span>. السيرفر بيرفض يبدأ في الإنتاج
+        لو الإعدادات لسه على وضع التطوير.
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════════════════
+     08 — DASHBOARD
+     ══════════════════════════════════════════════════════════ -->
+<section class="section" id="dashboard">
+  <div class="section-head">
+    <span class="section-no">08</span>
+    <div>
+      <span class="kicker">الأساس الحقيقي للوحة</span>
+      <h2>لوحة التحكم والجلسة</h2>
+    </div>
+  </div>
+
+  <p class="lead">
+    لوحة التحكم لسه مش كاملة، لكن الأساس الحقيقي اتربط: المستخدم اللي دخل فعلاً هو اللي بيظهر،
+    والجلسة بتتحقق، وتسجيل الخروج بيمسح الجلسة من قاعدة البيانات.
+  </p>
+
+  <div class="real-vs-prototype">
+    <div class="panel">
+      <h3>اللي بقى حقيقي</h3>
+      <ul class="bullets check">
+        <li>اسم المستخدم وحالة حسابه من <span class="ltr">/api/auth/me</span>.</li>
+        <li>حماية مسار اللوحة بجلسة ويب صالحة.</li>
+        <li>تسجيل خروج فعلي + إمكانية إلغاء كل الجلسات.</li>
+        <li>آخر نشاط للجلسة بيتحدّث بشكل غير متزامن.</li>
+      </ul>
+    </div>
+    <div class="panel prototype">
+      <h3>اللي لسه prototype</h3>
+      <ul class="bullets dash">
+        <li>الترشيحات والبحث المتقدم.</li>
+        <li>الرسائل والمكالمات والإشعارات.</li>
+        <li>المحفظة وسجل الحركات.</li>
+        <li>الولي والمجتمع والإعدادات.</li>
+      </ul>
+      <p class="small mt-2 mb-0">دول تصميم جاهز للربط في المرحلة الثانية، ومش بنقدّمهم كوظائف مكتملة.</p>
+    </div>
+  </div>
+
+  <h3 class="mt-4 mb-2">دورة حياة الجلسة</h3>
+  <div class="session-flow">
+    <div class="step-card">
+      <span class="step-no">1</span>
+      <b>دخول ناجح</b>
+      <p>كلمة مرور أو <span class="ltr">OTP</span> صحيح.</p>
+    </div>
+    <div class="step-card">
+      <span class="step-no">2</span>
+      <b>توكن عشوائي</b>
+      <p>32 بايت عشوائية — مش قابل للتخمين.</p>
+    </div>
+    <div class="step-card">
+      <span class="step-no">3</span>
+      <b>تخزين آمن</b>
+      <p><span class="ltr">HMAC-SHA256</span> في DB، والكوكي <span class="ltr">httpOnly</span>.</p>
+    </div>
+    <div class="step-card">
+      <span class="step-no">4</span>
+      <b>تحقق كل طلب</b>
+      <p>صلاحية + حساب نشط + تحديث آخر نشاط.</p>
+    </div>
+    <div class="step-card">
+      <span class="step-no">5</span>
+      <b>خروج</b>
+      <p>حذف الجلسة من DB ومسح الكوكي.</p>
+    </div>
+  </div>
+
+  <div class="callout success">
+    <b>ليه ده مهم؟</b>
+    <p>
+      الجلسة مش <span class="ltr">JWT</span> مخزّن في المتصفح، والتوكن مش مخزّن خام في قاعدة البيانات.
+      ده يقلل أثر أي تسريب، وبيسمح بإلغاء الجلسات فورًا من السيرفر.
+    </p>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════════════════
+     09 — RESPONSIVE
+     ══════════════════════════════════════════════════════════ -->
+<section class="section" id="responsive">
+  <div class="section-head">
+    <span class="section-no">09</span>
+    <div>
+      <span class="kicker">تجربة واحدة على كل شاشة</span>
+      <h2>التجاوب والثيمات</h2>
+    </div>
+  </div>
+
+  <p class="lead">
+    اختبرنا الواجهة على 3 مقاسات أساسية، بالعربي والإنجليزي، لايت ودارك،
+    مع تقليل الحركة. مفيش <span class="ltr">horizontal overflow</span> في أي مقاس.
+  </p>
+
+  <div class="mobile-gallery">
+    <figure class="shot">
+      <div class="browser-bar"><i></i><i></i><i></i></div>
+      <img src="../assets/home-mobile-light.png" alt="الرئيسية موبايل لايت">
+      <figcaption><b>موبايل 390px</b><br>عربي · لايت</figcaption>
+    </figure>
+    <figure class="shot">
+      <div class="browser-bar"><i></i><i></i><i></i></div>
+      <img src="../assets/home-mobile-dark.png" alt="الرئيسية موبايل دارك">
+      <figcaption><b>موبايل 390px</b><br>عربي · دارك</figcaption>
+    </figure>
+    <figure class="shot tablet">
+      <div class="browser-bar"><i></i><i></i><i></i></div>
+      <img src="../assets/tablet-menu.png" alt="قائمة التابلت">
+      <figcaption><b>تابلت 820px</b><br>قائمة تنقل مفتوحة</figcaption>
+    </figure>
+  </div>
+
+  <div class="three-col mt-4">
+    <div class="panel">
+      <h4>1440px — Desktop</h4>
+      <p class="small mb-0">كل الأقسام والـ <span class="ltr">grid</span> ظاهرة، والمسافات متوازنة.</p>
+    </div>
+    <div class="panel">
+      <h4>820px — Tablet</h4>
+      <p class="small mb-0">قائمة موبايل متسقة، مفيش تداخل، والهيدر ثابت.</p>
+    </div>
+    <div class="panel">
+      <h4>390px — Mobile</h4>
+      <p class="small mb-0"><span class="ltr">Hero</span> وأزرار وبطاقات وتنقل سفلي — بدون قص أو <span class="ltr">overflow</span>.</p>
+    </div>
+  </div>
+
+  <div class="two-col mt-4">
+    <div class="panel soft">
+      <h3>اللغة والثيم</h3>
+      <ul class="bullets">
+        <li>عربي <span class="ltr">RTL</span> افتراضي، وإنجليزي <span class="ltr">LTR</span> كامل.</li>
+        <li>لايت ودارك مع حفظ الاختيار في <span class="ltr">localStorage</span>.</li>
+        <li>تبديل اللغة والثيم من أي صفحة تقريبًا.</li>
+      </ul>
+    </div>
+    <div class="panel soft">
+      <h3>الوصول والحركة</h3>
+      <ul class="bullets">
+        <li><span class="ltr">prefers-reduced-motion</span> بيوقف الأنيميشن.</li>
+        <li>تسميات واضحة للأزرار وحقول الإدخال.</li>
+        <li><span class="ltr">focus</span> ظاهر لعناصر التحكم.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════════════════
+     10 — API
+     ══════════════════════════════════════════════════════════ -->
+<section class="section" id="api">
+  <div class="section-head">
+    <span class="section-no">10</span>
+    <div>
+      <span class="kicker">العقد بين الويب والباك-إند</span>
+      <h2>واجهات API</h2>
+    </div>
+  </div>
+
+  <p class="lead">
+    15 مسار وظيفي + مساري صحة، كلهم بنفس شكل الاستجابة والـ <span class="ltr">requestId</span>.
+    الأسماء متوافقة مع عقلية الموبايل، لكن الجلسات ويب والمصادقة مستقلة.
+  </p>
+
+  <table class="api-table">
+    <thead>
+      <tr><th>المسار والطريقة</th><th>الوظيفة</th><th>الحماية</th></tr>
+    </thead>
+    <tbody>
+      <tr class="group-row"><td colspan="3">المصادقة</td></tr>
+      <tr><td><span class="method post">POST</span><span class="endpoint">/api/auth/register/start</span></td><td>بدء تسجيل برقم الهاتف</td><td>عام</td></tr>
+      <tr><td><span class="method post">POST</span><span class="endpoint">/api/auth/register/verify-otp</span></td><td>تأكيد <span class="ltr">OTP</span> + إنشاء الحساب + هدية الترحيب</td><td>عام</td></tr>
+      <tr><td><span class="method patch">PATCH</span><span class="endpoint">/api/auth/register/profile-basics</span></td><td>استكمال البيانات الأساسية</td><td>جلسة</td></tr>
+      <tr><td><span class="method post">POST</span><span class="endpoint">/api/auth/otp/login/start</span></td><td>إرسال كود دخول</td><td>عام</td></tr>
+      <tr><td><span class="method post">POST</span><span class="endpoint">/api/auth/otp/login/verify</span></td><td>التحقق من الكود وإنشاء جلسة</td><td>عام</td></tr>
+      <tr><td><span class="method post">POST</span><span class="endpoint">/api/auth/login</span></td><td>دخول بكلمة مرور (هاتف/بريد)</td><td>عام</td></tr>
+      <tr><td><span class="method get">GET</span><span class="endpoint">/api/auth/me</span></td><td>بيانات المستخدم والجلسة الحالية</td><td>جلسة</td></tr>
+      <tr><td><span class="method post">POST</span><span class="endpoint">/api/auth/logout</span></td><td>إنهاء الجلسة الحالية</td><td>كوكي</td></tr>
+      <tr><td><span class="method post">POST</span><span class="endpoint">/api/auth/logout-all</span></td><td>إنهاء كل جلسات المستخدم</td><td>جلسة</td></tr>
+      <tr><td><span class="method post">POST</span><span class="endpoint">/api/auth/set-password</span></td><td>تعيين كلمة مرور</td><td>جلسة</td></tr>
+      <tr><td><span class="method post">POST</span><span class="endpoint">/api/auth/change-password</span></td><td>تغيير كلمة المرور</td><td>جلسة</td></tr>
+
+      <tr class="group-row"><td colspan="3">الباقات</td></tr>
+      <tr><td><span class="method get">GET</span><span class="endpoint">/api/subscriptions/plans</span></td><td>الباقات + المزايا + السعر السنوي</td><td>عام</td></tr>
+
+      <tr class="group-row"><td colspan="3">المقالات</td></tr>
+      <tr><td><span class="method get">GET</span><span class="endpoint">/api/blog/categories</span></td><td>تصنيفات المقالات</td><td>عام</td></tr>
+      <tr><td><span class="method get">GET</span><span class="endpoint">/api/blog/articles</span></td><td>قائمة المقالات المنشورة + بحث/تصنيف</td><td>عام</td></tr>
+      <tr><td><span class="method get">GET</span><span class="endpoint">/api/blog/articles/:slugOrId</span></td><td>تفاصيل مقال منشور + زيادة المشاهدات</td><td>عام</td></tr>
+
+      <tr class="group-row"><td colspan="3">الصحة</td></tr>
+      <tr><td><span class="method get">GET</span><span class="endpoint">/health</span></td><td>فحص الخدمة وقاعدة البيانات</td><td>عام</td></tr>
+      <tr><td><span class="method get">GET</span><span class="endpoint">/api/health</span></td><td>نفس الفحص تحت <span class="ltr">/api</span></td><td>عام</td></tr>
+    </tbody>
+  </table>
+
+  <div class="callout mt-3">
+    <b>شكل الاستجابة</b>
+    <p>
+      النجاح: <span class="ltr">{ data, meta: { requestId, serverTime } }</span>.
+      الخطأ: <span class="ltr">{ error: { code, message }, meta }</span>.
+      كل استجابة فيها <span class="ltr">x-request-id</span> لتسهيل التتبع.
+    </p>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════════════════
+     11 — SECURITY
+     ══════════════════════════════════════════════════════════ -->
+<section class="section" id="security">
+  <div class="section-head">
+    <span class="section-no">11</span>
+    <div>
+      <span class="kicker">الأمان من أول سطر</span>
+      <h2>الأمان والخصوصية</h2>
+    </div>
+  </div>
+
+  <p class="lead">
+    الأمان مش إضافة في الآخر؛ القرارات الأساسية اتبنت من أول يوم:
+    جلسات مشفرة، <span class="ltr">OTP</span> منفصل، تحقق من المدخلات، وحدود محاولات.
+  </p>
+
+  <table>
+    <thead>
+      <tr><th>الطبقة</th><th>الإجراء</th><th>الأثر</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>كوكي الجلسة</td><td><span class="ltr">httpOnly</span> + <span class="ltr">SameSite=Lax</span> + <span class="ltr">Secure</span> في الإنتاج</td><td>يمنع قراءة التوكن من <span class="ltr">JS</span></td></tr>
+      <tr><td>تخزين التوكن</td><td><span class="ltr">HMAC-SHA256</span> فقط — مش التوكن الخام</td><td>لو الـ DB اتسربت، التوكن مش قابل للاستخدام</td></tr>
+      <tr><td>OTP</td><td><span class="ltr">bcrypt</span> + صلاحية 5 دقايق + 5 محاولات + منع إعادة إرسال 60 ثانية</td><td>يقلل التخمين وإساءة الاستخدام</td></tr>
+      <tr><td>حدود المحاولات</td><td>حدود على الدخول و<span class="ltr">OTP</span> لكل <span class="ltr">IP</span> / رقم</td><td>يقلل <span class="ltr">brute force</span></td></tr>
+      <tr><td>CSRF</td><td>فحص <span class="ltr">Origin</span> للطلبات المتغيرة + <span class="ltr">same-origin proxy</span></td><td>يمنع طلبات من أصل غريب</td></tr>
+      <tr><td>Helmet</td><td><span class="ltr">security headers</span> على الـ BFF</td><td>تقليل هجمات المتصفح الشائعة</td></tr>
+      <tr><td>التحقق من المدخلات</td><td><span class="ltr">Zod</span> لكل <span class="ltr">body/query</span> + حد 100KB</td><td>يمنع مدخلات غير متوقعة</td></tr>
+      <tr><td>كلمات المرور</td><td><span class="ltr">bcrypt</span> cost 12</td><td>تخزين آمن حتى لو الـ DB اتسربت</td></tr>
+      <tr><td>الأسرار</td><td>من البيئة فقط + رفض إعدادات التطوير في الإنتاج</td><td>مفيش أسرار في الكود أو Git</td></tr>
+      <tr><td>التتبع</td><td><span class="ltr">LoginAttempt</span> + <span class="ltr">IP/User-Agent</span> للجلسة</td><td>تدقيق أفضل عند أي مشكلة</td></tr>
+    </tbody>
+  </table>
+
+  <div class="two-col mt-3">
+    <div class="callout success">
+      <b>جلسات الويب معزولة</b>
+      <p>
+        <span class="ltr">web_sessions</span> و<span class="ltr">web_otp_codes</span> جداول ويب مستقلة.
+        مفيش أي خلط مع <span class="ltr">otp_codes</span> أو <span class="ltr">user_sessions</span> الخاصة بالموبايل.
+      </p>
+    </div>
+    <div class="callout warn">
+      <b>قبل الإنتاج</b>
+      <p>
+        HTTPS إجباري، <span class="ltr">COOKIE_SECURE=true</span>،
+        <span class="ltr">TRUST_PROXY=true</span> ورا reverse proxy،
+        و<span class="ltr">WEB_ORIGIN</span> على الدومين النهائي فقط.
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════════════════
+     12 — TESTING
+     ══════════════════════════════════════════════════════════ -->
+<section class="section" id="testing">
+  <div class="section-head">
+    <span class="section-no">12</span>
+    <div>
+      <span class="kicker">إثبات إنه شغال</span>
+      <h2>الاختبارات والجودة</h2>
+    </div>
+  </div>
+
+  <p class="lead">
+    اختبرنا المسارات الأساسية يدويًا على <span class="ltr">build</span> إنتاجي محلي،
+    مع بيانات حقيقية من قاعدة البيانات. كل السيناريوهات الأساسية نجحت.
+  </p>
+
+  <table>
+    <thead>
+      <tr><th>الاختبار</th><th>النتيجة</th><th>ملاحظات</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>بناء الـ BFF — <span class="ltr">npm run build</span></td><td><span class="status-ok">ناجح</span></td><td>TypeScript compile بدون أخطاء</td></tr>
+      <tr><td>بناء Next.js — <span class="ltr">npm run build</span></td><td><span class="status-ok">ناجح</span></td><td>كل الصفحات اتبنت</td></tr>
+      <tr><td>فحص الصحة + قاعدة البيانات</td><td><span class="status-ok">ناجح</span></td><td><span class="ltr">database: ok</span></td></tr>
+      <tr><td>دخول بكلمة مرور — نجاح وفشل</td><td><span class="status-ok">ناجح</span></td><td>رسائل خطأ مناسبة</td></tr>
+      <tr><td><span class="ltr">OTP</span> — بدء، تحقق، إعادة إرسال</td><td><span class="status-ok">ناجح</span></td><td>كود 5 أرقام + انتهاء صلاحية</td></tr>
+      <tr><td>تسجيل حساب جديد + هدية الترحيب</td><td><span class="status-ok">ناجح</span></td><td>محفظة + <span class="ltr">ledger</span> + رصيد</td></tr>
+      <tr><td>الجلسة — <span class="ltr">/me</span> ثم <span class="ltr">logout</span></td><td><span class="status-ok">ناجح</span></td><td>الجلسة بتتحذف من الـ DB</td></tr>
+      <tr><td>الباقات + السعر السنوي</td><td><span class="status-ok">ناجح</span></td><td><span class="nowrap">شهريًا: <span class="ltr">199 / 399</span></span><br><span class="nowrap">سنويًا: <span class="ltr">1,990 / 3,990</span></span></td></tr>
+      <tr><td>المقالات — قائمة، تفاصيل، بحث</td><td><span class="status-ok">ناجح</span></td><td>المنشور فقط</td></tr>
+      <tr><td>Production proxy — <span class="ltr">/api/bff</span></td><td><span class="status-ok">ناجح</span></td><td>كوكي <span class="ltr">same-origin</span></td></tr>
+      <tr><td>تجاوب <span class="ltr">1440 / 820 / 390</span></td><td><span class="status-ok">ناجح</span></td><td>بدون <span class="ltr">overflow</span> أفقي</td></tr>
+      <tr><td>عربي/إنجليزي + لايت/دارك + تقليل الحركة</td><td><span class="status-ok">ناجح</span></td><td>كل التبديلات شغالة</td></tr>
+      <tr><td>تنظيف بيانات الاختبار</td><td><span class="status-ok">ناجح</span></td><td>مفيش مستخدمين تجريبيين متبقين</td></tr>
+    </tbody>
+  </table>
+
+  <div class="callout warn">
+    <b>ملاحظة صريحة</b>
+    <p>
+      مفيش اختبارات آلية أو <span class="ltr">CI/CD</span> في المرحلة الأولى.
+      الاختبارات كانت وظيفية يدوية على <span class="ltr">build</span> إنتاجي.
+      إضافة اختبارات آلية ومراقبة مستمرة في خطة المرحلة الثانية.
+    </p>
+  </div>
+
+  <div class="three-col mt-4">
+    <div class="panel">
+      <h4>بيئة الاختبار</h4>
+      <p class="small mb-0">نسخة إنتاجية محلية: <span class="ltr">next start</span> + <span class="ltr">BFF</span> 4001 + <span class="ltr">PostgreSQL</span>.</p>
+    </div>
+    <div class="panel">
+      <h4>بيانات حقيقية</h4>
+      <p class="small mb-0">باقة جولد 199، بلاتينيوم 399، ومقال منشور واحد — ثم تم تنظيف كل بيانات الاختبار.</p>
+    </div>
+    <div class="panel">
+      <h4>التغطية</h4>
+      <p class="small mb-0">13 سيناريو وظيفي: بناء، صحة، دخول، <span class="ltr">OTP</span>، تسجيل، جلسة، باقات، مقالات، تجاوب، ثيمات، وتنظيف.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════════════════
+     13 — DEPLOY
+     ══════════════════════════════════════════════════════════ -->
+<section class="section" id="deploy">
+  <div class="section-head">
+    <span class="section-no">13</span>
+    <div>
+      <span class="kicker">من التطوير للإنتاج</span>
+      <h2>التشغيل والنشر</h2>
+    </div>
+  </div>
+
+  <p class="lead">
+    التشغيل مقسوم لخدمتين: الـ <span class="ltr">BFF</span> على 4001، و<span class="ltr">Next.js</span> على 3000/80.
+    <span class="ltr">Next</span> بيعمل <span class="ltr">proxy</span> لـ <span class="ltr">/api/bff</span>،
+    والكوكي يفضل <span class="ltr">same-origin</span>.
+  </p>
+
+  <div class="two-col">
+    <div class="panel deploy-steps">
+      <h3>خطوات التشغيل</h3>
+      <ol class="flow-list">
+        <li>جهّز سيرفر فيه <span class="ltr">Node.js 20+</span> و<span class="ltr">PostgreSQL</span> ودومين <span class="ltr">HTTPS</span>.</li>
+        <li>نزّل المشروع واعمل <span class="ltr">npm ci</span> في الـ <span class="ltr">BFF</span> والويب.</li>
+        <li>أنشئ جداول الويب من <span class="ltr">bff/prisma/web_tables.sql</span> مرة واحدة.</li>
+        <li>إعداد <span class="ltr">.env</span> للـ <span class="ltr">BFF</span> — من غير رفعه على Git.</li>
+        <li>اعمل <span class="ltr">build</span> للاتنين وشغّل الـ <span class="ltr">BFF</span> ثم الويب.</li>
+        <li>ظبط <span class="ltr">reverse proxy</span> و<span class="ltr">HTTPS</span> واختبر <span class="ltr">/api/bff/health</span>.</li>
+      </ol>
+    </div>
+    <div class="panel soft">
+      <h3>متغيرات البيئة المطلوبة</h3>
+      <div class="env-list compact">
+        <div class="env-item"><code>DATABASE_URL</code><span>نفس اتصال قاعدة بيانات الموبايل</span></div>
+        <div class="env-item"><code>WEB_SESSION_SECRET</code><span>32 حرفًا على الأقل</span></div>
+        <div class="env-item"><code>WEB_ORIGIN</code><span>دومين الويب النهائي</span></div>
+        <div class="env-item"><code>WEB_COOKIE_NAME</code><span>اسم كوكي الجلسة</span></div>
+        <div class="env-item"><code>SESSION_TTL_DAYS</code><span>مدة الجلسة — افتراضي 30</span></div>
+        <div class="env-item"><code>OTP_SMS_PROVIDER</code><span>twilio في الإنتاج</span></div>
+        <div class="env-item"><code>TWILIO_*</code><span>SID + TOKEN + FROM</span></div>
+        <div class="env-item"><code>COOKIE_SECURE / TRUST_PROXY</code><span>true في الإنتاج</span></div>
+      </div>
+    </div>
+  </div>
+
+  <pre class="code-block compact"><span class="comment"># BFF</span>
+cd bff
+npm ci
+npx prisma generate
+psql "$DATABASE_URL" -f prisma/web_tables.sql
+npm run build
+NODE_ENV=production npm start
+
+<span class="comment"># Next.js — على نفس السيرفر أو سيرفر منفصل</span>
+BFF_URL=http://127.0.0.1:4001 npm run build
+npm start</pre>
+
+  <div class="two-col mt-3 deploy-checks">
+    <div class="panel">
+      <h3>قبل الإطلاق</h3>
+      <ul class="check-list">
+        <li>دومين + شهادة <span class="ltr">HTTPS</span> شغالين.</li>
+        <li>بيانات Twilio ورقم الإرسال متأكدين.</li>
+        <li><span class="ltr">OTP_DEV_ECHO=false</span> و<span class="ltr">OTP_SMS_PROVIDER=twilio</span>.</li>
+        <li><span class="ltr">COOKIE_SECURE=true</span> و<span class="ltr">TRUST_PROXY=true</span>.</li>
+        <li><span class="ltr">WEB_ORIGIN</span> على الدومين النهائي فقط.</li>
+      </ul>
+    </div>
+    <div class="panel soft">
+      <h3>المراقبة والنسخ الاحتياطي</h3>
+      <ul class="check-list">
+        <li>نسخة احتياطية من قاعدة البيانات قبل الإطلاق.</li>
+        <li>مراقبة <span class="ltr">/health</span> و<span class="ltr">/api/health</span>.</li>
+        <li>تتبع الأخطاء بالـ <span class="ltr">requestId</span> في اللوجز.</li>
+        <li>مراجعة الجلسات منتهية الصلاحية بشكل دوري.</li>
+        <li>خطة تراجع واضحة لأي إصدار جديد.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════════════════
+     14 — NEXT
+     ══════════════════════════════════════════════════════════ -->
+<section class="section" id="next">
+  <div class="section-head">
+    <span class="section-no">14</span>
+    <div>
+      <span class="kicker">بعد الأساس</span>
+      <h2>المرحلة الثانية والخطوة الجاية</h2>
+    </div>
+  </div>
+
+  <p class="lead">
+    المرحلة الأولى سلّمت الأساس. المرحلة الثانية هي تحويل لوحة التحكم والـ
+    <span class="ltr">onboarding</span> والدفع لتجربة كاملة — مع الحفاظ على نفس المعمارية.
+  </p>
+
+  <table class="roadmap-table">
+    <thead>
+      <tr><th>الأولوية</th><th>البند</th><th>النتيجة المتوقعة</th></tr>
+    </thead>
+    <tbody>
+      <tr><td><span class="priority p1">P1</span></td><td>استكمال <span class="ltr">onboarding</span> وربطه بالـ API</td><td>ملف متكامل وجودة ملف أعلى</td></tr>
+      <tr><td><span class="priority p1">P1</span></td><td>ربط أقسام لوحة التحكم</td><td>ترشيحات، بحث، رسائل، محفظة، ولي، مجتمع</td></tr>
+      <tr><td><span class="priority p1">P1</span></td><td>الاشتراكات والدفع</td><td><span class="ltr">Paymob / Fawry</span> + إدارة الاشتراك</td></tr>
+      <tr><td><span class="priority p2">P2</span></td><td>الإشعارات والتوثيق</td><td>بريد، <span class="ltr">push</span>، وتوثيق هوية</td></tr>
+      <tr><td><span class="priority p2">P2</span></td><td>إدارة المحتوى والباقات</td><td>أدمن ويب للمقالات والباقات</td></tr>
+      <tr><td><span class="priority p2">P2</span></td><td>اختبارات آلية + <span class="ltr">CI/CD</span> + مراقبة</td><td>ثقة واستقرار مع كل إصدار</td></tr>
+      <tr><td><span class="priority p3">P3</span></td><td>تحسين <span class="ltr">SEO / SSR</span> والأداء</td><td>ظهور أفضل وسرعة أعلى</td></tr>
+    </tbody>
+  </table>
+
+  <h3 class="mt-4 mb-2">قرارات محتاجينها منك عشان نبدأ</h3>
+  <div class="decision-grid">
+    <div class="decision"><b>مزود الرسائل</b>بيانات Twilio ورقم الإرسال، أو مزود <span class="ltr">SMS</span> بديل.</div>
+    <div class="decision"><b>بوابة الدفع</b>Paymob أو Fawry أو غيرهم، وبيانات التاجر.</div>
+    <div class="decision"><b>الدومين والاستضافة</b>الدومين النهائي، والسيرفر، وشهادة <span class="ltr">HTTPS</span>.</div>
+    <div class="decision"><b>النصوص القانونية</b>اعتماد الشروط وسياسة الخصوصية قبل الإطلاق.</div>
+  </div>
+
+  <div class="closing">
+    <span class="closing-kicker">الخطوة الجاية</span>
+    <h2>راجع التقرير، اعتمد الأساس،<br>وخلينا نبدأ المرحلة الثانية</h2>
+    <p>
+      المرحلة الأولى جاهزة للمراجعة والاعتماد. بعد الاعتماد، بنحدد أولويات المرحلة الثانية
+      ونبدأ في ربط لوحة التحكم والـ <span class="ltr">onboarding</span> والدفع.
+    </p>
+  </div>
+
+</section>
+
+</body>
+</html>
