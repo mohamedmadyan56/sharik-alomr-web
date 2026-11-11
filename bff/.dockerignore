@@ -1,0 +1,13 @@
+node_modules
+dist
+build
+.cache
+.git
+.github
+tests
+*.log
+.env
+.env.*
+!.env.example
+Dockerfile
+README.md
