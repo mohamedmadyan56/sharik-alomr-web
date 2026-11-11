@@ -1687,7 +1687,9 @@ export default function Login({
                                 ? ar
                                   ? "جارٍ الاتصال..."
                                   : "Connecting..."
-                                : provider}
+                                : isGoogle
+                                  ? provider
+                                  : `${provider} (${ar ? "قريبًا" : "Soon"})`}
                             </span>
                           </Button>
                         )
