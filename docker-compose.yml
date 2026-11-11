@@ -1,0 +1,166 @@
+name: sharik-alomr
+
+services:
+  db:
+    image: postgres:16-alpine
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER:-sharik}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?POSTGRES_PASSWORD is required}
+      POSTGRES_DB: ${POSTGRES_DB:-sharik_alomr}
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./backups:/backups
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-sharik} -d ${POSTGRES_DB:-sharik_alomr}"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+
+  migrate:
+    build:
+      context: ./bff
+      target: builder
+    command: ["npx", "prisma", "migrate", "deploy"]
+    environment:
+      DATABASE_URL: postgresql://${POSTGRES_USER:-sharik}:${POSTGRES_PASSWORD}@db:5432/${POSTGRES_DB:-sharik_alomr}?schema=public
+    depends_on:
+      db:
+        condition: service_healthy
+    restart: "no"
+
+  seed:
+    build:
+      context: ./bff
+      target: builder
+    command: ["npx", "tsx", "scripts/seed-production.ts"]
+    environment:
+      DATABASE_URL: postgresql://${POSTGRES_USER:-sharik}:${POSTGRES_PASSWORD}@db:5432/${POSTGRES_DB:-sharik_alomr}?schema=public
+    depends_on:
+      db:
+        condition: service_healthy
+      migrate:
+        condition: service_completed_successfully
+    restart: "no"
+
+  seed-admin:
+    build:
+      context: ./bff
+      target: builder
+    command: ["npx", "tsx", "scripts/seed-admin.ts"]
+    environment:
+      DATABASE_URL: postgresql://${POSTGRES_USER:-sharik}:${POSTGRES_PASSWORD}@db:5432/${POSTGRES_DB:-sharik_alomr}?schema=public
+      ADMIN_BOOTSTRAP_EMAIL: ${ADMIN_BOOTSTRAP_EMAIL:-admin@sharik-alomr.com}
+      ADMIN_BOOTSTRAP_PASSWORD: ${ADMIN_BOOTSTRAP_PASSWORD:-}
+      ADMIN_BOOTSTRAP_NAME: ${ADMIN_BOOTSTRAP_NAME:-مدير النظام}
+    volumes:
+      - ./secrets:/secrets
+    depends_on:
+      migrate:
+        condition: service_completed_successfully
+      seed:
+        condition: service_completed_successfully
+    restart: "no"
+
+  bff:
+    build:
+      context: ./bff
+    restart: unless-stopped
+    env_file:
+      - .env
+    environment:
+      NODE_ENV: production
+      HOST: 0.0.0.0
+      PORT: 4001
+      DATABASE_URL: postgresql://${POSTGRES_USER:-sharik}:${POSTGRES_PASSWORD}@db:5432/${POSTGRES_DB:-sharik_alomr}?schema=public
+      WEB_ORIGIN: ${PUBLIC_URL:?PUBLIC_URL is required}
+      APP_URL: ${PUBLIC_URL}
+      COOKIE_SECURE: "true"
+      TRUST_PROXY: "true"
+    volumes:
+      - media_data:/app/uploads
+    depends_on:
+      db:
+        condition: service_healthy
+      migrate:
+        condition: service_completed_successfully
+    healthcheck:
+      test: ["CMD-SHELL", "wget -qO- http://127.0.0.1:4001/health >/dev/null || exit 1"]
+      interval: 20s
+      timeout: 5s
+      start_period: 20s
+      retries: 5
+
+  web:
+    build:
+      context: .
+      args:
+        BFF_URL: http://bff:4001
+        SITE_URL: ${PUBLIC_URL:?PUBLIC_URL is required}
+    restart: unless-stopped
+    environment:
+      NODE_ENV: production
+      BFF_URL: http://bff:4001
+      SITE_URL: ${PUBLIC_URL}
+      PORT: 3000
+      HOSTNAME: 0.0.0.0
+    depends_on:
+      bff:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD-SHELL", "wget -qO- http://127.0.0.1:3000/ >/dev/null || exit 1"]
+      interval: 30s
+      timeout: 5s
+      start_period: 30s
+      retries: 5
+
+  nginx:
+    image: nginx:1.27-alpine
+    restart: unless-stopped
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./deploy/nginx/nginx.conf:/etc/nginx/nginx.conf:ro
+      - ./deploy/nginx/conf.d:/etc/nginx/conf.d:ro
+      - ./deploy/certs:/etc/nginx/certs:ro
+      - ./deploy/certbot/www:/var/www/certbot
+    depends_on:
+      web:
+        condition: service_healthy
+
+  prometheus:
+    image: prom/prometheus:v2.55.1
+    profiles: ["observability"]
+    restart: unless-stopped
+    command:
+      - --config.file=/etc/prometheus/prometheus.yml
+      - --storage.tsdb.retention.time=30d
+    volumes:
+      - ./deploy/observability/prometheus.yml:/etc/prometheus/prometheus.yml:ro
+      - ./secrets/metrics-token:/etc/prometheus/metrics-token:ro
+      - prometheus_data:/prometheus
+    depends_on:
+      bff:
+        condition: service_healthy
+
+  grafana:
+    image: grafana/grafana:11.3.0
+    profiles: ["observability"]
+    restart: unless-stopped
+    environment:
+      GF_SECURITY_ADMIN_USER: ${GRAFANA_ADMIN_USER:-admin}
+      GF_SECURITY_ADMIN_PASSWORD: ${GRAFANA_ADMIN_PASSWORD:?GRAFANA_ADMIN_PASSWORD is required}
+      GF_USERS_ALLOW_SIGN_UP: "false"
+    volumes:
+      - grafana_data:/var/lib/grafana
+      - ./deploy/observability/grafana/provisioning:/etc/grafana/provisioning:ro
+      - ./deploy/observability/grafana/dashboards:/var/lib/grafana/dashboards:ro
+    depends_on:
+      - prometheus
+
+volumes:
+  postgres_data:
+  media_data:
+  prometheus_data:
+  grafana_data:
