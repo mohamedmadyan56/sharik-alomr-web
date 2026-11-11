@@ -40,9 +40,14 @@ export const metadata: Metadata = {
     description: siteDescription,
   },
   twitter: {
-    card: "summary",
+    card: "summary_large_image",
     title: "شريك العمر | زواج جاد بخطوات محترمة",
     description: siteDescription,
+  },
+  appleWebApp: {
+    capable: true,
+    title: "شريك العمر",
+    statusBarStyle: "default",
   },
   robots: {
     index: true,
@@ -55,6 +60,32 @@ export const metadata: Metadata = {
       "max-video-preview": -1,
     },
   },
+};
+
+const structuredData = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Organization",
+      "@id": `${siteUrl}/#organization`,
+      name: "شريك العمر",
+      alternateName: "Sharik Alomr",
+      url: siteUrl,
+      logo: `${siteUrl}/icons/icon-512.png`,
+      description: siteDescription,
+      areaServed: "EG",
+      knowsLanguage: ["ar", "en"],
+    },
+    {
+      "@type": "WebSite",
+      "@id": `${siteUrl}/#website`,
+      url: siteUrl,
+      name: "شريك العمر",
+      description: siteDescription,
+      inLanguage: "ar-EG",
+      publisher: { "@id": `${siteUrl}/#organization` },
+    },
+  ],
 };
 
 export const viewport: Viewport = {
@@ -70,6 +101,12 @@ export default function RootLayout({ children }: { children: ReactNode }) {
   return (
     <html lang="ar" dir="rtl" suppressHydrationWarning>
       <body>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify(structuredData).replace(/</g, "\\u003c"),
+          }}
+        />
         <AppProviders>{children}</AppProviders>
       </body>
     </html>
