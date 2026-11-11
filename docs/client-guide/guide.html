@@ -1,0 +1,1185 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>شريك العمر — دليل العميل</title>
+<meta name="author" content="فريق التطوير">
+<meta name="description" content="دليل مبسط لموقع شريك العمر: كل ميزة ووظيفتها مع لقطات شاشة من الموقع الحقيقي.">
+<link rel="stylesheet" href="guide.css">
+</head>
+<body>
+
+<!-- ── أيقونات ─────────────────────────────────────────────── -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+  <defs>
+    <symbol id="i-home" viewBox="0 0 24 24"><path d="M3 10.8 12 3l9 7.8"/><path d="M5.2 9.5V21h13.6V9.5"/><path d="M9.5 21v-6.2h5V21"/></symbol>
+    <symbol id="i-users" viewBox="0 0 24 24"><circle cx="9" cy="8.2" r="3.4"/><path d="M2.8 20.5c0-3.5 2.8-5.6 6.2-5.6s6.2 2.1 6.2 5.6"/><path d="M16 5.2a3.2 3.2 0 0 1 0 6.1"/><path d="M17.8 14.6c2.1.5 3.4 2.1 3.4 4.4"/></symbol>
+    <symbol id="i-heart" viewBox="0 0 24 24"><path d="M12 20.3S3.4 15 3.4 8.9A4.6 4.6 0 0 1 12 6.2a4.6 4.6 0 0 1 8.6 2.7C20.6 15 12 20.3 12 20.3Z"/></symbol>
+    <symbol id="i-chat" viewBox="0 0 24 24"><path d="M21 11.5a8.4 8.4 0 0 1-9 8.4 9.6 9.6 0 0 1-3.4-.7L3 21l1.6-4.2a8.2 8.2 0 0 1-1-4A8.4 8.4 0 0 1 12 3.1a8.4 8.4 0 0 1 9 8.4Z"/></symbol>
+    <symbol id="i-wallet" viewBox="0 0 24 24"><path d="M4 7.5A2.5 2.5 0 0 1 6.5 5H18v3"/><path d="M4 7.5V18a2 2 0 0 0 2 2h14V8H6.5"/><path d="M16.5 13.8h1.8"/></symbol>
+    <symbol id="i-shield" viewBox="0 0 24 24"><path d="M12 3 4.8 6v5.4c0 4.4 3 8.2 7.2 9.6 4.2-1.4 7.2-5.2 7.2-9.6V6L12 3Z"/><path d="m8.8 12.2 2.2 2.2 4.3-4.4"/></symbol>
+    <symbol id="i-phone" viewBox="0 0 24 24"><path d="M7.3 3.5h-3A1.3 1.3 0 0 0 3 4.9C3 13.8 10.2 21 19.1 21a1.3 1.3 0 0 0 1.4-1.3v-3a1.3 1.3 0 0 0-1-1.3l-3.5-.8a1.3 1.3 0 0 0-1.3.5l-1.3 1.6a15.5 15.5 0 0 1-5.1-5.1l1.6-1.3a1.3 1.3 0 0 0 .5-1.3l-.8-3.5a1.3 1.3 0 0 0-1.3-1Z"/></symbol>
+    <symbol id="i-globe" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M3.3 9.5h17.4M3.3 14.5h17.4"/><path d="M12 3c2.4 2.5 3.6 5.6 3.6 9s-1.2 6.5-3.6 9c-2.4-2.5-3.6-5.6-3.6-9S9.6 5.5 12 3Z"/></symbol>
+    <symbol id="i-moon" viewBox="0 0 24 24"><path d="M20.6 14.2A8.8 8.8 0 0 1 9.8 3.4 8.8 8.8 0 1 0 20.6 14.2Z"/></symbol>
+    <symbol id="i-layout" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 9h18M7 6.8h.1M10 6.8h.1"/></symbol>
+    <symbol id="i-server" viewBox="0 0 24 24"><rect x="3.5" y="4" width="17" height="6" rx="1.5"/><rect x="3.5" y="14" width="17" height="6" rx="1.5"/><path d="M7 7h.1M7 17h.1M11 7h6M11 17h6"/></symbol>
+    <symbol id="i-db" viewBox="0 0 24 24"><ellipse cx="12" cy="5.5" rx="8" ry="3"/><path d="M4 5.5v6c0 1.7 3.6 3 8 3s8-1.3 8-3v-6"/><path d="M4 11.5v6c0 1.7 3.6 3 8 3s8-1.3 8-3v-6"/></symbol>
+    <symbol id="i-spark" viewBox="0 0 24 24"><path d="m12 3 1.9 5.1L19 10l-5.1 1.9L12 17l-1.9-5.1L5 10l5.1-1.9L12 3Z"/><path d="m18.5 15.5.8 2.2 2.2.8-2.2.8-.8 2.2-.8-2.2-2.2-.8 2.2-.8.8-2.2Z"/></symbol>
+    <symbol id="i-check" viewBox="0 0 24 24"><path d="m5 12.5 4.5 4.5L19 7.5"/></symbol>
+    <symbol id="i-lock" viewBox="0 0 24 24"><rect x="4.5" y="10" width="15" height="10.5" rx="2"/><path d="M8 10V7.5a4 4 0 0 1 8 0V10"/><path d="M12 14v2.5"/></symbol>
+    <symbol id="i-file" viewBox="0 0 24 24"><path d="M6 3.5h8l4 4V20.5H6V3.5Z"/><path d="M14 3.5v4h4M9 12h6M9 16h6"/></symbol>
+    <symbol id="i-bell" viewBox="0 0 24 24"><path d="M18 9.5a6 6 0 1 0-12 0c0 5-2 6.5-2 6.5h16s-2-1.5-2-6.5Z"/><path d="M10 19a2.2 2.2 0 0 0 4 0"/></symbol>
+    <symbol id="i-search" viewBox="0 0 24 24"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m15.5 15.5 4.5 4.5"/></symbol>
+    <symbol id="i-sliders" viewBox="0 0 24 24"><path d="M4 7h16M4 12h16M4 17h16"/><circle cx="9" cy="7" r="2"/><circle cx="15" cy="12" r="2"/><circle cx="8" cy="17" r="2"/></symbol>
+    <symbol id="i-arrow" viewBox="0 0 24 24"><path d="M4.5 12h15M13.5 6l6 6-6 6"/></symbol>
+    <symbol id="i-star" viewBox="0 0 24 24"><path d="m12 3.5 2.6 5.3 5.9.9-4.3 4.1 1 5.8-5.2-2.7-5.2 2.7 1-5.8-4.3-4.1 5.9-.9L12 3.5Z"/></symbol>
+    <symbol id="i-flag" viewBox="0 0 24 24"><path d="M5.5 21V4"/><path d="M5.5 4.5h11l-2 3.3 2 3.3h-11"/></symbol>
+    <symbol id="i-eye" viewBox="0 0 24 24"><path d="M2.8 12S6.3 5.8 12 5.8 21.2 12 21.2 12 17.7 18.2 12 18.2 2.8 12 2.8 12Z"/><circle cx="12" cy="12" r="3"/></symbol>
+    <symbol id="i-key" viewBox="0 0 24 24"><circle cx="8" cy="8" r="4.2"/><path d="m11 11 9 9M16.5 16.5l2-2M14 14l2-2"/></symbol>
+    <symbol id="i-check-circle" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="m8 12.3 2.7 2.7L16.5 9"/></symbol>
+    <symbol id="i-clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5.3l3.3 2"/></symbol>
+    <symbol id="i-card" viewBox="0 0 24 24"><rect x="3" y="5.5" width="18" height="13" rx="2"/><path d="M3 9.5h18M6.5 15h3"/></symbol>
+    <symbol id="i-tag" viewBox="0 0 24 24"><path d="M3.5 11.5V4.5h7L20.5 14.5l-6 6L3.5 11.5Z"/><circle cx="8" cy="9" r="1.2"/></symbol>
+    <symbol id="i-book" viewBox="0 0 24 24"><path d="M4 5.5A2.5 2.5 0 0 1 6.5 3H20v15.5H6.5A2.5 2.5 0 0 0 4 21V5.5Z"/><path d="M4 18.5A2.5 2.5 0 0 1 6.5 16H20"/></symbol>
+    <symbol id="i-ban" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="m5.6 5.6 12.8 12.8"/></symbol>
+  </defs>
+</svg>
+
+<!-- ══════════════════════════════════════════════════════════
+     01 — الغلاف
+     ══════════════════════════════════════════════════════════ -->
+<section class="page cover">
+  <div class="cover-inner">
+    <div class="cover-ring r1"></div>
+    <div class="cover-ring r2"></div>
+    <div class="cover-ring r3"></div>
+    <div class="cover-glow"></div>
+    <img class="cover-mark" src="assets/logo-white.png" alt="">
+
+    <div class="cover-top">
+      <div class="cover-brand">
+        <img src="assets/logo-white.png" alt="شريك العمر">
+        <div>
+          <b>شريك العمر</b>
+          <span>SHARIK ALOMR</span>
+        </div>
+      </div>
+      <span class="cover-badge">دليل العميل · 2026</span>
+    </div>
+
+    <div class="cover-middle">
+      <div class="cover-kicker"><i></i> نسخة الويب · منصة شريك العمر</div>
+      <h1>كل اللي بنيناه،<br><em>مشروح ببساطة.</em></h1>
+      <p>
+        جولة مختصرة على موقع شريك العمر: كل شاشة، وظيفتها، وإزاي بتخدم
+        المستخدم — بلقطات حقيقية من الموقع.
+      </p>
+      <div class="cover-features">
+        <span>13 صفحة</span>
+        <span>عربي / English</span>
+        <span>فاتح / داكن</span>
+        <span>موبايل / كمبيوتر</span>
+        <span>لوحة مستخدم</span>
+        <span>لوحة إدارة</span>
+      </div>
+    </div>
+
+    <div class="cover-bottom">
+      <div class="cover-meta">
+        <span>إعداد</span>
+        <b>فريق التطوير</b>
+      </div>
+      <div class="cover-meta">
+        <span>التاريخ</span>
+        <b>نوفمبر 2026</b>
+      </div>
+      <div class="cover-note">خاص بالعميل<br>يُرجى عدم التوزيع</div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════════════════
+     02 — أهلًا + المحتويات
+     ══════════════════════════════════════════════════════════ -->
+<section class="page">
+  <header class="topbar">
+    <div class="brand">
+      <img src="assets/logo.png" alt="">
+      <div><b>شريك العمر</b><small>SHARIK ALOMR</small></div>
+    </div>
+    <span class="section-tag">البداية</span>
+  </header>
+
+  <div class="eyebrow">قبل ما نبدأ</div>
+  <h1 class="title">أهلًا بيك في <em>دليلك</em></h1>
+  <p class="lead">
+    الدليل ده مش تقرير تقني. هو جولة سريعة بتشرح كل جزء في الموقع بلغة
+    بسيطة، ومع كل جزء لقطة شاشة من النسخة الحقيقية.
+  </p>
+
+  <div class="welcome-quote">
+    هدفنا إن العميل يفهم <b>إيه اللي موجود</b>، و<b>إيه اللي بيعمله</b>،
+    و<b>إيه اللي جاي</b> — من غير ما يحتاج خبرة تقنية.
+  </div>
+
+  <h2 class="sub"><svg class="ic"><use href="#i-file"/></svg> محتويات الدليل</h2>
+  <div class="toc">
+    <div class="row"><span class="title">المنصة في سطر واحد</span><span class="pg">03</span></div>
+    <div class="row"><span class="title">رحلة المستخدم</span><span class="pg">04</span></div>
+    <div class="row"><span class="title">الصفحة الرئيسية</span><span class="pg">05</span></div>
+    <div class="row"><span class="title">الباقات والمحفظة</span><span class="pg">06</span></div>
+    <div class="row"><span class="title">المقالات والمحتوى</span><span class="pg">07</span></div>
+    <div class="row"><span class="title">الثقة والصفحات القانونية</span><span class="pg">08</span></div>
+    <div class="row"><span class="title">الدخول والتسجيل</span><span class="pg">09</span></div>
+    <div class="row"><span class="title">لوحة المستخدم</span><span class="pg">10</span></div>
+    <div class="row"><span class="title">الترشيحات والمحفظة</span><span class="pg">11</span></div>
+    <div class="row"><span class="title">الرسائل والملف الشخصي</span><span class="pg">12</span></div>
+    <div class="row"><span class="title">لوحة الإدارة</span><span class="pg">13</span></div>
+    <div class="row"><span class="title">إدارة المستخدمين والجودة</span><span class="pg">14</span></div>
+    <div class="row"><span class="title">الباقات والمدفوعات</span><span class="pg">15</span></div>
+    <div class="row"><span class="title">اللغة والوضع الداكن والموبايل</span><span class="pg">16</span></div>
+    <div class="row"><span class="title">كيف يعمل الموقع؟</span><span class="pg">17</span></div>
+    <div class="row"><span class="title">الأمان والخصوصية</span><span class="pg">18</span></div>
+    <div class="row"><span class="title">فين وصلنا؟ وإيه الجاي؟</span><span class="pg">19</span></div>
+  </div>
+
+  <div class="note info mt-5">
+    <svg class="ic"><use href="#i-spark"/></svg>
+    <div><b>طريقة القراءة:</b> ابدأ من الصفحة اللي تهمك. كل صفحة مستقلة،
+    وفي آخر الدليل قسم مبسط عن التقنية والأمان والخطوات القادمة.</div>
+  </div>
+
+  <h2 class="sub mt-5"><svg class="ic"><use href="#i-eye"/></svg> إزاي تستخدم الدليل؟</h2>
+  <div class="grid grid-3">
+    <div class="card">
+      <svg class="ic"><use href="#i-star"/></svg>
+      <h3>ابدأ بالصورة الكبيرة</h3>
+      <p>صفحة 3 بتلخص المنصة كلها في دقيقة واحدة.</p>
+    </div>
+    <div class="card">
+      <svg class="ic"><use href="#i-layout"/></svg>
+      <h3>شوف الشاشات</h3>
+      <p>صفحات 5–16 فيها لقطات حقيقية لكل جزء في الموقع.</p>
+    </div>
+    <div class="card">
+      <svg class="ic"><use href="#i-spark"/></svg>
+      <h3>اعرف الجاي</h3>
+      <p>صفحة 19 بتوضح الحالة الحالية والخطوات القادمة.</p>
+    </div>
+  </div>
+
+  <footer class="pfoot"><span>دليل العميل · <b>نسخة الويب</b></span><span class="pno">02</span></footer>
+</section>
+
+<!-- ══════════════════════════════════════════════════════════
+     03 — المنصة في سطر واحد
+     ══════════════════════════════════════════════════════════ -->
+<section class="page">
+  <header class="topbar">
+    <div class="brand">
+      <img src="assets/logo.png" alt="">
+      <div><b>شريك العمر</b><small>SHARIK ALOMR</small></div>
+    </div>
+    <span class="section-tag">نظرة عامة</span>
+  </header>
+
+  <div class="eyebrow">الصورة الكبيرة</div>
+  <h1 class="title">المنصة في <em>سطر واحد</em></h1>
+  <p class="lead">
+    شريك العمر منصة زواج مصرية للتعارف الجاد: بترشيحات مدروسة،
+    وخصوصية حقيقية، وخطوات تحترم القيم.
+  </p>
+
+  <div class="grid grid-3 mb-5">
+    <div class="card tinted">
+      <svg class="ic"><use href="#i-globe"/></svg>
+      <h3>عربي أولًا</h3>
+      <p>تجربة كاملة بالعربية، مع تبديل فوري للإنجليزية في أي وقت.</p>
+    </div>
+    <div class="card tinted">
+      <svg class="ic"><use href="#i-lock"/></svg>
+      <h3>خصوصية حقيقية</h3>
+      <p>المستخدم بيحدد مين يشوف إيه، وإمتى — من غير مفاجآت.</p>
+    </div>
+    <div class="card tinted">
+      <svg class="ic"><use href="#i-heart"/></svg>
+      <h3>خطوات محترمة</h3>
+      <p>من التعارف للتواصل، كل مرحلة ليها قواعد واضحة ومعلنة.</p>
+    </div>
+  </div>
+
+  <h2 class="sub"><svg class="ic"><use href="#i-layout"/></svg> اللي موجود في النسخة الحالية</h2>
+  <div class="chips mb-5">
+    <span class="chip"><svg class="ic"><use href="#i-home"/></svg> موقع تعريفي كامل</span>
+    <span class="chip"><svg class="ic"><use href="#i-card"/></svg> باقات وأسعار</span>
+    <span class="chip"><svg class="ic"><use href="#i-book"/></svg> مقالات ومحتوى</span>
+    <span class="chip"><svg class="ic"><use href="#i-key"/></svg> تسجيل ودخول</span>
+    <span class="chip"><svg class="ic"><use href="#i-users"/></svg> لوحة مستخدم</span>
+    <span class="chip"><svg class="ic"><use href="#i-shield"/></svg> لوحة إدارة</span>
+  </div>
+
+  <div class="stats">
+    <div><b>13</b><span>صفحة ويب</span></div>
+    <div><b>2</b><span>لغة: عربي / إنجليزي</span></div>
+    <div><b>2</b><span>وضع: فاتح / داكن</span></div>
+    <div><b>34</b><span>اختبار ناجح</span></div>
+  </div>
+
+  <div class="note ok mt-5">
+    <svg class="ic"><use href="#i-check-circle"/></svg>
+    <div><b>الخلاصة:</b> النسخة الحالية جاهزة تعرض المنصة، تستقبل مستخدمين،
+    وتدير المحتوى والجودة من لوحة تحكم كاملة.</div>
+  </div>
+
+  <div class="quote-band">
+    <span class="mark">&rdquo;</span>
+    <p>الهدف مش أكبر عدد من الحسابات، الهدف <b>تجربة محترمة تنتهي بزواج ناجح</b>.</p>
+  </div>
+
+  <footer class="pfoot"><span>دليل العميل · <b>نسخة الويب</b></span><span class="pno">03</span></footer>
+</section>
+
+<!-- ══════════════════════════════════════════════════════════
+     04 — رحلة المستخدم
+     ══════════════════════════════════════════════════════════ -->
+<section class="page">
+  <header class="topbar">
+    <div class="brand">
+      <img src="assets/logo.png" alt="">
+      <div><b>شريك العمر</b><small>SHARIK ALOMR</small></div>
+    </div>
+    <span class="section-tag">رحلة المستخدم</span>
+  </header>
+
+  <div class="eyebrow">من أول زيارة للتواصل</div>
+  <h1 class="title">رحلة <em>المستخدم</em></h1>
+  <p class="lead">
+    ست خطوات واضحة، كل واحدة بتبني ثقة وتسد خطوة من خطوات التردد.
+  </p>
+
+  <div class="steps mb-5">
+    <div class="step" data-no="1">
+      <span class="num">1</span>
+      <h3>يتعرّف</h3>
+      <p>يفتح الصفحة الرئيسية ويشوف المنصة وقيمها وطريقة عملها.</p>
+    </div>
+    <div class="step" data-no="2">
+      <span class="num">2</span>
+      <h3>يقرأ</h3>
+      <p>يتصفح الباقات والمقالات وصفحات الثقة قبل أي تسجيل.</p>
+    </div>
+    <div class="step" data-no="3">
+      <span class="num">3</span>
+      <h3>يسجّل</h3>
+      <p>يدخل برقم الموبايل ورمز التحقق، أو بحساب Google.</p>
+    </div>
+    <div class="step" data-no="4">
+      <span class="num">4</span>
+      <h3>يكمّل ملفه</h3>
+      <p>يضيف بياناته واهتماماته ويحدد حدود الخصوصية.</p>
+    </div>
+    <div class="step" data-no="5">
+      <span class="num">5</span>
+      <h3>يستكشف</h3>
+      <p>يشوف ترشيحات مدروسة ويبدي اهتمامه بمن يناسبه.</p>
+    </div>
+    <div class="step" data-no="6">
+      <span class="num">6</span>
+      <h3>يتواصل</h3>
+      <p>المحادثة بتفتح بعد القبول المتبادل، وفي حدود واضحة.</p>
+    </div>
+  </div>
+
+  <div class="grid grid-3">
+    <div class="panel">
+      <h3>وضوح</h3>
+      <p>كل خطوة ليها هدف معلن، من غير مفاجآت أو خطوات مخفية.</p>
+    </div>
+    <div class="panel">
+      <h3>أمان</h3>
+      <p>بيانات المستخدم تحت تحكمه، ويقدر يحدد مين يشوفها.</p>
+    </div>
+    <div class="panel">
+      <h3>تحكم</h3>
+      <p>يقدر يكمّل أو يتوقف في أي وقت، من غير ضغط.</p>
+    </div>
+  </div>
+
+  <div class="note info mt-5">
+    <svg class="ic"><use href="#i-users"/></svg>
+    <div><b>وفي كل خطوة:</b> الإدارة متابعة الجودة والبلاغات، والمستخدم
+    عنده تحكم كامل في ظهوره وبياناته.</div>
+  </div>
+
+  <h2 class="sub mt-5"><svg class="ic"><use href="#i-shield"/></svg> وفي نفس الوقت… الإدارة</h2>
+  <div class="grid grid-3">
+    <div class="card">
+      <svg class="ic"><use href="#i-check-circle"/></svg>
+      <h3>مراجعة الملفات</h3>
+      <p>التحقق من الطلبات والموافقة على الملفات المؤهلة.</p>
+    </div>
+    <div class="card">
+      <svg class="ic"><use href="#i-flag"/></svg>
+      <h3>متابعة البلاغات</h3>
+      <p>الرد على أي سلوك غير مناسب وإجراء واضح.</p>
+    </div>
+    <div class="card">
+      <svg class="ic"><use href="#i-sliders"/></svg>
+      <h3>ضبط الجودة</h3>
+      <p>متابعة المؤشرات وتحسين التجربة باستمرار.</p>
+    </div>
+  </div>
+
+  <footer class="pfoot"><span>دليل العميل · <b>نسخة الويب</b></span><span class="pno">04</span></footer>
+</section>
+
+<!-- ══════════════════════════════════════════════════════════
+     05 — الصفحة الرئيسية
+     ══════════════════════════════════════════════════════════ -->
+<section class="page">
+  <header class="topbar">
+    <div class="brand">
+      <img src="assets/logo.png" alt="">
+      <div><b>شريك العمر</b><small>SHARIK ALOMR</small></div>
+    </div>
+    <span class="section-tag">الواجهة</span>
+  </header>
+
+  <div class="eyebrow">أول انطباع</div>
+  <h1 class="title">الصفحة <em>الرئيسية</em></h1>
+  <p class="lead">
+    بتعرّف الزائر بالمنصة في نص دقيقة، وبتوجهه للخطوة المناسبة:
+    يقرأ، يشوف الباقات، أو يبدأ رحلته.
+  </p>
+
+  <figure class="shot">
+    <div class="browserbar"><i></i><i></i><i></i><span>sharik-alomr.com</span></div>
+    <img src="assets/home-desktop.jpg" alt="الصفحة الرئيسية لشريك العمر">
+    <figcaption><b>لقطة حقيقية</b> — الصفحة الرئيسية على شاشة الكمبيوتر.</figcaption>
+  </figure>
+
+  <ul class="checks mt-4">
+    <li><svg class="ic"><use href="#i-check"/></svg><div><b>وعد واضح:</b> عنوان رئيسي وزر «ابدأ رحلتك».</div></li>
+    <li><svg class="ic"><use href="#i-check"/></svg><div><b>كيف تعمل:</b> شرح مختصر في 3 خطوات.</div></li>
+    <li><svg class="ic"><use href="#i-check"/></svg><div><b>الباقات:</b> مقارنة سريعة قبل التسجيل.</div></li>
+    <li><svg class="ic"><use href="#i-check"/></svg><div><b>الأسئلة الشائعة:</b> إجابات تقلل التردد.</div></li>
+    <li><svg class="ic"><use href="#i-check"/></svg><div><b>من نحن والأمان:</b> ثقة قبل أي خطوة.</div></li>
+    <li><svg class="ic"><use href="#i-check"/></svg><div><b>فوتر شامل:</b> كل الصفحات المهمة في مكان واحد.</div></li>
+  </ul>
+
+  <div class="note info mt-4">
+    <svg class="ic"><use href="#i-layout"/></svg>
+    <div><b>نفس الترتيب على الموبايل:</b> الأقسام بتترتب تلقائيًا عشان
+    تفضل مفهومة وسهلة التصفح على أي شاشة.</div>
+  </div>
+
+  <footer class="pfoot"><span>دليل العميل · <b>نسخة الويب</b></span><span class="pno">05</span></footer>
+</section>
+
+<!-- ══════════════════════════════════════════════════════════
+     06 — الباقات والمحفظة
+     ══════════════════════════════════════════════════════════ -->
+<section class="page">
+  <header class="topbar">
+    <div class="brand">
+      <img src="assets/logo.png" alt="">
+      <div><b>شريك العمر</b><small>SHARIK ALOMR</small></div>
+    </div>
+    <span class="section-tag">الباقات</span>
+  </header>
+
+  <div class="eyebrow">قرار واضح</div>
+  <h1 class="title">الباقات <em>والمحفظة</em></h1>
+  <p class="lead">
+    أسعار واضحة، مقارنة سهلة، ومحفظة رصيد جوه حساب المستخدم —
+    من غير أي رسوم مخفية.
+  </p>
+
+  <figure class="shot">
+    <div class="browserbar"><i></i><i></i><i></i><span>sharik-alomr.com/pricing</span></div>
+    <img src="assets/pricing.jpg" alt="صفحة الباقات والأسعار">
+    <figcaption><b>صفحة الباقات</b> — الباقات والحزم والأسعار في مكان واحد.</figcaption>
+  </figure>
+
+  <div class="grid grid-2 mt-4">
+    <div class="card">
+      <svg class="ic"><use href="#i-tag"/></svg>
+      <h3>باقات واضحة</h3>
+      <p>اسم الباقة، سعرها، ومميزاتها قدام المستخدم من غير تفاصيل مخفية.</p>
+    </div>
+    <div class="card">
+      <svg class="ic"><use href="#i-check-circle"/></svg>
+      <h3>مقارنة سهلة</h3>
+      <p>المستخدم يقدر يقارن المميزات ويختار الأنسب له بسرعة.</p>
+    </div>
+    <div class="card">
+      <svg class="ic"><use href="#i-wallet"/></svg>
+      <h3>محفظة رصيد</h3>
+      <p>شحن، رصيد، وحركة واضحة لكل عملية — جوه لوحة المستخدم.</p>
+    </div>
+    <div class="card">
+      <svg class="ic"><use href="#i-sliders"/></svg>
+      <h3>تحكم إداري</h3>
+      <p>الإدارة تقدر تعديل الأسعار والحزم من غير نشر نسخة جديدة.</p>
+    </div>
+  </div>
+
+  <div class="note info mt-4">
+    <svg class="ic"><use href="#i-card"/></svg>
+    <div><b>الدفع:</b> البنية جاهزة لربط Stripe أو Paymob. التفعيل النهائي
+    بيحتاج مفاتيح حساب الدفع الخاص بالعميل.</div>
+  </div>
+
+  <footer class="pfoot"><span>دليل العميل · <b>نسخة الويب</b></span><span class="pno">06</span></footer>
+</section>
+
+<!-- ══════════════════════════════════════════════════════════
+     07 — المقالات
+     ══════════════════════════════════════════════════════════ -->
+<section class="page">
+  <header class="topbar">
+    <div class="brand">
+      <img src="assets/logo.png" alt="">
+      <div><b>شريك العمر</b><small>SHARIK ALOMR</small></div>
+    </div>
+    <span class="section-tag">المحتوى</span>
+  </header>
+
+  <div class="eyebrow">قيمة قبل التسجيل</div>
+  <h1 class="title">المقالات <em>والمحتوى</em></h1>
+  <p class="lead">
+    محتوى بيساعد المستخدم ياخد قرار واثق، ويبني علاقة مع المنصة
+    قبل ما يسجّل.
+  </p>
+
+  <figure class="shot crop">
+    <div class="browserbar"><i></i><i></i><i></i><span>sharik-alomr.com/articles</span></div>
+    <img src="assets/articles.jpg" alt="صفحة المقالات">
+    <figcaption><b>صفحة المقالات</b> — تصفح، بحث، وتصنيفات.</figcaption>
+  </figure>
+
+  <figure class="shot crop short">
+    <div class="browserbar"><i></i><i></i><i></i><span>sharik-alomr.com/articles/…</span></div>
+    <img src="assets/article-detail.jpg" alt="صفحة تفاصيل المقال">
+    <figcaption><b>صفحة المقال</b> — عنوان، محتوى كامل، ووقت قراءة.</figcaption>
+  </figure>
+
+  <ul class="checks mt-3">
+    <li><svg class="ic"><use href="#i-check"/></svg><div><b>تصفح وبحث:</b> الوصول للمقال المناسب بسرعة.</div></li>
+    <li><svg class="ic"><use href="#i-check"/></svg><div><b>تجربة قراءة:</b> محتوى منسق ووقت قراءة واضح.</div></li>
+    <li><svg class="ic"><use href="#i-check"/></svg><div><b>تفاعل:</b> إعجاب، حفظ، وتعليقات.</div></li>
+    <li><svg class="ic"><use href="#i-check"/></svg><div><b>إدارة:</b> نشر وتعديل المحتوى من لوحة الإدارة.</div></li>
+  </ul>
+
+  <footer class="pfoot"><span>دليل العميل · <b>نسخة الويب</b></span><span class="pno">07</span></footer>
+</section>
+
+<!-- ══════════════════════════════════════════════════════════
+     08 — الثقة والصفحات القانونية
+     ══════════════════════════════════════════════════════════ -->
+<section class="page">
+  <header class="topbar">
+    <div class="brand">
+      <img src="assets/logo.png" alt="">
+      <div><b>شريك العمر</b><small>SHARIK ALOMR</small></div>
+    </div>
+    <span class="section-tag">الثقة</span>
+  </header>
+
+  <div class="eyebrow">شفافية من اليوم الأول</div>
+  <h1 class="title">الثقة <em>قبل أي خطوة</em></h1>
+  <p class="lead">
+    ست صفحات قانونية وتوعوية، مكتوبة بالعربي، ومتاحة من فوتر الموقع
+    في أي وقت.
+  </p>
+
+  <figure class="shot crop">
+    <div class="browserbar"><i></i><i></i><i></i><span>sharik-alomr.com/legal/privacy</span></div>
+    <img src="assets/legal.jpg" alt="صفحة سياسة الخصوصية">
+    <figcaption><b>نموذج من الصفحات</b> — سياسة الخصوصية بشكل واضح ومقروء.</figcaption>
+  </figure>
+
+  <div class="grid grid-3 mt-4">
+    <div class="card">
+      <svg class="ic"><use href="#i-heart"/></svg>
+      <h3>عن المنصة</h3>
+      <p>مين إحنا، وإيه اللي بنؤمن بيه.</p>
+    </div>
+    <div class="card">
+      <svg class="ic"><use href="#i-lock"/></svg>
+      <h3>الخصوصية</h3>
+      <p>إيه البيانات اللي بنجمعها وإزاي بنحميها.</p>
+    </div>
+    <div class="card">
+      <svg class="ic"><use href="#i-file"/></svg>
+      <h3>الشروط والأحكام</h3>
+      <p>قواعد الاستخدام وحقوق الطرفين.</p>
+    </div>
+    <div class="card">
+      <svg class="ic"><use href="#i-wallet"/></svg>
+      <h3>سياسة الاسترداد</h3>
+      <p>شروط الاسترجاع بشكل واضح.</p>
+    </div>
+    <div class="card">
+      <svg class="ic"><use href="#i-shield"/></svg>
+      <h3>السلامة والإبلاغ</h3>
+      <p>إزاي تبلغ عن أي سلوك غير مناسب.</p>
+    </div>
+    <div class="card">
+      <svg class="ic"><use href="#i-eye"/></svg>
+      <h3>ملفات الكوكيز</h3>
+      <p>إيه اللي بنخزنه على جهازك وليه.</p>
+    </div>
+  </div>
+
+  <div class="note ok mt-4">
+    <svg class="ic"><use href="#i-check-circle"/></svg>
+    <div><b>الخلاصة:</b> الصفحات دي بتبني ثقة المستخدم، وبتحمي المنصة
+    قانونيًا، وبتخلي كل شيء معلن قبل التسجيل.</div>
+  </div>
+
+  <footer class="pfoot"><span>دليل العميل · <b>نسخة الويب</b></span><span class="pno">08</span></footer>
+</section>
+
+<!-- ══════════════════════════════════════════════════════════
+     09 — الدخول والتسجيل
+     ══════════════════════════════════════════════════════════ -->
+<section class="page">
+  <header class="topbar">
+    <div class="brand">
+      <img src="assets/logo.png" alt="">
+      <div><b>شريك العمر</b><small>SHARIK ALOMR</small></div>
+    </div>
+    <span class="section-tag">الدخول</span>
+  </header>
+
+  <div class="eyebrow">ثلاث طرق، نفس الأمان</div>
+  <h1 class="title">الدخول <em>والتسجيل</em></h1>
+  <p class="lead">
+    المستخدم يختار الطريقة الأنسب له: رمز تحقق على الموبايل، كلمة مرور،
+    أو حساب Google.
+  </p>
+
+  <div class="two-up">
+    <figure class="shot">
+      <div class="browserbar"><i></i><i></i><i></i><span>تسجيل الدخول</span></div>
+      <img src="assets/login-password-panel.jpg" alt="الدخول بكلمة المرور">
+      <figcaption><b>كلمة المرور</b> — مع خيار «نسيت كلمة المرور».</figcaption>
+    </figure>
+    <figure class="shot">
+      <div class="browserbar"><i></i><i></i><i></i><span>رمز التحقق</span></div>
+      <img src="assets/login-otp-panel.jpg" alt="الدخول برمز التحقق">
+      <figcaption><b>رمز التحقق OTP</b> — 5 أرقام على الموبايل.</figcaption>
+    </figure>
+  </div>
+
+  <div class="grid grid-3 mt-3">
+    <div class="card tinted">
+      <svg class="ic"><use href="#i-phone"/></svg>
+      <h3>رقم الموبايل + OTP</h3>
+      <p>الأسرع: من غير كلمة مرور، ورمز جديد كل مرة.</p>
+    </div>
+    <div class="card tinted">
+      <svg class="ic"><use href="#i-key"/></svg>
+      <h3>كلمة المرور</h3>
+      <p>للمستخدم اللي بيفضل الطريقة التقليدية.</p>
+    </div>
+    <div class="card tinted">
+      <svg class="ic"><use href="#i-globe"/></svg>
+      <h3>حساب Google</h3>
+      <p>دخول بضغطة واحدة من غير بيانات إضافية.</p>
+    </div>
+  </div>
+
+  <div class="note info mt-4">
+    <svg class="ic"><use href="#i-check-circle"/></svg>
+    <div><b>وضوح كامل:</b> Facebook وApple ظاهرين بوضوح كـ «قريبًا»،
+    عشان مفيش زر بيوعد بحاجة مش شغالة.</div>
+  </div>
+
+  <footer class="pfoot"><span>دليل العميل · <b>نسخة الويب</b></span><span class="pno">09</span></footer>
+</section>
+
+<!-- ══════════════════════════════════════════════════════════
+     10 — لوحة المستخدم
+     ══════════════════════════════════════════════════════════ -->
+<section class="page">
+  <header class="topbar">
+    <div class="brand">
+      <img src="assets/logo.png" alt="">
+      <div><b>شريك العمر</b><small>SHARIK ALOMR</small></div>
+    </div>
+    <span class="section-tag">تجربة المستخدم</span>
+  </header>
+
+  <div class="eyebrow">مساحته الشخصية</div>
+  <h1 class="title">لوحة <em>المستخدم</em></h1>
+  <p class="lead">
+    مساحة واحدة بتجمع كل حاجة: الترشيحات، الاهتمامات، المحفظة،
+    الرسائل، والإعدادات.
+  </p>
+
+  <figure class="shot">
+    <div class="browserbar"><i></i><i></i><i></i><span>sharik-alomr.com/dashboard/user</span></div>
+    <img src="assets/user-overview.jpg" alt="لوحة المستخدم — النظرة العامة">
+    <figcaption><b>النظرة العامة</b> — نسبة اكتمال الملف، الترشيحات، والاهتمامات.</figcaption>
+  </figure>
+
+  <ul class="checks mt-4">
+    <li><svg class="ic"><use href="#i-check"/></svg><div><b>نسبة اكتمال الملف:</b> خطوة واضحة لتحسين الترشيحات.</div></li>
+    <li><svg class="ic"><use href="#i-check"/></svg><div><b>ترشيحات جديدة:</b> عدد محدث لحظيًا.</div></li>
+    <li><svg class="ic"><use href="#i-check"/></svg><div><b>اهتمامات مستلمة:</b> مين مهتم بيه.</div></li>
+    <li><svg class="ic"><use href="#i-check"/></svg><div><b>تواصل متبادل:</b> المحادثات بعد القبول.</div></li>
+    <li><svg class="ic"><use href="#i-check"/></svg><div><b>آخر النشاطات:</b> كل جديد في مكان واحد.</div></li>
+    <li><svg class="ic"><use href="#i-check"/></svg><div><b>تحكم كامل:</b> الخصوصية والإعدادات في متناوله.</div></li>
+  </ul>
+
+  <footer class="pfoot"><span>دليل العميل · <b>نسخة الويب</b></span><span class="pno">10</span></footer>
+</section>
+
+<!-- ══════════════════════════════════════════════════════════
+     11 — الترشيحات والمحفظة
+     ══════════════════════════════════════════════════════════ -->
+<section class="page">
+  <header class="topbar">
+    <div class="brand">
+      <img src="assets/logo.png" alt="">
+      <div><b>شريك العمر</b><small>SHARIK ALOMR</small></div>
+    </div>
+    <span class="section-tag">الترشيحات</span>
+  </header>
+
+  <div class="eyebrow">مش عشوائية</div>
+  <h1 class="title">الترشيحات <em>والمحفظة</em></h1>
+  <p class="lead">
+    ترشيحات مبنية على معايير المستخدم: السن، المدينة، المؤهل،
+    والحالة الاجتماعية.
+  </p>
+
+  <figure class="shot crop">
+    <div class="browserbar"><i></i><i></i><i></i><span>sharik-alomr.com/dashboard/user — الترشيحات</span></div>
+    <img src="assets/user-matches.jpg" alt="صفحة الترشيحات">
+    <figcaption><b>الترشيحات</b> — فلاتر دقيقة ونسبة توافق لكل ملف.</figcaption>
+  </figure>
+
+  <figure class="shot crop short">
+    <div class="browserbar"><i></i><i></i><i></i><span>sharik-alomr.com/dashboard/user — المحفظة</span></div>
+    <img src="assets/user-wallet.jpg" alt="محفظة الرصيد">
+    <figcaption><b>محفظة الرصيد</b> — الرصيد وحركة كل عملية بشكل واضح.</figcaption>
+  </figure>
+
+  <ul class="checks mt-3">
+    <li><svg class="ic"><use href="#i-check"/></svg><div><b>فلاتر دقيقة:</b> سن، مدينة، مؤهل، وحالة اجتماعية.</div></li>
+    <li><svg class="ic"><use href="#i-check"/></svg><div><b>نسبة توافق:</b> مؤشر يساعد على الاختيار.</div></li>
+    <li><svg class="ic"><use href="#i-check"/></svg><div><b>إرسال اهتمام:</b> خطوة واضحة وآمنة.</div></li>
+    <li><svg class="ic"><use href="#i-check"/></svg><div><b>رصيد ومصاريف:</b> كل حركة متسجلة.</div></li>
+  </ul>
+
+  <footer class="pfoot"><span>دليل العميل · <b>نسخة الويب</b></span><span class="pno">11</span></footer>
+</section>
+
+<!-- ══════════════════════════════════════════════════════════
+     12 — الرسائل والملف الشخصي
+     ══════════════════════════════════════════════════════════ -->
+<section class="page">
+  <header class="topbar">
+    <div class="brand">
+      <img src="assets/logo.png" alt="">
+      <div><b>شريك العمر</b><small>SHARIK ALOMR</small></div>
+    </div>
+    <span class="section-tag">التواصل</span>
+  </header>
+
+  <div class="eyebrow">بعد القبول المتبادل</div>
+  <h1 class="title">الرسائل <em>والملف الشخصي</em></h1>
+  <p class="lead">
+    التواصل مش مفتوح للكل: المحادثة بتبدأ بعد قبول الاهتمام المتبادل،
+    وفي حدود واضحة.
+  </p>
+
+  <div class="two-up big">
+    <figure class="shot">
+      <div class="browserbar"><i></i><i></i><i></i><span>الرسائل</span></div>
+      <img src="assets/user-messages.jpg" alt="صفحة الرسائل">
+      <figcaption><b>الرسائل</b> — محادثات آمنة بعد القبول المتبادل.</figcaption>
+    </figure>
+    <figure class="shot">
+      <div class="browserbar"><i></i><i></i><i></i><span>ملفي الشخصي</span></div>
+      <img src="assets/user-profile.jpg" alt="صفحة الملف الشخصي">
+      <figcaption><b>الملف الشخصي</b> — بيانات واهتمامات ونسبة اكتمال.</figcaption>
+    </figure>
+  </div>
+
+  <ul class="checks mt-4">
+    <li><svg class="ic"><use href="#i-check"/></svg><div><b>محادثات آمنة:</b> تفتح بعد قبول الطرفين.</div></li>
+    <li><svg class="ic"><use href="#i-check"/></svg><div><b>بحث داخل المحادثات:</b> الوصول السريع.</div></li>
+    <li><svg class="ic"><use href="#i-check"/></svg><div><b>ملف مكتمل:</b> نسبة الاكتمال بتزيد فرص التوافق.</div></li>
+    <li><svg class="ic"><use href="#i-check"/></svg><div><b>تحكم في الظهور:</b> المستخدم يحدد مين يشوف إيه.</div></li>
+  </ul>
+
+  <div class="note info mt-4">
+    <svg class="ic"><use href="#i-lock"/></svg>
+    <div><b>فلسفة المنصة:</b> خطوات محترمة وحدود واضحة — التواصل حق
+    مكتسب، مش متاح للجميع من أول لحظة.</div>
+  </div>
+
+  <h2 class="sub mt-5"><svg class="ic"><use href="#i-chat"/></svg> إزاي تبدأ محادثة؟</h2>
+  <div class="grid grid-3">
+    <div class="panel">
+      <h3>1. قبول متبادل</h3>
+      <p>الطرفان لازم يقبلوا الاهتمام قبل فتح المحادثة.</p>
+    </div>
+    <div class="panel">
+      <h3>2. محادثة آمنة</h3>
+      <p>المحادثة بتفتح جوه المنصة، من غير مشاركة بيانات تواصل.</p>
+    </div>
+    <div class="panel">
+      <h3>3. تواصل محترم</h3>
+      <p>قواعد واضحة، وإبلاغ سهل لو حصل أي تجاوز.</p>
+    </div>
+  </div>
+
+  <footer class="pfoot"><span>دليل العميل · <b>نسخة الويب</b></span><span class="pno">12</span></footer>
+</section>
+
+<!-- ══════════════════════════════════════════════════════════
+     13 — لوحة الإدارة
+     ══════════════════════════════════════════════════════════ -->
+<section class="page">
+  <header class="topbar">
+    <div class="brand">
+      <img src="assets/logo.png" alt="">
+      <div><b>شريك العمر</b><small>SHARIK ALOMR</small></div>
+    </div>
+    <span class="section-tag">الإدارة</span>
+  </header>
+
+  <div class="eyebrow">غرفة التحكم</div>
+  <h1 class="title">لوحة <em>الإدارة</em></h1>
+  <p class="lead">
+    كل ما يخص المنصة في لوحة واحدة: المستخدمون، الجودة، المحتوى،
+    والمال — بصلاحيات دقيقة لكل أدمن.
+  </p>
+
+  <figure class="shot">
+    <div class="browserbar"><i></i><i></i><i></i><span>sharik-alomr.com/dashboard/admin</span></div>
+    <img src="assets/admin-overview.jpg" alt="لوحة الإدارة — النظرة العامة">
+    <figcaption><b>النظرة العامة</b> — مؤشرات المنصة في شاشة واحدة.</figcaption>
+  </figure>
+
+  <div class="chips mt-4">
+    <span class="chip"><svg class="ic"><use href="#i-users"/></svg> المستخدمون</span>
+    <span class="chip"><svg class="ic"><use href="#i-check-circle"/></svg> قائمة التحقق</span>
+    <span class="chip"><svg class="ic"><use href="#i-flag"/></svg> البلاغات والمخاطر</span>
+    <span class="chip"><svg class="ic"><use href="#i-tag"/></svg> الباقات والحزم</span>
+    <span class="chip"><svg class="ic"><use href="#i-wallet"/></svg> المدفوعات</span>
+    <span class="chip"><svg class="ic"><use href="#i-clock"/></svg> الاشتراكات</span>
+    <span class="chip"><svg class="ic"><use href="#i-book"/></svg> المحتوى والمجتمع</span>
+    <span class="chip"><svg class="ic"><use href="#i-key"/></svg> المشرفون والصلاحيات</span>
+    <span class="chip"><svg class="ic"><use href="#i-spark"/></svg> تحليلات المنصة</span>
+    <span class="chip"><svg class="ic"><use href="#i-shield"/></svg> سجل التدقيق</span>
+  </div>
+
+  <div class="note info mt-4">
+    <svg class="ic"><use href="#i-lock"/></svg>
+    <div><b>صلاحيات دقيقة:</b> كل أدمن بيشوف ويعمل بس اللي مسموح له بيه.
+    مش كل المشرفين لهم نفس الصلاحيات.</div>
+  </div>
+
+  <footer class="pfoot"><span>دليل العميل · <b>نسخة الويب</b></span><span class="pno">13</span></footer>
+</section>
+
+<!-- ══════════════════════════════════════════════════════════
+     14 — إدارة المستخدمين والجودة
+     ══════════════════════════════════════════════════════════ -->
+<section class="page">
+  <header class="topbar">
+    <div class="brand">
+      <img src="assets/logo.png" alt="">
+      <div><b>شريك العمر</b><small>SHARIK ALOMR</small></div>
+    </div>
+    <span class="section-tag">الجودة</span>
+  </header>
+
+  <div class="eyebrow">متابعة يومية</div>
+  <h1 class="title">إدارة <em>المستخدمين والجودة</em></h1>
+  <p class="lead">
+    كل مستخدم له ملف كامل، وكل إجراء متسجل — عشان الجودة تبقى
+    قابلة للمراجعة، مش مجرد وعود.
+  </p>
+
+  <figure class="shot">
+    <div class="browserbar"><i></i><i></i><i></i><span>sharik-alomr.com/dashboard/admin — المستخدمون</span></div>
+    <img src="assets/admin-users.jpg" alt="إدارة المستخدمين">
+    <figcaption><b>المستخدمون والملفات</b> — بحث وفلترة وملف كامل لكل مستخدم.</figcaption>
+  </figure>
+
+  <div class="grid grid-2 mt-4">
+    <div class="card">
+      <svg class="ic"><use href="#i-search"/></svg>
+      <h3>بحث وفلترة</h3>
+      <p>الوصول السريع لأي مستخدم بالاسم أو الرقم أو الحالة.</p>
+    </div>
+    <div class="card">
+      <svg class="ic"><use href="#i-user"/></svg>
+      <h3>ملف المستخدم</h3>
+      <p>البيانات، حالة الحساب، ونسبة اكتمال الملف.</p>
+    </div>
+    <div class="card">
+      <svg class="ic"><use href="#i-check-circle"/></svg>
+      <h3>قائمة التحقق</h3>
+      <p>مراجعة طلبات التوثيق والموافقة عليها أو رفضها.</p>
+    </div>
+    <div class="card">
+      <svg class="ic"><use href="#i-flag"/></svg>
+      <h3>البلاغات والمخاطر</h3>
+      <p>متابعة البلاغات واتخاذ إجراء واضح ومتسجل.</p>
+    </div>
+  </div>
+
+  <div class="note info mt-4">
+    <svg class="ic"><use href="#i-shield"/></svg>
+    <div><b>سجل التدقيق:</b> كل إجراء إداري متسجل — مين عمله، وإمتى،
+    وليه. ده بيحمي المنصة والمستخدمين.</div>
+  </div>
+
+  <footer class="pfoot"><span>دليل العميل · <b>نسخة الويب</b></span><span class="pno">14</span></footer>
+</section>
+
+<!-- ══════════════════════════════════════════════════════════
+     15 — الباقات والمدفوعات (إدارة)
+     ══════════════════════════════════════════════════════════ -->
+<section class="page">
+  <header class="topbar">
+    <div class="brand">
+      <img src="assets/logo.png" alt="">
+      <div><b>شريك العمر</b><small>SHARIK ALOMR</small></div>
+    </div>
+    <span class="section-tag">الإدارة المالية</span>
+  </header>
+
+  <div class="eyebrow">كل شيء تحت السيطرة</div>
+  <h1 class="title">الباقات <em>والمدفوعات</em></h1>
+  <p class="lead">
+    تعديل الأسعار، متابعة المدفوعات، وإدارة الاشتراكات — من مكان
+    واحد ومن غير تدخل تقني.
+  </p>
+
+  <figure class="shot crop mid">
+    <div class="browserbar"><i></i><i></i><i></i><span>شاشة الباقات والحزم</span></div>
+    <img src="assets/admin-plans.jpg" alt="إدارة الباقات">
+    <figcaption><b>الباقات والحزم</b> — تعديل السعر والمميزات والتفعيل.</figcaption>
+  </figure>
+
+  <figure class="shot crop short">
+    <div class="browserbar"><i></i><i></i><i></i><span>شاشة المدفوعات</span></div>
+    <img src="assets/admin-payments.jpg" alt="إدارة المدفوعات">
+    <figcaption><b>المدفوعات</b> — متابعة العمليات والاشتراكات.</figcaption>
+  </figure>
+
+  <ul class="checks mt-3">
+    <li><svg class="ic"><use href="#i-check"/></svg><div><b>تعديل الأسعار:</b> من غير نشر نسخة جديدة.</div></li>
+    <li><svg class="ic"><use href="#i-check"/></svg><div><b>تفعيل وإيقاف:</b> تحكم كامل في الحزم.</div></li>
+    <li><svg class="ic"><use href="#i-check"/></svg><div><b>متابعة المدفوعات:</b> كل عملية واضحة.</div></li>
+    <li><svg class="ic"><use href="#i-check"/></svg><div><b>إدارة الاشتراكات:</b> التجديد والإلغاء.</div></li>
+  </ul>
+
+  <div class="note mt-3">
+    <svg class="ic"><use href="#i-shield"/></svg>
+    <div><b>ملاحظة:</b> البانر الأصفر في اللقطة تذكير أمني للأدمن إن
+    التحقق بخطوتين مش مفعّل — ميزة حماية، مش خطأ.</div>
+  </div>
+
+  <footer class="pfoot"><span>دليل العميل · <b>نسخة الويب</b></span><span class="pno">15</span></footer>
+</section>
+
+<!-- ══════════════════════════════════════════════════════════
+     16 — اللغة والوضع الداكن والموبايل
+     ══════════════════════════════════════════════════════════ -->
+<section class="page">
+  <header class="topbar">
+    <div class="brand">
+      <img src="assets/logo.png" alt="">
+      <div><b>شريك العمر</b><small>SHARIK ALOMR</small></div>
+    </div>
+    <span class="section-tag">التجربة</span>
+  </header>
+
+  <div class="eyebrow">مرونة كاملة</div>
+  <h1 class="title">تجربة <em>تناسب كل مستخدم</em></h1>
+  <p class="lead">
+    نفس الموقع، بأربع طرق مختلفة: عربي أو إنجليزي، فاتح أو داكن،
+    وعلى موبايل أو كمبيوتر.
+  </p>
+
+  <div class="media-row">
+    <figure class="shot desktop">
+      <div class="browserbar"><i></i><i></i><i></i><span>الوضع الداكن</span></div>
+      <img src="assets/home-dark.jpg" alt="الوضع الداكن">
+      <figcaption><b>الوضع الداكن</b> — مريح للعين وبنفس الهوية.</figcaption>
+    </figure>
+    <figure class="shot phone">
+      <div class="browserbar"><i></i><i></i><i></i><span>موبايل</span></div>
+      <img src="assets/home-mobile.jpg" alt="الموقع على الموبايل">
+      <figcaption><b>موبايل</b> — نفس التجربة بحجم مناسب.</figcaption>
+    </figure>
+  </div>
+
+  <figure class="shot strip">
+    <div class="browserbar"><i></i><i></i><i></i><span>sharik-alomr.com — English</span></div>
+    <img src="assets/home-en.jpg" alt="الموقع باللغة الإنجليزية">
+    <figcaption><b>الإنجليزية</b> — تبديل فوري بدون إعادة تحميل الصفحة.</figcaption>
+  </figure>
+
+  <ul class="checks mt-4">
+    <li><svg class="ic"><use href="#i-check"/></svg><div><b>لغة فورية:</b> عربي ↔ إنجليزي بضغطة.</div></li>
+    <li><svg class="ic"><use href="#i-check"/></svg><div><b>وضع داكن:</b> مريح للعين وبيتحفظ.</div></li>
+    <li><svg class="ic"><use href="#i-check"/></svg><div><b>تصميم متجاوب:</b> موبايل، تابلت، وكمبيوتر.</div></li>
+    <li><svg class="ic"><use href="#i-check"/></svg><div><b>نفس المحتوى:</b> كل الميزات متاحة في كل وضع.</div></li>
+  </ul>
+
+  <footer class="pfoot"><span>دليل العميل · <b>نسخة الويب</b></span><span class="pno">16</span></footer>
+</section>
+
+<!-- ══════════════════════════════════════════════════════════
+     17 — كيف يعمل الموقع؟
+     ══════════════════════════════════════════════════════════ -->
+<section class="page">
+  <header class="topbar">
+    <div class="brand">
+      <img src="assets/logo.png" alt="">
+      <div><b>شريك العمر</b><small>SHARIK ALOMR</small></div>
+    </div>
+    <span class="section-tag">ببساطة</span>
+  </header>
+
+  <div class="eyebrow">من غير مصطلحات</div>
+  <h1 class="title">كيف يعمل الموقع؟</h1>
+  <p class="lead">
+    ثلاث طبقات بس، وكل طبقة ليها دور واضح. المستخدم بيشوف الواجهة،
+    والطبقات التانية بتشتغل في الخلفية بأمان.
+  </p>
+
+  <div class="layers">
+    <div class="layer">
+      <svg class="ic"><use href="#i-layout"/></svg>
+      <b>المتصفح</b>
+      <span>الواجهة اللي المستخدم بيشوفها ويتفاعل معاها</span>
+    </div>
+    <div class="arrow"><svg class="ic"><use href="#i-arrow"/></svg></div>
+    <div class="layer">
+      <svg class="ic"><use href="#i-server"/></svg>
+      <b>تطبيق الويب</b>
+      <span>Next.js — الصفحات والتجربة والتصميم</span>
+    </div>
+    <div class="arrow"><svg class="ic"><use href="#i-arrow"/></svg></div>
+    <div class="layer">
+      <svg class="ic"><use href="#i-key"/></svg>
+      <b>الوسيط الآمن</b>
+      <span>BFF — بيتحقق من الطلبات ويتكلم مع البيانات</span>
+    </div>
+    <div class="arrow"><svg class="ic"><use href="#i-arrow"/></svg></div>
+    <div class="layer">
+      <svg class="ic"><use href="#i-db"/></svg>
+      <b>قاعدة البيانات</b>
+      <span>PostgreSQL — مصدر واحد للحقيقة</span>
+    </div>
+  </div>
+
+  <h2 class="sub"><svg class="ic"><use href="#i-star"/></svg> ليه البنية دي مهمة للعميل؟</h2>
+  <div class="grid grid-3">
+    <div class="card">
+      <svg class="ic"><use href="#i-shield"/></svg>
+      <h3>أمان أعلى</h3>
+      <p>المتصفح مش بيتصل بقاعدة البيانات مباشرة — كل طلب بيعدي على مراجعة.</p>
+    </div>
+    <div class="card">
+      <svg class="ic"><use href="#i-spark"/></svg>
+      <h3>سرعة وتجربة أفضل</h3>
+      <p>واجهة خفيفة بتعرض المحتوى بسرعة، حتى مع نمو البيانات.</p>
+    </div>
+    <div class="card">
+      <svg class="ic"><use href="#i-server"/></svg>
+      <h3>قابلية التوسع</h3>
+      <p>كل طبقة تقدر تكبر لوحدها من غير ما تعيد بناء الباقي.</p>
+    </div>
+  </div>
+
+  <div class="note info mt-4">
+    <svg class="ic"><use href="#i-check-circle"/></svg>
+    <div><b>مهم:</b> الموقع بيقرأ من نفس قاعدة بيانات تطبيق الموبايل،
+    من غير أي تعديل في كود الموبايل.</div>
+  </div>
+
+  <div class="chips mt-4">
+    <span class="chip">Next.js 16</span>
+    <span class="chip">React 19</span>
+    <span class="chip">Express</span>
+    <span class="chip">Prisma</span>
+    <span class="chip">PostgreSQL</span>
+    <span class="chip">Docker</span>
+  </div>
+
+  <h2 class="sub mt-5"><svg class="ic"><use href="#i-check-circle"/></svg> إزاي بنضمن إن الموقع شغال؟</h2>
+  <div class="grid grid-3">
+    <div class="card">
+      <svg class="ic"><use href="#i-layout"/></svg>
+      <h3>تشغيل موحد</h3>
+      <p>كل الخدمات بتشتغل في بيئة واحدة قابلة للتكرار بـ Docker.</p>
+    </div>
+    <div class="card">
+      <svg class="ic"><use href="#i-check-circle"/></svg>
+      <h3>فحص تلقائي</h3>
+      <p>كل تعديل بيعدي على فحص وبناء واختبارات قبل النشر.</p>
+    </div>
+    <div class="card">
+      <svg class="ic"><use href="#i-spark"/></svg>
+      <h3>مراقبة</h3>
+      <p>مؤشرات التشغيل والمراقبة جاهزة لمتابعة الأداء.</p>
+    </div>
+  </div>
+
+  <footer class="pfoot"><span>دليل العميل · <b>نسخة الويب</b></span><span class="pno">17</span></footer>
+</section>
+
+<!-- ══════════════════════════════════════════════════════════
+     18 — الأمان والخصوصية
+     ══════════════════════════════════════════════════════════ -->
+<section class="page">
+  <header class="topbar">
+    <div class="brand">
+      <img src="assets/logo.png" alt="">
+      <div><b>شريك العمر</b><small>SHARIK ALOMR</small></div>
+    </div>
+    <span class="section-tag">الحماية</span>
+  </header>
+
+  <div class="eyebrow">أساس التعامل</div>
+  <h1 class="title">الأمان <em>والخصوصية</em></h1>
+  <p class="lead">
+    الأمان مش ميزة إضافية — هو أساس التعامل. كل طبقة في المنصة
+    فيها حماية، وكل إجراء إداري متسجل.
+  </p>
+
+  <div class="grid grid-3">
+    <div class="card tinted">
+      <svg class="ic"><use href="#i-phone"/></svg>
+      <h3>دخول برمز OTP</h3>
+      <p>رمز قصير العمر، ومحدود المحاولات، وبيتبعت للموبايل.</p>
+    </div>
+    <div class="card tinted">
+      <svg class="ic"><use href="#i-lock"/></svg>
+      <h3>جلسات محمية</h3>
+      <p>كوكيز آمنة، وصلاحية محددة، وخروج فوري عند الحاجة.</p>
+    </div>
+    <div class="card tinted">
+      <svg class="ic"><use href="#i-key"/></svg>
+      <h3>صلاحيات دقيقة</h3>
+      <p>كل أدمن له صلاحيات محددة، مش وصول كامل لكل شيء.</p>
+    </div>
+    <div class="card tinted">
+      <svg class="ic"><use href="#i-shield"/></svg>
+      <h3>تحقق بخطوتين</h3>
+      <p>حماية إضافية لحسابات الإدارة الحساسة.</p>
+    </div>
+    <div class="card tinted">
+      <svg class="ic"><use href="#i-file"/></svg>
+      <h3>سجل تدقيق</h3>
+      <p>كل إجراء إداري متسجل: مين، إمتى، وإيه.</p>
+    </div>
+    <div class="card tinted">
+      <svg class="ic"><use href="#i-ban"/></svg>
+      <h3>حماية من التكرار</h3>
+      <p>حدود على المحاولات والطلبات لمنع سوء الاستخدام.</p>
+    </div>
+  </div>
+
+  <h2 class="sub mt-5"><svg class="ic"><use href="#i-eye"/></svg> خصوصية المستخدم</h2>
+  <ul class="checks">
+    <li><svg class="ic"><use href="#i-check"/></svg><div><b>تحكم في الظهور:</b> مين يشوف الملف وإيه.</div></li>
+    <li><svg class="ic"><use href="#i-check"/></svg><div><b>إخفاء بيانات التواصل:</b> لحد ما الطرفين يقبلوا.</div></li>
+    <li><svg class="ic"><use href="#i-check"/></svg><div><b>إبلاغ وحظر:</b> أدوات واضحة للحماية.</div></li>
+    <li><svg class="ic"><use href="#i-check"/></svg><div><b>تعطيل الحساب:</b> المستخدم يقدر يوقف حسابه.</div></li>
+  </ul>
+
+  <div class="note ok mt-4">
+    <svg class="ic"><use href="#i-lock"/></svg>
+    <div><b>الأسرار خارج الكود:</b> المفاتيح وبيانات الاتصال متخزنة في
+    ملفات محمية، ومش مرفوعة على Git.</div>
+  </div>
+
+  <div class="quote-band">
+    <span class="mark">&rdquo;</span>
+    <p>خصوصية المستخدم مش خيار في الإعدادات — <b>هي جزء من التصميم</b>.</p>
+  </div>
+
+  <footer class="pfoot"><span>دليل العميل · <b>نسخة الويب</b></span><span class="pno">18</span></footer>
+</section>
+
+<!-- ══════════════════════════════════════════════════════════
+     19 — الحالة والخطوات القادمة
+     ══════════════════════════════════════════════════════════ -->
+<section class="page">
+  <header class="topbar">
+    <div class="brand">
+      <img src="assets/logo.png" alt="">
+      <div><b>شريك العمر</b><small>SHARIK ALOMR</small></div>
+    </div>
+    <span class="section-tag">الخلاصة</span>
+  </header>
+
+  <div class="eyebrow">آخر صفحة</div>
+  <h1 class="title">فين وصلنا؟ <em>وإيه الجاي؟</em></h1>
+  <p class="lead">
+    النسخة الحالية جاهزة، والاختبارات كلها ناجحة. فاضل خطوات
+    تفعيل بسيطة قبل الإطلاق الرسمي.
+  </p>
+
+  <div class="status mb-5">
+    <div class="status-item"><svg class="ic"><use href="#i-check-circle"/></svg><div><b>13 صفحة</b> تعمل وتستجيب</div></div>
+    <div class="status-item"><svg class="ic"><use href="#i-check-circle"/></svg><div><b>34/34</b> اختبار ناجح</div></div>
+    <div class="status-item"><svg class="ic"><use href="#i-check-circle"/></svg><div><b>3 فحوصات CI</b> خضراء بالكامل</div></div>
+    <div class="status-item"><svg class="ic"><use href="#i-check-circle"/></svg><div><b>0 روابط مكسورة</b> داخليًا</div></div>
+    <div class="status-item"><svg class="ic"><use href="#i-check-circle"/></svg><div><b>موبايل وتابلت</b> وكمبيوتر</div></div>
+    <div class="status-item"><svg class="ic"><use href="#i-check-circle"/></svg><div><b>عربي وإنجليزي</b> وفاتح وداكن</div></div>
+  </div>
+
+  <h2 class="sub"><svg class="ic"><use href="#i-spark"/></svg> الخطوات القادمة</h2>
+  <div class="next-grid">
+    <div class="next">
+      <svg class="ic"><use href="#i-card"/></svg>
+      <div><b>بوابة الدفع</b><span>تفعيل Stripe أو Paymob بمفاتيح الحساب.</span></div>
+    </div>
+    <div class="next">
+      <svg class="ic"><use href="#i-bell"/></svg>
+      <div><b>الإشعارات</b><span>SMS وبريد إلكتروني وتنبيهات فورية.</span></div>
+    </div>
+    <div class="next">
+      <svg class="ic"><use href="#i-globe"/></svg>
+      <div><b>تسجيل اجتماعي</b><span>تفعيل Facebook وApple.</span></div>
+    </div>
+    <div class="next">
+      <svg class="ic"><use href="#i-server"/></svg>
+      <div><b>الإطلاق</b><span>ربط الدومين النهائي ومراجعة المحتوى.</span></div>
+    </div>
+  </div>
+
+  <div class="thanks">
+    <h2>شكرًا لثقتكم.</h2>
+    <p>
+      الدليل ده ملخص لكل ما تم بناؤه في نسخة الويب. أي ميزة جديدة
+      هتتضاف بنفس الأسلوب: شرح واضح، ولقطة حقيقية، ونتيجة ملموسة.
+    </p>
+    <div class="brandline">
+      <img src="assets/logo-white.png" alt="">
+      <div><b>شريك العمر</b><br>زواج جاد بخطوات محترمة</div>
+    </div>
+  </div>
+
+  <footer class="pfoot"><span>دليل العميل · <b>نسخة الويب</b></span><span class="pno">19</span></footer>
+</section>
+
+
+</body>
+</html>
