@@ -1,0 +1,9 @@
+User-agent: *
+Allow: /
+Disallow: /dashboard/
+Disallow: /admin/
+Disallow: /onboarding
+Disallow: /login
+Disallow: /api/
+
+Sitemap: https://sharik-alomr.com/sitemap.xml
