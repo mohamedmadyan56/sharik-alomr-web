@@ -4,7 +4,6 @@ out/
 dist/
 build/
 .cache/
-.env*
 !.env.example
 !**/.env.example
 .vite/
@@ -18,3 +17,4 @@ backups/
 bff/uploads/
 deploy/certs/
 deploy/certbot/
+config.bat

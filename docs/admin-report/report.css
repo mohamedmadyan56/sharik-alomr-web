@@ -1,0 +1,384 @@
+/* ============================================================
+   شريك العمر — تقرير لوحة تحكم الإدارة
+   يبني على هوية دليل العميل: نفس الخطوط والألوان وصفحات A4.
+   ============================================================ */
+
+@import url("../client-guide/guide.css");
+
+/* ── ترويسة الصفحات ──────────────────────────────────────── */
+
+.page {
+  padding: 13mm 15mm 15mm;
+}
+
+.page .topbar {
+  margin-bottom: 5mm;
+}
+
+.lead.tight {
+  margin-bottom: 4mm;
+}
+
+/* ── بطاقات الحكم (تم / لم يتم) ──────────────────────────── */
+
+.verdicts {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 3.5mm;
+}
+
+.verdict {
+  position: relative;
+  border: 0.3mm solid var(--line);
+  border-radius: 3mm;
+  background: var(--soft);
+  padding: 4mm 4.5mm;
+  overflow: hidden;
+}
+
+.verdict::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  right: 0;
+  left: 0;
+  height: 1.2mm;
+  background: var(--line);
+}
+
+.verdict.good {
+  background: linear-gradient(145deg, #f2faf6, #eaf6f0);
+  border-color: #cfe9dd;
+}
+
+.verdict.good::before {
+  background: #3d9a71;
+}
+
+.verdict.part {
+  background: linear-gradient(145deg, #fefaf0, #fcf4e2);
+  border-color: #f0dfb8;
+}
+
+.verdict.part::before {
+  background: #c79533;
+}
+
+.verdict.bad {
+  background: linear-gradient(145deg, #fff5f6, #fdeef1);
+  border-color: #f1d2d8;
+}
+
+.verdict.bad::before {
+  background: #c25a70;
+}
+
+.verdict-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 3mm;
+  margin-bottom: 2mm;
+}
+
+.verdict-head .ic {
+  width: 7mm;
+  height: 7mm;
+  color: var(--rose);
+}
+
+.verdict.good .verdict-head .ic {
+  color: var(--green);
+}
+
+.verdict.part .verdict-head .ic {
+  color: var(--gold);
+}
+
+.verdict.bad .verdict-head .ic {
+  color: #b3455c;
+}
+
+.verdict h3 {
+  margin: 0 0 1.5mm;
+  font-size: 10.5pt;
+  font-weight: 700;
+  color: var(--plum);
+  line-height: 1.45;
+}
+
+.verdict p {
+  margin: 0;
+  font-size: 8pt;
+  line-height: 1.75;
+  color: #5f4c5b;
+}
+
+/* ── شرائح الحالة ────────────────────────────────────────── */
+
+.pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 1.2mm;
+  font-size: 7pt;
+  font-weight: 700;
+  border-radius: 999px;
+  padding: 0.9mm 2.6mm;
+  line-height: 1.6;
+  white-space: nowrap;
+}
+
+.pill.ok {
+  color: #1c6246;
+  background: #e6f5ed;
+  border: 0.25mm solid #c8e6d9;
+}
+
+.pill.no {
+  color: #9b3349;
+  background: #fdeef1;
+  border: 0.25mm solid #f2cfd6;
+}
+
+.pill.part {
+  color: #7e5a15;
+  background: #fcf3df;
+  border: 0.25mm solid #efdcb4;
+}
+
+.pill.neutral {
+  color: var(--grape);
+  background: var(--blush);
+  border: 0.25mm solid #e7d5e3;
+}
+
+/* ── الجداول ─────────────────────────────────────────────── */
+
+.matrix {
+  width: 100%;
+  border-collapse: collapse;
+  border-spacing: 0;
+  font-size: 7.9pt;
+  border: 0.3mm solid var(--line);
+  border-radius: 3mm;
+  overflow: hidden;
+}
+
+.matrix thead th {
+  background: linear-gradient(145deg, #f9f1f7, #f4e8f1);
+  color: var(--plum);
+  font-weight: 700;
+  text-align: right;
+  padding: 2.4mm 3mm;
+  border-bottom: 0.35mm solid #e7d5e3;
+  font-size: 7.8pt;
+}
+
+.matrix tbody td {
+  padding: 2.2mm 3mm;
+  border-bottom: 0.25mm solid var(--line-soft);
+  color: #4d3a49;
+  line-height: 1.6;
+  vertical-align: middle;
+}
+
+.matrix tbody tr:last-child td {
+  border-bottom: 0;
+}
+
+.matrix tbody tr:nth-child(even) td {
+  background: #fdfbfc;
+}
+
+.matrix td.c,
+.matrix th.c {
+  text-align: center;
+}
+
+.matrix td b {
+  color: var(--plum);
+  font-weight: 600;
+}
+
+.matrix td small {
+  display: block;
+  font-size: 6.8pt;
+  color: var(--muted);
+  line-height: 1.5;
+}
+
+/* ── مؤشرات صغيرة ────────────────────────────────────────── */
+
+.kpis {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 3mm;
+}
+
+.kpi {
+  text-align: center;
+  background: var(--soft);
+  border: 0.3mm solid var(--line);
+  border-radius: 3mm;
+  padding: 3.5mm 2mm;
+}
+
+.kpi b {
+  display: block;
+  font-size: 16pt;
+  line-height: 1.3;
+  color: var(--rose);
+  font-weight: 700;
+}
+
+.kpi span {
+  display: block;
+  font-size: 7pt;
+  color: var(--muted);
+  line-height: 1.55;
+}
+
+/* ── قائمة الخطة ─────────────────────────────────────────── */
+
+.plan-list {
+  display: grid;
+  gap: 2.5mm;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.plan-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 3mm;
+  border: 0.3mm solid var(--line);
+  border-radius: 2.5mm;
+  background: #fff;
+  padding: 2.8mm 3.5mm;
+}
+
+.plan-item .n {
+  flex: 0 0 auto;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 6.5mm;
+  height: 6.5mm;
+  border-radius: 50%;
+  background: var(--plum);
+  color: #fff;
+  font-size: 8pt;
+  font-weight: 700;
+  margin-top: 0.3mm;
+}
+
+.plan-item b {
+  display: block;
+  font-size: 8.8pt;
+  color: var(--plum);
+  line-height: 1.5;
+}
+
+.plan-item span {
+  display: block;
+  font-size: 7.4pt;
+  color: var(--muted);
+  line-height: 1.65;
+}
+
+/* ── صناديق مساعدة ───────────────────────────────────────── */
+
+.callout {
+  border-right: 1.2mm solid var(--pink);
+  background: linear-gradient(90deg, #fdf8fc, #fff);
+  border-radius: 0 2.5mm 2.5mm 0;
+  padding: 3.5mm 4.5mm;
+  font-size: 8.4pt;
+  line-height: 1.8;
+  color: var(--grape);
+}
+
+.callout b {
+  color: var(--plum);
+}
+
+.mini-note {
+  font-size: 7.2pt;
+  color: var(--muted);
+  line-height: 1.7;
+}
+
+.two-col {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 4mm;
+}
+
+.split-6-4 {
+  display: grid;
+  grid-template-columns: 1.25fr 0.75fr;
+  gap: 5mm;
+  align-items: start;
+}
+
+.tag-line {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.8mm;
+  margin-top: 2.5mm;
+}
+
+.tag-line span {
+  font-size: 6.9pt;
+  font-weight: 600;
+  color: var(--grape);
+  background: #fff;
+  border: 0.25mm solid #e7d5e3;
+  border-radius: 999px;
+  padding: 0.8mm 2.5mm;
+  line-height: 1.6;
+}
+
+/* صور أقصر داخل التقرير */
+figure.shot.crop.xshort img {
+  height: 44mm;
+  object-fit: cover;
+  object-position: top;
+}
+
+figure.shot.crop.report img {
+  height: 62mm;
+  object-fit: cover;
+  object-position: top;
+}
+
+figure.shot.crop.tall img {
+  height: 78mm;
+  object-fit: cover;
+  object-position: top;
+}
+
+figure.shot figcaption {
+  font-size: 7pt;
+}
+
+/* شكرًا */
+.thanks.compact {
+  margin-top: 4mm;
+  padding: 5mm 6mm 4.5mm;
+}
+
+.thanks.compact h2 {
+  font-size: 14pt;
+}
+
+.thanks.compact p {
+  font-size: 8.2pt;
+  line-height: 1.8;
+}
+
+.thanks.compact .brandline {
+  margin-top: 3.5mm;
+  padding-top: 3mm;
+}
